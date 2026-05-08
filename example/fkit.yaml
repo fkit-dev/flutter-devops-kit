@@ -1,0 +1,20 @@
+project_name: sample_project
+
+tooling:
+  use_fvm: false
+
+build:
+  debug_info: ./debug-info
+
+entry:
+  main: lib/main.dart
+
+flavors:
+  default: development
+
+  development:
+    env: env/development.json
+    firebase_app_id: YOUR_FIREBASE_APP_ID
+
+firebase:
+  tester_group: internal-testers
