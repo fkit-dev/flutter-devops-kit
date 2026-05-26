@@ -1,8 +1,11 @@
-import '../core/command.dart';
+import 'package:args/args.dart';
+
+import '../core/base_arg_command.dart';
 import '../models/build_mode.dart';
 import '../services/build_service.dart';
+import '../services/logger_service.dart';
 
-class RunCommand extends Command {
+class RunCommand extends BaseArgCommand {
   @override
   String get name => 'run';
 
@@ -10,24 +13,29 @@ class RunCommand extends Command {
   String get description => 'Run flutter app';
 
   @override
-  Future<void> run(List<String> args) async {
-    if (args.isEmpty) {
-      throw Exception('❌ Please provide flavor');
+  ArgParser buildParser() {
+    return ArgParser()
+      ..addFlag('profile', abbr: 'p', negatable: false)
+      ..addFlag('release', abbr: 'r', negatable: false);
+  }
+
+  @override
+  Future<void> execute(ArgResults results) async {
+    if (results.rest.isEmpty) {
+      LoggerService.error('Please provide flavor');
+
+      return;
     }
 
-    final flavor = args.first;
-
-    final profile = args.contains('--profile');
-
-    final release = args.contains('--release');
+    final flavor = results.rest.first;
 
     BuildMode mode = BuildMode.debug;
 
-    if (profile) {
+    if (results['profile']) {
       mode = BuildMode.profile;
     }
 
-    if (release) {
+    if (results['release']) {
       mode = BuildMode.release;
     }
 

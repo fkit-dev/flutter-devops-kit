@@ -4,11 +4,13 @@ import '../models/build_result.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../utils/command_executor.dart';
+import '../validators/project_validator.dart';
 import 'logger_service.dart';
 
 class BuildService {
   Future<void> run({required String flavor, BuildMode mode = BuildMode.debug}) async {
     final config = await ConfigService.load();
+    ProjectValidator.validate(config);
 
     final flavorConfig = config.flavors[flavor];
 
@@ -36,6 +38,7 @@ class BuildService {
 
   Future<BuildResult> build({required BuildPlatform platform, required String flavor}) async {
     final config = await ConfigService.load();
+    ProjectValidator.validate(config);
 
     final flavorConfig = config.flavors[flavor];
 

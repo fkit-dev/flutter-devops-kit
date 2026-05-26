@@ -1,10 +1,13 @@
-import '../core/command.dart';
+import 'package:args/args.dart';
+
+import '../core/base_arg_command.dart';
 import '../models/build_platform.dart';
 import '../services/build_service.dart';
 import '../services/config_service.dart';
 import '../services/firebase_service.dart';
+import '../services/logger_service.dart';
 
-class FirebaseCommand extends Command {
+class FirebaseCommand extends BaseArgCommand {
   @override
   String get name => 'firebase';
 
@@ -12,27 +15,30 @@ class FirebaseCommand extends Command {
   String get description => 'Build and upload to Firebase';
 
   @override
-  Future<void> run(List<String> args) async {
-    if (args.isEmpty) {
-      throw Exception('❌ Usage: fkit firebase <flavor> [--notes=\"message\"]');
+  ArgParser buildParser() {
+    return ArgParser()..addOption('notes', abbr: 'n', help: 'Release notes');
+  }
+
+  @override
+  Future<void> execute(ArgResults results) async {
+    if (results.rest.isEmpty) {
+      LoggerService.error('Usage: fkit firebase <flavor>');
+
+      return;
     }
 
-    final flavor = args.first;
+    final flavor = results.rest.first;
 
-    String notes = 'Automated build upload via FKIT';
-
-    final notesArg = args.where((e) => e.startsWith('--notes='));
-
-    if (notesArg.isNotEmpty) {
-      notes = notesArg.first.replaceFirst('--notes=', '');
-    }
+    final notes = results['notes'] ?? 'Automated build upload via FKIT';
 
     final config = await ConfigService.load();
 
     final flavorConfig = config.flavors[flavor];
 
     if (flavorConfig == null) {
-      throw Exception('❌ Flavor "$flavor" not found');
+      LoggerService.error('Flavor "$flavor" not found');
+
+      return;
     }
 
     final buildService = BuildService();
