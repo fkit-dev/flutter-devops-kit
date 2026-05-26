@@ -1,6 +1,7 @@
 import '../core/command.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
+import '../services/logger_service.dart';
 import '../utils/command_executor.dart';
 
 class FixCommand extends Command {
@@ -12,8 +13,7 @@ class FixCommand extends Command {
 
   @override
   Future<void> run(List<String> args) async {
-    print('\n🛠 Applying dart fixes...\n');
-
+    LoggerService.section('Applying Dart fixes');
     final config = await ConfigService.load();
 
     final flutterService = FlutterService(config);
@@ -22,6 +22,10 @@ class FixCommand extends Command {
 
     await CommandExecutor.run(command.first, [...command.skip(1), 'fix', '--apply']);
 
-    print('\n✅ Dart fixes applied.\n');
+    LoggerService.blank();
+
+    LoggerService.success('Dart fixes applied.');
+
+    LoggerService.blank();
   }
 }

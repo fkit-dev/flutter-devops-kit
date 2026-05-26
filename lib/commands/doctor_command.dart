@@ -1,4 +1,5 @@
 import '../core/command.dart';
+import '../services/logger_service.dart';
 import '../utils/process_utils.dart';
 
 class DoctorCommand extends Command {
@@ -13,7 +14,7 @@ class DoctorCommand extends Command {
 
   @override
   Future<void> run(List<String> args) async {
-    print('\n🩺 Running Flutter DevOps diagnostics...\n');
+    LoggerService.section('Running Flutter DevOps diagnostics');
 
     await _check('Flutter', 'flutter');
     await _check('Dart', 'dart');
@@ -22,16 +23,25 @@ class DoctorCommand extends Command {
     await _check('Java', 'java');
     await _check('Git', 'git');
 
-    print('\n────────────────────────');
+    LoggerService.divider();
 
-    print('✔ Installed : $_success');
-    print('✘ Missing   : $_failed');
+    LoggerService.success('Installed : $_success');
+
+    if (_failed > 0) {
+      LoggerService.error('Missing : $_failed');
+    } else {
+      LoggerService.success('Missing : 0');
+    }
+
+    LoggerService.blank();
 
     if (_failed == 0) {
-      print('\n✅ Environment ready.\n');
+      LoggerService.success('Environment ready.');
     } else {
-      print('\n⚠ Some required tools are missing.\n');
+      LoggerService.warning('Some required tools are missing.');
     }
+
+    LoggerService.blank();
   }
 
   Future<void> _check(String title, String command) async {
@@ -39,10 +49,12 @@ class DoctorCommand extends Command {
 
     if (exists) {
       _success++;
-      print('✔ $title installed');
+
+      LoggerService.success('$title installed');
     } else {
       _failed++;
-      print('✘ $title missing');
+
+      LoggerService.error('$title missing');
     }
   }
 }

@@ -13,6 +13,14 @@ class FlutterService {
     return ['flutter'];
   }
 
+  List<String> get flutterPubCommand {
+    if (config.useFvm) {
+      return ['fvm', 'flutter', 'pub'];
+    }
+
+    return ['flutter', 'pub'];
+  }
+
   List<String> get dartCommand {
     if (config.useFvm) {
       return ['fvm', 'dart'];

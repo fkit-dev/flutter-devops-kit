@@ -4,28 +4,22 @@ import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 import '../utils/command_executor.dart';
 
-class FormatCommand extends Command {
+class WatchCommand extends Command {
   @override
-  String get name => 'format';
+  String get name => 'watch';
 
   @override
-  String get description => 'Format dart files';
+  String get description => 'Run build_runner watch';
 
   @override
   Future<void> run(List<String> args) async {
-    LoggerService.section('Formatting project');
+    LoggerService.section('Watching for file changes');
     final config = await ConfigService.load();
 
     final flutterService = FlutterService(config);
 
     final command = flutterService.dartCommand;
 
-    await CommandExecutor.run(command.first, [...command.skip(1), 'format', 'lib']);
-
-    LoggerService.blank();
-
-    LoggerService.success('Formatting complete.');
-
-    LoggerService.blank();
+    await CommandExecutor.run(command.first, [...command.skip(1), 'run', 'build_runner', 'watch', '--delete-conflicting-outputs']);
   }
 }

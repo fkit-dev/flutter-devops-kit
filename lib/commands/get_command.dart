@@ -1,6 +1,7 @@
 import '../core/command.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
+import '../services/logger_service.dart';
 import '../utils/command_executor.dart';
 
 class GetCommand extends Command {
@@ -12,8 +13,7 @@ class GetCommand extends Command {
 
   @override
   Future<void> run(List<String> args) async {
-    print('\n📦 Fetching dependencies...\n');
-
+    LoggerService.section('Fetching dependencies');
     final config = await ConfigService.load();
 
     final flutterService = FlutterService(config);
@@ -22,6 +22,10 @@ class GetCommand extends Command {
 
     await CommandExecutor.run(command.first, [...command.skip(1), 'pub', 'get']);
 
-    print('\n✅ Dependencies installed.\n');
+    LoggerService.blank();
+
+    LoggerService.success('Dependencies installed.');
+
+    LoggerService.blank();
   }
 }

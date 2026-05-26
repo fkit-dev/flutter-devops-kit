@@ -4,27 +4,27 @@ import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 import '../utils/command_executor.dart';
 
-class FormatCommand extends Command {
+class GenerateCommand extends Command {
   @override
-  String get name => 'format';
+  String get name => 'generate';
 
   @override
-  String get description => 'Format dart files';
+  String get description => 'Run build_runner build';
 
   @override
   Future<void> run(List<String> args) async {
-    LoggerService.section('Formatting project');
+    LoggerService.section('Generating files');
     final config = await ConfigService.load();
 
     final flutterService = FlutterService(config);
 
-    final command = flutterService.dartCommand;
+    final command = flutterService.flutterPubCommand;
 
-    await CommandExecutor.run(command.first, [...command.skip(1), 'format', 'lib']);
+    await CommandExecutor.run(command.first, [...command.skip(1), 'run', 'build_runner', 'build', '--delete-conflicting-outputs']);
 
     LoggerService.blank();
 
-    LoggerService.success('Formatting complete.');
+    LoggerService.success('Generation complete.');
 
     LoggerService.blank();
   }

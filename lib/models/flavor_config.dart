@@ -1,10 +1,13 @@
+import 'firebase_config.dart';
+
 class FlavorConfig {
   final String env;
-  final String firebaseAppId;
 
-  FlavorConfig({required this.env, required this.firebaseAppId});
+  final FirebaseConfig firebase;
+
+  FlavorConfig({required this.env, required this.firebase});
 
   factory FlavorConfig.fromMap(Map<dynamic, dynamic> map) {
-    return FlavorConfig(env: map['env'] ?? '', firebaseAppId: map['firebase_app_id'] ?? '');
+    return FlavorConfig(env: map['env'] ?? '', firebase: FirebaseConfig.fromMap(map['firebase'] ?? {}));
   }
 }

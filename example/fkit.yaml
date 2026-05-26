@@ -1,10 +1,16 @@
-project_name: sample_project
+project_name: scoreloan
 
 tooling:
   use_fvm: false
 
+platforms:
+  android: true
+  ios: true
+  web: true
+
 build:
   debug_info: ./debug-info
+  obfuscate: true
 
 entry:
   main: lib/main.dart
@@ -14,7 +20,36 @@ flavors:
 
   development:
     env: env/development.json
-    firebase_app_id: YOUR_FIREBASE_APP_ID
+
+    firebase:
+      app_distribution_id: YOUR_ANDROID_APP_ID
+
+      options:
+        android: lib/firebase/firebase_options_development.dart
+        ios: lib/firebase/firebase_options_development.dart
+        web: lib/firebase/firebase_options_development.dart
+
+  staging:
+    env: env/staging.json
+
+    firebase:
+      app_distribution_id: YOUR_STAGING_APP_ID
+
+      options:
+        android: lib/firebase/firebase_options_staging.dart
+        ios: lib/firebase/firebase_options_staging.dart
+        web: lib/firebase/firebase_options_staging.dart
+
+  production:
+    env: env/production.json
+
+    firebase:
+      app_distribution_id: YOUR_PRODUCTION_APP_ID
+
+      options:
+        android: lib/firebase/firebase_options_production.dart
+        ios: lib/firebase/firebase_options_production.dart
+        web: lib/firebase/firebase_options_production.dart
 
 firebase:
   tester_group: internal-testers

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import '../services/logger_service.dart';
+
 class CommandExecutor {
   static Future<void> run(String command, List<String> arguments, {bool streamOutput = true}) async {
     try {
@@ -17,7 +19,7 @@ class CommandExecutor {
         throw Exception('❌ Command failed with exit code $exitCode');
       }
     } catch (e) {
-      print(e);
+      LoggerService.error("Error: ${e.toString()}");
       rethrow;
     }
   }
