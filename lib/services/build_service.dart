@@ -43,7 +43,7 @@ class BuildService {
     final flavorConfig = config.flavors[flavor];
 
     if (flavorConfig == null) {
-      throw Exception('❌ Flavor \"$flavor\" not found');
+      throw Exception('❌ Flavor "$flavor" not found');
     }
 
     final flutterService = FlutterService(config);

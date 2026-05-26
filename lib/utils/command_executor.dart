@@ -1,26 +1,29 @@
-import 'dart:async';
 import 'dart:io';
 
 import '../services/logger_service.dart';
 
 class CommandExecutor {
-  static Future<void> run(String command, List<String> arguments, {bool streamOutput = true}) async {
-    try {
-      final process = await Process.start(command, arguments, runInShell: true);
+  static Future<void> run(String command, List<String> arguments) async {
+    final fullCommand = '$command ${arguments.join(' ')}';
 
-      if (streamOutput) {
-        stdout.addStream(process.stdout);
-        stderr.addStream(process.stderr);
-      }
+    LoggerService.command(fullCommand);
 
-      final exitCode = await process.exitCode;
+    LoggerService.progress('Executing command...');
 
-      if (exitCode != 0) {
-        throw Exception('❌ Command failed with exit code $exitCode');
-      }
-    } catch (e) {
-      LoggerService.error("Error: ${e.toString()}");
-      rethrow;
+    final process = await Process.start(command, arguments, runInShell: true);
+
+    stdout.addStream(process.stdout);
+
+    stderr.addStream(process.stderr);
+
+    final exitCode = await process.exitCode;
+
+    if (exitCode != 0) {
+      LoggerService.progressFail('Command failed');
+
+      throw Exception('Command failed: $fullCommand');
     }
+
+    LoggerService.progressComplete('Command completed');
   }
 }
