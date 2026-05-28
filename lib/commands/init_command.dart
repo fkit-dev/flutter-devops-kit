@@ -14,6 +14,40 @@ class InitCommand extends Command {
 
   @override
   Future<void> run(List<String> args) async {
+    final configFile = File('fkit.yaml');
+
+    if (configFile.existsSync()) {
+      LoggerService.warning('Existing FKIT configuration detected.');
+
+      try {
+        final existingContent = await configFile.readAsString();
+
+        final projectMatch = RegExp(r'project_name:\s*(.*)').firstMatch(existingContent);
+
+        final projectName = projectMatch?.group(1)?.trim();
+
+        if (projectName != null && projectName.isNotEmpty) {
+          LoggerService.info('Project: $projectName');
+        }
+      } catch (_) {}
+
+      LoggerService.blank();
+
+      final shouldReplace = PromptService.confirm('Do you want to replace it?');
+
+      if (!shouldReplace) {
+        LoggerService.blank();
+
+        LoggerService.warning('Initialization cancelled.');
+
+        LoggerService.blank();
+
+        return;
+      }
+
+      LoggerService.blank();
+    }
+
     LoggerService.section('FKIT Project Initialization');
 
     final projectName = PromptService.ask('Project name');
@@ -26,11 +60,23 @@ class InitCommand extends Command {
 
     final web = PromptService.confirm('Enable Web?');
 
-    final flavorsInput = PromptService.ask('Flavors (comma separated)');
+    final flavoringEnabled = PromptService.confirm('Does project use flavors?');
 
-    final defaultFlavor = PromptService.ask('Default flavor');
+    late final List<String> flavors;
 
-    final flavors = flavorsInput.split(',').map((e) => e.trim()).toList();
+    late final String defaultFlavor;
+
+    if (flavoringEnabled) {
+      final flavorsInput = PromptService.ask('Flavors (comma separated)');
+
+      flavors = flavorsInput.split(',').map((e) => e.trim()).toList();
+
+      defaultFlavor = PromptService.ask('Default flavor');
+    } else {
+      flavors = ['main'];
+
+      defaultFlavor = 'main';
+    }
 
     final flavorConfigs = <String, Map<String, dynamic>>{};
 
@@ -43,9 +89,19 @@ class InitCommand extends Command {
 
       final appId = PromptService.ask('Firebase App Distribution ID');
 
-      final firebaseOptions = PromptService.ask('Firebase options file');
+      final androidFirebase = PromptService.ask('Android Firebase options path');
 
-      flavorConfigs[flavor] = {'env': env, 'appId': appId, 'firebaseOptions': firebaseOptions};
+      final iosFirebase = PromptService.ask('iOS Firebase options path');
+
+      final webFirebase = PromptService.ask('Web Firebase options path');
+
+      flavorConfigs[flavor] = {
+        'env': env,
+
+        'appId': appId,
+
+        'firebaseOptions': {'android': androidFirebase, 'ios': iosFirebase, 'web': webFirebase},
+      };
     }
 
     final yaml = YamlGenerator.generate(
@@ -54,6 +110,7 @@ class InitCommand extends Command {
       android: android,
       ios: ios,
       web: web,
+      flavoringEnabled: flavoringEnabled,
       defaultFlavor: defaultFlavor,
       flavors: flavorConfigs,
     );

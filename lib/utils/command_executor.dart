@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import '../services/logger_service.dart';
@@ -12,18 +13,32 @@ class CommandExecutor {
 
     final process = await Process.start(command, arguments, runInShell: true);
 
-    stdout.addStream(process.stdout);
+    process.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen((line) {
+      LoggerService.progressComplete();
 
-    stderr.addStream(process.stderr);
+      print(line);
+
+      LoggerService.progress('Executing command...');
+    });
+
+    process.stderr.transform(utf8.decoder).transform(const LineSplitter()).listen((line) {
+      LoggerService.progressFail();
+
+      print(line);
+
+      LoggerService.progress('Executing command...');
+    });
 
     final exitCode = await process.exitCode;
 
+    LoggerService.progressComplete();
+
     if (exitCode != 0) {
-      LoggerService.progressFail('Command failed');
+      LoggerService.error('Command failed');
 
       throw Exception('Command failed: $fullCommand');
     }
 
-    LoggerService.progressComplete('Command completed');
+    LoggerService.success('Command completed');
   }
 }

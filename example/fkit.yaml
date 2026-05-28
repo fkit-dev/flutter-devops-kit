@@ -15,6 +15,9 @@ build:
 entry:
   main: lib/main.dart
 
+flavoring:
+  enabled: true
+
 flavors:
   default: development
 

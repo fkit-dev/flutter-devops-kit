@@ -5,6 +5,7 @@ class YamlGenerator {
     required bool android,
     required bool ios,
     required bool web,
+    required bool flavoringEnabled,
     required String defaultFlavor,
     required Map<String, Map<String, dynamic>> flavors,
   }) {
@@ -37,11 +38,17 @@ class YamlGenerator {
 
     buffer.writeln();
 
+    buffer.writeln('flavoring:');
+    buffer.writeln('  enabled: $flavoringEnabled');
+
+    buffer.writeln();
+
     buffer.writeln('flavors:');
     buffer.writeln('  default: $defaultFlavor');
 
     for (final flavor in flavors.entries) {
       buffer.writeln();
+
       buffer.writeln('  ${flavor.key}:');
 
       buffer.writeln('    env: ${flavor.value['env']}');
@@ -59,26 +66,24 @@ class YamlGenerator {
 
       buffer.writeln('      options:');
 
-      buffer.writeln(
-        '        android: '
-        '${flavor.value['firebaseOptions']}',
-      );
+      final options = flavor.value['firebaseOptions'] as Map<String, dynamic>;
 
-      buffer.writeln(
-        '        ios: '
-        '${flavor.value['firebaseOptions']}',
-      );
+      buffer.writeln('        android: ${options['android']}');
 
-      buffer.writeln(
-        '        web: '
-        '${flavor.value['firebaseOptions']}',
-      );
+      buffer.writeln('        ios: ${options['ios']}');
+
+      buffer.writeln('        web: ${options['web']}');
     }
 
     buffer.writeln();
 
     buffer.writeln('firebase:');
     buffer.writeln('  tester_group: internal-testers');
+
+    buffer.writeln();
+
+    buffer.writeln('generator:');
+    buffer.writeln('  default_template: riverpod_clean');
 
     return buffer.toString();
   }

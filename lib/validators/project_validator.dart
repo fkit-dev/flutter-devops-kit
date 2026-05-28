@@ -4,11 +4,21 @@ import 'file_validator.dart';
 
 class ProjectValidator {
   static void validate(ProjectConfig config) {
+    _validateFlavoring(config);
+
     _validateMainEntry(config);
 
     _validateFlavorEnvFiles(config);
 
     _validateFirebaseOptions(config);
+  }
+
+  static void _validateFlavoring(ProjectConfig config) {
+    if (!config.flavoringEnabled && config.flavors.length > 1) {
+      throw Exception('❌ Flavoring disabled but multiple flavors configured');
+    }
+
+    LoggerService.success('Flavoring validated');
   }
 
   static void _validateMainEntry(ProjectConfig config) {

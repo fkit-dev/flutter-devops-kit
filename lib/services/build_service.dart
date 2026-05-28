@@ -5,6 +5,7 @@ import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../utils/command_executor.dart';
 import '../validators/project_validator.dart';
+import 'artifact_service.dart';
 import 'logger_service.dart';
 
 class BuildService {
@@ -22,8 +23,13 @@ class BuildService {
 
     final command = flutterService.flutterCommand;
 
-    final arguments = <String>[...command.skip(1), 'run', '--dart-define-from-file=${flavorConfig.env}'];
+    final arguments = <String>[...command.skip(1), 'run'];
 
+    if (config.flavoringEnabled) {
+      arguments.addAll(['--flavor', flavor]);
+    }
+
+    arguments.add('--dart-define-from-file=${flavorConfig.env}');
     if (mode == BuildMode.profile) {
       arguments.add('--profile');
     }
@@ -57,7 +63,13 @@ class BuildService {
       BuildPlatform.web => 'web',
     };
 
-    final arguments = <String>[...command.skip(1), 'build', buildType, '--release', '--dart-define-from-file=${flavorConfig.env}'];
+    final arguments = <String>[...command.skip(1), 'build', buildType];
+
+    if (config.flavoringEnabled) {
+      arguments.addAll(['--flavor', flavor]);
+    }
+
+    arguments.addAll(['--release', '--dart-define-from-file=${flavorConfig.env}']);
 
     if (platform != BuildPlatform.web) {
       arguments.add('--obfuscate');
@@ -69,15 +81,9 @@ class BuildService {
 
     await CommandExecutor.run(command.first, arguments);
 
-    final artifactPath = switch (platform) {
-      BuildPlatform.apk => 'build/app/outputs/flutter-apk/app-release.apk',
+    final artifactPath = await ArtifactService.resolve(platform: platform, flavor: flavor);
 
-      BuildPlatform.aab => 'build/app/outputs/bundle/release/app-release.aab',
-
-      BuildPlatform.ipa => 'build/ios/ipa',
-
-      BuildPlatform.web => 'build/web',
-    };
+    LoggerService.success('Artifact generated:');
 
     return BuildResult(artifactPath: artifactPath);
   }

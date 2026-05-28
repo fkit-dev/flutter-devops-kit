@@ -19,6 +19,8 @@ class ConfigCommand extends Command {
 
     LoggerService.info('Main Entry     : ${config.mainEntry}');
 
+    LoggerService.info('Flavoring Enabled : ${config.flavoringEnabled}');
+
     LoggerService.info('Default Flavor : ${config.defaultFlavor}');
 
     LoggerService.info('Tester Group   : ${config.testerGroup}');

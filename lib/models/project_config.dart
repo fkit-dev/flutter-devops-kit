@@ -11,6 +11,7 @@ class ProjectConfig {
   final PlatformConfig platforms;
   final Map<String, FlavorConfig> flavors;
   final String defaultTemplate;
+  final bool flavoringEnabled;
 
   ProjectConfig({
     required this.useFvm,
@@ -22,6 +23,7 @@ class ProjectConfig {
     required this.platforms,
     required this.flavors,
     required this.defaultTemplate,
+    required this.flavoringEnabled,
   });
 
   factory ProjectConfig.fromMap(Map<dynamic, dynamic> map) {
@@ -32,6 +34,7 @@ class ProjectConfig {
     final flavorsMap = map['flavors'] ?? {};
     final flavors = <String, FlavorConfig>{};
     final generator = map['generator'] ?? {};
+    final flavoring = map['flavoring'] ?? {};
     for (final item in flavorsMap.entries) {
       if (item.key == 'default') continue;
       flavors[item.key] = FlavorConfig.fromMap(item.value);
@@ -47,6 +50,7 @@ class ProjectConfig {
       platforms: PlatformConfig.fromMap(map['platforms'] ?? {}),
       flavors: flavors,
       defaultTemplate: generator['default_template'] ?? 'default',
+      flavoringEnabled: flavoring['enabled'] ?? false,
     );
   }
 }
