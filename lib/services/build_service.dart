@@ -9,7 +9,7 @@ import 'artifact_service.dart';
 import 'logger_service.dart';
 
 class BuildService {
-  Future<void> run({required String flavor, BuildMode mode = BuildMode.debug}) async {
+  Future<void> run({required BuildPlatform platform, required String flavor, BuildMode mode = BuildMode.debug}) async {
     final config = await ConfigService.load();
     ProjectValidator.validate(config);
 
@@ -25,7 +25,7 @@ class BuildService {
 
     final arguments = <String>[...command.skip(1), 'run'];
 
-    if (config.flavoringEnabled) {
+    if (config.flavoringEnabled && platform != BuildPlatform.web) {
       arguments.addAll(['--flavor', flavor]);
     }
 
@@ -65,7 +65,7 @@ class BuildService {
 
     final arguments = <String>[...command.skip(1), 'build', buildType];
 
-    if (config.flavoringEnabled) {
+    if (config.flavoringEnabled && platform != BuildPlatform.web) {
       arguments.addAll(['--flavor', flavor]);
     }
 
