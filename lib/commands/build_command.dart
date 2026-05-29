@@ -3,6 +3,7 @@ import 'package:args/args.dart';
 import '../core/base_arg_command.dart';
 import '../models/build_platform.dart';
 import '../services/build_service.dart';
+import '../services/config_service.dart';
 import '../services/logger_service.dart';
 
 class BuildCommand extends BaseArgCommand {
@@ -19,30 +20,27 @@ class BuildCommand extends BaseArgCommand {
 
   @override
   Future<void> execute(ArgResults results) async {
-    if (results.rest.length < 2) {
-      LoggerService.error('Usage: fkit build <apk|aab|ipa|web> <flavor>');
-
+    if (results.rest.isEmpty) {
+      LoggerService.error('Usage: fkit build <apk|aab|ipa|web> [flavor]');
       return;
     }
 
-    final platformArg = results.rest[0];
-
-    final flavor = results.rest[1];
-
+    final config = await ConfigService.load();
+    final platformArg = results.rest.first;
+    final flavor = results.rest.length > 1 ? results.rest[1] : config.defaultFlavor;
     final platform = switch (platformArg) {
       'apk' => BuildPlatform.apk,
-
       'aab' => BuildPlatform.aab,
-
       'ipa' => BuildPlatform.ipa,
-
       'web' => BuildPlatform.web,
 
       _ => throw Exception('Unsupported build platform'),
     };
 
-    final buildService = BuildService();
+    LoggerService.info('Platform : $platformArg');
+    LoggerService.info('Flavor   : $flavor');
 
+    final buildService = BuildService();
     await buildService.build(platform: platform, flavor: flavor);
   }
 }
