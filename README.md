@@ -206,12 +206,13 @@ firebase:
 
 Detailed documentation:
 
-* `docs/configuration.md`
-* `docs/commands.md`
-* `docs/firebase.md`
-* `docs/signing.md`
-* `docs/feature-scaffolding.md`
-* `docs/roadmap.md`
+* `doc/configuration.md`
+* `doc/commands.md`
+* `doc/firebase.md`
+* `dos/installation.md`
+* `dos/signing.md`
+* `doc/feature-scaffolding.md`
+* `dos/roadmap.md`
 
 ---
 
