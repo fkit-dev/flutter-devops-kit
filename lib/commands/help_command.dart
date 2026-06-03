@@ -12,41 +12,111 @@ class HelpCommand extends Command {
   Future<void> run(List<String> args) async {
     LoggerService.section('Flutter DevOps Kit');
 
-    LoggerService.info('Available Commands:');
+    LoggerService.info('Project Commands');
 
     LoggerService.blank();
 
-    LoggerService.info('help                    Show available commands');
+    LoggerService.info('init                     Initialize FKIT config');
 
-    LoggerService.info('doctor                  Validate environment');
+    LoggerService.info('config                   Print loaded config');
 
-    LoggerService.info('config                  Print loaded config');
+    LoggerService.info('validate                 Validate project setup');
 
-    LoggerService.info('clean                   Clean flutter project');
+    LoggerService.blank();
 
-    LoggerService.info('get                     Fetch dependencies');
+    LoggerService.info('Environment Commands');
 
-    LoggerService.info('fix                     Apply dart fixes');
+    LoggerService.blank();
 
-    LoggerService.info('analyze                 Analyze project');
+    LoggerService.info('doctor                   Validate environment');
 
-    LoggerService.info('format                  Format dart files');
+    LoggerService.info('signing setup            Setup Android signing');
 
-    LoggerService.info('generate                Generate build_runner files');
+    LoggerService.info('signing doctor           Validate Android signing');
 
-    LoggerService.info('watch                   Watch build_runner changes');
+    LoggerService.blank();
 
-    LoggerService.info('run <flavor>            Run app');
+    LoggerService.info('Dependency Commands');
 
-    LoggerService.info('build apk <flavor>      Build APK');
+    LoggerService.blank();
 
-    LoggerService.info('build aab <flavor>      Build AAB');
+    LoggerService.info('clean                    Clean flutter project');
 
-    LoggerService.info('build ipa <flavor>      Build IPA');
+    LoggerService.info('get                      Fetch dependencies');
 
-    LoggerService.info('build web <flavor>      Build Web');
+    LoggerService.info('fix                      Apply dart fixes');
 
-    LoggerService.info('firebase <flavor>       Upload APK to Firebase');
+    LoggerService.info('analyze                  Analyze project');
+
+    LoggerService.info('format                   Format dart files');
+
+    LoggerService.blank();
+
+    LoggerService.info('Code Generation');
+
+    LoggerService.blank();
+
+    LoggerService.info('generate                 Generate build_runner files');
+
+    LoggerService.info('watch                    Watch build_runner changes');
+
+    LoggerService.blank();
+
+    LoggerService.info('Run Commands');
+
+    LoggerService.blank();
+
+    LoggerService.info('run [flavor]             Run app');
+
+    LoggerService.info('run production -p        Run in profile mode');
+
+    LoggerService.info('run production -r        Run in release mode');
+
+    LoggerService.info('run production -t web    Run on web');
+
+    LoggerService.blank();
+
+    LoggerService.info('Build Commands');
+
+    LoggerService.blank();
+
+    LoggerService.info('build apk [flavor]       Build APK');
+
+    LoggerService.info('build aab [flavor]       Build AAB');
+
+    LoggerService.info('build ipa [flavor]       Build IPA');
+
+    LoggerService.info('build web [flavor]       Build Web');
+
+    LoggerService.blank();
+
+    LoggerService.info('Distribution Commands');
+
+    LoggerService.blank();
+
+    LoggerService.info('firebase [flavor]        Upload APK to Firebase');
+
+    LoggerService.blank();
+
+    LoggerService.info('Feature Commands');
+
+    LoggerService.blank();
+
+    LoggerService.info('feat <name>              Create feature module');
+
+    LoggerService.blank();
+
+    LoggerService.info('Examples');
+
+    LoggerService.blank();
+
+    LoggerService.info('fkit build apk production');
+
+    LoggerService.info('fkit build web');
+
+    LoggerService.info('fkit firebase production');
+
+    LoggerService.info('fkit signing setup');
 
     LoggerService.blank();
   }

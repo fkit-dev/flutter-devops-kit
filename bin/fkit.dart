@@ -12,6 +12,7 @@ import 'package:flutter_devops_kit/commands/get_command.dart';
 import 'package:flutter_devops_kit/commands/help_command.dart';
 import 'package:flutter_devops_kit/commands/init_command.dart';
 import 'package:flutter_devops_kit/commands/run_command.dart';
+import 'package:flutter_devops_kit/commands/signing_command.dart';
 import 'package:flutter_devops_kit/commands/validate_command.dart';
 import 'package:flutter_devops_kit/commands/watch_command.dart';
 
@@ -33,6 +34,7 @@ Future<void> main(List<String> args) async {
     'generate': GenerateCommand(),
     'watch': WatchCommand(),
     'validate': ValidateCommand(),
+    'signing': SigningCommand(),
   };
 
   if (args.isEmpty) {
