@@ -1,12 +1,30 @@
 name: flutter_devops_kit
-description: A sample command-line application.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+
+description: >
+  A powerful Flutter DevOps CLI toolkit for build automation,
+  Firebase distribution, Android signing setup,
+  feature scaffolding, and project workflows.
+
+version: 0.1.0
+
+homepage: https://github.com/TejasD36/flutter-devops-kit
+
+repository: https://github.com/TejasD36/flutter-devops-kit
+
+issue_tracker: https://github.com/TejasD36/flutter-devops-kit/issues
+
+documentation: https://github.com/TejasD36/flutter-devops-kit#readme
+
+topics:
+  - flutter
+  - cli
+  - automation
+  - devops
+  - firebase
 
 environment:
-  sdk: ^3.10.8
+  sdk: ">=3.0.0 <4.0.0"
 
-# Add regular dependencies here.
 dependencies:
   args: ^2.7.0
   mason_logger: ^0.3.5

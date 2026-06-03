@@ -1,6 +1,6 @@
 # Flutter DevOps Kit (FKIT)
 
-A scalable Flutter DevOps CLI for build automation, flavor management, Firebase distribution, and reusable engineering workflows.
+A scalable Flutter DevOps CLI toolkit for build automation, Firebase distribution, Android signing setup, feature scaffolding, and reusable engineering workflows.
 
 ---
 
@@ -10,17 +10,16 @@ Flutter DevOps Kit (`fkit`) is a reusable command-line automation toolkit built 
 
 It helps automate:
 
-* Flutter cleanup & setup
-* Dependency management
-* Code formatting & analysis
+* Flutter project setup
 * Flavor-based builds
 * Firebase App Distribution
-* iOS & Android workflows
+* Android signing configuration
+* Code generation workflows
 * Feature scaffolding
-* Project tooling
-* Future CI/CD workflows
+* Flutter/Dart tooling
+* Multi-project DevOps workflows
 
-The CLI is globally installed once and configured per project using `fkit.yaml`.
+FKIT is installed globally once and configured per project using `fkit.yaml`.
 
 ---
 
@@ -31,65 +30,51 @@ The CLI is globally installed once and configured per project using `fkit.yaml`.
 * Global CLI installation
 * Project-based YAML configuration
 * Flutter & Dart command automation
+* APK / AAB / IPA / Web builds
+* Firebase App Distribution
+* Android signing setup
 * Environment diagnostics
-* Dynamic flavor support
+* Flavor-aware workflows
 * FVM support
-* Code quality commands
-* Config-driven architecture
+* Feature scaffolding
+* Code quality automation
+* Interactive project initialization
+* Config validation
 
 ## Planned Features
 
-* APK/AAB/IPA builds
-* Firebase App Distribution
-* Feature scaffolding
 * Fastlane integration
 * Play Store deployment
 * App Store deployment
-* Release automation
+* Web deployment automation
+* Release pipelines
 * Git tagging
 * Changelog generation
 * CI/CD templates
+* Slack / Discord notifications
 
 ---
 
 # Installation
 
-## 1. Clone Repository
+## Install Globally
 
 ```bash
-git clone https://github.com/TejasD36/flutter-devops-kit.git
+dart pub global activate flutter_devops_kit
 ```
 
 ---
 
-## 2. Navigate to Project
+## Add Dart Global Bin to PATH
 
-```bash
-cd flutter_devops_kit
-```
-
----
-
-## 3. Activate CLI Globally
-
-```bash
-dart pub global activate --source path .
-```
-
----
-
-## 4. Add Dart Global Bin to PATH (macOS/Linux)
-
-Add this to your shell config:
-
-### ZSH
+### macOS / Linux (ZSH)
 
 ```bash
 echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-### Bash
+### macOS / Linux (Bash)
 
 ```bash
 echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.bashrc
@@ -98,40 +83,151 @@ source ~/.bashrc
 
 ---
 
-## 5. Verify Installation
+## Verify Installation
 
 ```bash
 fkit help
 ```
 
-Expected output:
-
-```bash
-Flutter DevOps Kit
-
-Available Commands:
-help
-doctor
-clean
-get
-fix
-analyze
-format
-```
-
 ---
 
-# Project Configuration
+# Quick Start
 
-Each Flutter project using `fkit` must contain:
+## 1. Initialize FKIT
+
+Run inside your Flutter project:
+
+```bash
+fkit init
+```
+
+This generates:
 
 ```bash
 fkit.yaml
 ```
 
-inside the project root.
+---
 
-Example:
+## 2. Validate Environment
+
+```bash
+fkit doctor
+```
+
+---
+
+## 3. Build APK
+
+```bash
+fkit build apk production
+```
+
+---
+
+## 4. Upload to Firebase
+
+```bash
+fkit firebase production
+```
+
+---
+
+# Example `fkit.yaml`
+
+```yaml
+project_name: sample_project
+
+tooling:
+  use_fvm: false
+
+platforms:
+  android: true
+  ios: true
+  web: true
+
+build:
+  debug_info: ./debug-info
+  obfuscate: true
+
+entry:
+  main: lib/main.dart
+
+flavoring:
+  enabled: true
+
+flavors:
+  default: production
+
+  development:
+    env: env/development.json
+
+    firebase:
+      app_distribution_id: YOUR_DEV_APP_ID
+
+      options:
+        android: lib/firebase_options_development.dart
+        ios: lib/firebase_options_development.dart
+        web: lib/firebase_options_development.dart
+
+  production:
+    env: env/production.json
+
+    firebase:
+      app_distribution_id: YOUR_PROD_APP_ID
+
+      options:
+        android: lib/firebase_options_production.dart
+        ios: lib/firebase_options_production.dart
+        web: lib/firebase_options_production.dart
+
+firebase:
+  tester_group: internal-testers
+```
+
+---
+
+# Core Commands
+
+| Command                     | Description              |
+| --------------------------- | ------------------------ |
+| `fkit help`                 | Show available commands  |
+| `fkit doctor`               | Validate environment     |
+| `fkit init`                 | Initialize FKIT config   |
+| `fkit build apk production` | Build APK                |
+| `fkit build web`            | Build web app            |
+| `fkit firebase production`  | Upload build to Firebase |
+| `fkit signing setup`        | Setup Android signing    |
+| `fkit feat auth`            | Generate feature module  |
+
+---
+
+# Documentation
+
+Detailed documentation:
+
+* `docs/configuration.md`
+* `docs/commands.md`
+* `docs/firebase.md`
+* `docs/signing.md`
+* `docs/feature-scaffolding.md`
+* `docs/roadmap.md`
+
+---
+
+# Architecture
+
+FKIT follows:
+
+* Config-driven architecture
+* Reusable global tooling
+* Multi-project support
+* Flavor-aware workflows
+* Future CI/CD scalability
+
+---
+
+# Recommended Project Structure
 
 ```bash
 my_flutter_project/
@@ -145,243 +241,15 @@ my_flutter_project/
 
 ---
 
-# Example `fkit.yaml`
-
-```yaml
-project_name: sample_project
-
-tooling:
-  use_fvm: false
-
-build:
-  debug_info: ./debug-info
-  obfuscate: true
-
-entry:
-  main: lib/main.dart
-
-flavors:
-  default: development
-
-  development:
-    env: env/development.json
-    firebase_app_id: YOUR_DEV_FIREBASE_APP_ID
-
-  staging:
-    env: env/staging.json
-    firebase_app_id: YOUR_STAGING_FIREBASE_APP_ID
-
-  production:
-    env: env/production.json
-    firebase_app_id: YOUR_PRODUCTION_FIREBASE_APP_ID
-
-firebase:
-  tester_group: internal-testers
-```
-
----
-
-# Usage
-
-Run all commands from inside your Flutter project.
-
-Example:
-
-```bash
-cd my_flutter_project
-fkit clean
-```
-
----
-
-# Available Commands
-
-## Help
-
-```bash
-fkit help
-```
-
-Displays all available commands.
-
----
-
-## Doctor
-
-```bash
-fkit doctor
-```
-
-Checks required tools:
-
-* Flutter
-* Dart
-* Firebase CLI
-* CocoaPods
-* Java
-* Git
-
----
-
-## Clean Flutter Project
-
-```bash
-fkit clean
-```
-
-Equivalent to:
-
-```bash
-flutter clean
-```
-
-Automatically respects FVM configuration.
-
----
-
-## Get Dependencies
-
-```bash
-fkit get
-```
-
-Equivalent to:
-
-```bash
-flutter pub get
-```
-
----
-
-## Apply Dart Fixes
-
-```bash
-fkit fix
-```
-
-Equivalent to:
-
-```bash
-dart fix --apply
-```
-
----
-
-## Analyze Project
-
-```bash
-fkit analyze
-```
-
-Equivalent to:
-
-```bash
-dart analyze lib
-```
-
----
-
-## Format Project
-
-```bash
-fkit format
-```
-
-Equivalent to:
-
-```bash
-dart format lib
-```
-
----
-
-# FVM Support
-
-Enable FVM inside:
-
-```yaml
-fkit.yaml
-```
-
-```yaml
-tooling:
-  use_fvm: true
-```
-
-Then commands automatically use:
-
-```bash
-fvm flutter
-fvm dart
-```
-
-instead of:
-
-```bash
-flutter
-dart
-```
-
----
-
-# Architecture
-
-## Global CLI
-
-Installed once globally:
-
-```bash
-fkit
-```
-
----
-
-## Per-Project Config
-
-Each project contains:
-
-```bash
-fkit.yaml
-```
-
-This allows the same CLI to work across multiple projects with different:
-
-* Flavors
-* Firebase configs
-* FVM settings
-* Build setups
-* Environment files
-
----
-
-# Recommended Project Structure
-
-```bash
-my_flutter_project/
-├── android/
-├── ios/
-├── lib/
-├── env/
-│   ├── development.json
-│   ├── staging.json
-│   └── production.json
-├── fkit.yaml
-└── pubspec.yaml
-```
-
----
-
 # Development
 
-## Run CLI Locally
+Run locally:
 
 ```bash
 dart run bin/fkit.dart help
 ```
 
----
-
-## Re-Activate Global CLI After Changes
+Re-activate global CLI after changes:
 
 ```bash
 dart pub global activate --source path .
@@ -389,71 +257,17 @@ dart pub global activate --source path .
 
 ---
 
-# Planned Command Roadmap
-
-## General
-
-```bash
-fkit reset
-fkit prepare
-fkit watch
-fkit build-runner
-```
-
-## Build System
-
-```bash
-fkit run development
-fkit build apk development
-fkit build aab production
-fkit build ipa staging
-```
-
-## Firebase Distribution
-
-```bash
-fkit firebase development
-fkit firebase production --notes="QA build"
-```
-
-## Feature Scaffolding
-
-```bash
-fkit feat auth
-```
-
-## Release Automation
-
-```bash
-fkit release production
-```
-
----
-
-# Design Principles
-
-* Config-driven architecture
-* No project-specific hardcoding
-* Reusable global tooling
-* Flavor-aware workflows
-* Scalable command system
-* Future CI/CD compatibility
-* FVM compatibility
-
----
-
 # Contributing
 
-Contributions, improvements, and automation ideas are welcome.
+Contributions and automation ideas are welcome.
 
-Potential contribution areas:
+Areas of contribution:
 
 * Build automation
+* Deployment workflows
 * CI/CD templates
-* Store deployment
-* Fastlane integration
 * Feature generators
-* Documentation improvements
+* Documentation
 * Testing
 
 ---
