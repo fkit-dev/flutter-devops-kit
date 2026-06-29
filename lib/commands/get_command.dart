@@ -1,26 +1,38 @@
 import '../core/command.dart';
+import '../core/command_category.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
-import '../utils/command_executor.dart';
 
 class GetCommand extends Command {
   @override
   String get name => 'get';
 
   @override
-  String get description => 'Run flutter pub get';
+  String get description => 'Fetch Flutter dependencies';
+
+  @override
+  CommandCategory get category => CommandCategory.development;
+
+  @override
+  String get usage => 'fkit get';
+
+  @override
+  List<String> get examples => const ['fkit get'];
+
+  @override
+  bool get requiresConfig => true;
+
+  @override
+  bool get requiresFlutterProject => true;
 
   @override
   Future<void> run(List<String> args) async {
     LoggerService.section('Fetching dependencies');
+
     final config = await ConfigService.load();
 
-    final flutterService = FlutterService(config);
-
-    final command = flutterService.flutterCommand;
-
-    await CommandExecutor.run(command.first, [...command.skip(1), 'pub', 'get']);
+    await FlutterService(config).pubGet();
 
     LoggerService.blank();
 

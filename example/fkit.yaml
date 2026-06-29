@@ -1,3 +1,6 @@
+fkit:
+  version: 0.1.0
+
 project_name: scoreloan
 
 tooling:
@@ -56,3 +59,21 @@ flavors:
 
 firebase:
   tester_group: internal-testers
+
+localization:
+  enabled: true
+
+  arb_dir: lib/l10n
+
+  template: app_en.arb
+
+  output_dir: lib/gen/l10n
+
+  output_file: app_localizations.dart
+
+  default_locale: en
+
+  locales:
+    - en
+    - mr
+    - hi

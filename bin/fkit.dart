@@ -3,6 +3,7 @@ import 'package:flutter_devops_kit/commands/build_command.dart';
 import 'package:flutter_devops_kit/commands/clean_command.dart';
 import 'package:flutter_devops_kit/commands/config_command.dart';
 import 'package:flutter_devops_kit/commands/doctor_command.dart';
+import 'package:flutter_devops_kit/commands/extension_command.dart';
 import 'package:flutter_devops_kit/commands/feature_command.dart';
 import 'package:flutter_devops_kit/commands/firebase_command.dart';
 import 'package:flutter_devops_kit/commands/fix_command.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_devops_kit/commands/generate_command.dart';
 import 'package:flutter_devops_kit/commands/get_command.dart';
 import 'package:flutter_devops_kit/commands/help_command.dart';
 import 'package:flutter_devops_kit/commands/init_command.dart';
+import 'package:flutter_devops_kit/commands/localization_command.dart';
 import 'package:flutter_devops_kit/commands/run_command.dart';
 import 'package:flutter_devops_kit/commands/signing_command.dart';
 import 'package:flutter_devops_kit/commands/validate_command.dart';
@@ -24,6 +26,7 @@ Future<void> main(List<String> args) async {
     'doctor': DoctorCommand(),
     'clean': CleanCommand(),
     'config': ConfigCommand(),
+    'l10n': LocalizationCommand(),
     'get': GetCommand(),
     'fix': FixCommand(),
     'analyze': AnalyzeCommand(),
@@ -35,6 +38,7 @@ Future<void> main(List<String> args) async {
     'watch': WatchCommand(),
     'validate': ValidateCommand(),
     'signing': SigningCommand(),
+    'extension': ExtensionCommand(),
   };
 
   if (args.isEmpty) {

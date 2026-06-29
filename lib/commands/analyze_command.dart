@@ -1,8 +1,8 @@
 import '../core/command.dart';
+import '../core/command_category.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
-import '../utils/command_executor.dart';
 
 class AnalyzeCommand extends Command {
   @override
@@ -12,15 +12,29 @@ class AnalyzeCommand extends Command {
   String get description => 'Analyze Flutter project';
 
   @override
+  CommandCategory get category => CommandCategory.dependency;
+
+  @override
+  String get usage => 'fkit analyze';
+
+  @override
+  List<String> get examples => const [
+        'fkit analyze',
+      ];
+
+  @override
+  bool get requiresConfig => true;
+
+  @override
+  bool get requiresFlutterProject => true;
+
+  @override
   Future<void> run(List<String> args) async {
     LoggerService.section('Analyzing project');
+
     final config = await ConfigService.load();
 
-    final flutterService = FlutterService(config);
-
-    final command = flutterService.dartCommand;
-
-    await CommandExecutor.run(command.first, [...command.skip(1), 'analyze', 'lib']);
+    await FlutterService(config).analyze();
 
     LoggerService.blank();
 

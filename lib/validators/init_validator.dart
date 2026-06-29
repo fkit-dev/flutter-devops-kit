@@ -1,9 +1,10 @@
-import '../models/project_config.dart';
+import '../models/init_config.dart';
 import '../services/logger_service.dart';
+import '../utils/platform_utils.dart';
 import 'file_validator.dart';
 
-class ProjectValidator {
-  static void validate(ProjectConfig config) {
+class InitValidator {
+  static void validate(InitConfig config) {
     _validateFlavoring(config);
 
     _validateMainEntry(config);
@@ -13,7 +14,7 @@ class ProjectValidator {
     _validateFirebaseOptions(config);
   }
 
-  static void _validateFlavoring(ProjectConfig config) {
+  static void _validateFlavoring(InitConfig config) {
     if (!config.flavoringEnabled && config.flavors.length > 1) {
       throw Exception('❌ Flavoring disabled but multiple flavors configured');
     }
@@ -21,7 +22,7 @@ class ProjectValidator {
     LoggerService.success('Flavoring validated');
   }
 
-  static void _validateMainEntry(ProjectConfig config) {
+  static void _validateMainEntry(InitConfig config) {
     if (!FileValidator.exists(config.mainEntry)) {
       throw Exception(
         '❌ Main entry not found: '
@@ -32,7 +33,7 @@ class ProjectValidator {
     LoggerService.success('Main entry validated');
   }
 
-  static void _validateFlavorEnvFiles(ProjectConfig config) {
+  static void _validateFlavorEnvFiles(InitConfig config) {
     for (final flavor in config.flavors.entries) {
       final envFile = flavor.value.env;
 
@@ -47,22 +48,32 @@ class ProjectValidator {
     }
   }
 
-  static void _validateFirebaseOptions(ProjectConfig config) {
+  static void _validateFirebaseOptions(
+    InitConfig config,
+  ) {
     for (final flavor in config.flavors.entries) {
-      final firebaseOptions = flavor.value.firebase.options;
+      for (final entry in flavor.value.firebase.entries()) {
+        if (!PlatformUtils.isEnabled(
+          config,
+          entry.name,
+        )) {
+          continue;
+        }
 
-      for (final option in firebaseOptions.entries) {
-        if (!FileValidator.exists(option.value)) {
+        if (entry.platform.options.isEmpty) {
+          continue;
+        }
+
+        if (!FileValidator.exists(entry.platform.options)) {
           throw Exception(
-            '❌ Firebase options missing: '
-            '${option.value}',
+            '❌ ${entry.name} Firebase options missing: '
+            '${entry.platform.options}',
           );
         }
       }
 
       LoggerService.success(
-        'Firebase validated: '
-        '${flavor.key}',
+        'Firebase validated: ${flavor.key}',
       );
     }
   }

@@ -8,13 +8,13 @@ class SigningService {
   Future<void> setup() async {
     LoggerService.section('Android Signing Setup');
 
-    final alias = PromptService.ask('Keystore alias');
+    final alias = PromptService.ask('Keystore alias', defaultValue: 'fkit.jks');
 
-    final storePassword = PromptService.ask('Store password');
+    final storePassword = PromptService.ask('Store password', defaultValue: 'Fkit@1215');
 
-    final keyPassword = PromptService.ask('Key password');
+    final keyPassword = PromptService.ask('Key password', defaultValue: 'Fkit@1215');
 
-    final company = PromptService.ask('Company/Organization');
+    final company = PromptService.ask('Company/Organization', defaultValue: 'Fkit');
 
     final keystoreName = '$alias-keystore.jks';
 
@@ -61,8 +61,7 @@ class SigningService {
 
     LoggerService.success('Keystore generated');
 
-    final keyProperties =
-        '''
+    final keyProperties = '''
 storePassword=$storePassword
 keyPassword=$keyPassword
 keyAlias=$alias
