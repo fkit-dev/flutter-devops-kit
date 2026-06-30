@@ -73,8 +73,8 @@ class NamingService {
   }
 
   String _className(String base, String suffix) => '$base$suffix';
-  late final String screen = _className(featurePascal, 'Screen');
-  late final String screenFile = '${featureSnake}_screen.dart';
+  late final String screen = _className(resourcePascal, 'Screen');
+  late final String screenFile = '${resourceSnake}_screen.dart';
   late final String di = _className(featurePascal, 'Di');
   late final String diFile = '${featureSnake}_di.dart';
   late final String xcoreFile = 'xcore.dart';

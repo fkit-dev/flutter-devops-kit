@@ -1,5 +1,6 @@
 import 'template_component.dart';
 import 'template_feature.dart';
+import 'template_group.dart';
 
 class TemplateDefinition {
   const TemplateDefinition({
@@ -23,7 +24,7 @@ class TemplateDefinition {
   final List<String> supports;
 
   final TemplateFeature feature;
-  final Map<String, List<String>> groups;
+  final Map<String, TemplateGroup> groups;
   final Map<String, TemplateComponent> components;
 
   factory TemplateDefinition.fromMap(Map<dynamic, dynamic> map) {
@@ -38,7 +39,7 @@ class TemplateDefinition {
       author: map['author'] as String,
       supports: List<String>.from(map['supports'] ?? const []),
       feature: TemplateFeature.fromMap(Map<dynamic, dynamic>.from(map['feature'])),
-      groups: groupMap.map((key, value) => MapEntry(key.toString(), List<String>.from(value))),
+      groups: groupMap.map((key, value) => MapEntry(key.toString(), TemplateGroup.fromMap(Map<dynamic, dynamic>.from(value)))),
       components: componentMap.map(
         (key, value) => MapEntry(
           key.toString(),

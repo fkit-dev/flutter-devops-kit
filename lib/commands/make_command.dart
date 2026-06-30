@@ -60,7 +60,7 @@ class MakeCommand extends Command {
     if (template.components.containsKey(target)) {
       await generator.generate(context: context, component: target);
     } else if (template.groups.containsKey(target)) {
-      for (final item in template.groups[target]!) {
+      for (final item in template.groups[target]!.components) {
         await generator.generate(context: context, component: item);
       }
     } else {
@@ -69,17 +69,20 @@ class MakeCommand extends Command {
       LoggerService.blank();
 
       LoggerService.info('Supported components:');
+      LoggerService.blank();
 
-      for (final item in template.components.keys) {
-        LoggerService.info('  • $item');
+      for (final entry in template.components.entries) {
+        LoggerService.info('${entry.key.padRight(25)}${entry.value.description}');
       }
 
       LoggerService.blank();
 
+      LoggerService.blank();
       LoggerService.info('Supported groups:');
+      LoggerService.blank();
 
-      for (final group in template.groups.keys) {
-        LoggerService.info('  • $group');
+      for (final entry in template.groups.entries) {
+        LoggerService.info('${entry.key.padRight(25)}${entry.value.description}');
       }
 
       return;

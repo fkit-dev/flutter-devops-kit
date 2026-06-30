@@ -8,6 +8,16 @@ version: 1.0.0
 
 author: FKIT
 
+documentation:
+  overview: >
+    Feature-first Clean Architecture using flutter_bloc.
+    Uses Freezed, json_serializable and build_runner.
+
+  notes:
+    - Feature generation creates a complete feature module.
+    - DTO and Entity use Freezed.
+    - Run "fkit make resource auth Login" to generate resource files.
+
 supports:
   - feature
   - bloc
@@ -109,75 +119,96 @@ feature:
 
 components:
   entity:
+    description: Domain entity
     template: domain/entity.dart.tpl
     output: domain/entities/{{entityFile}}
 
   dto:
+    description: API request/response model
     template: data/dto.dart.tpl
     output: data/models/dtos/{{dtoFile}}
 
   mapper:
+    description: Converts DTO ↔ Entity
     template: data/mapper.dart.tpl
     output: data/models/mappers/{{mapperFile}}
 
   usecase:
+    description: Usecases
     template: domain/usecase.dart.tpl
     output: domain/usecases/{{usecaseFile}}
 
   bloc:
+    description: Bloc responsible for emit state
     template: bloc/bloc.dart.tpl
     output: presentation/bloc/{{blocFile}}
 
   state:
+    description: Bloc state
     template: bloc/state.dart.tpl
     output: presentation/bloc/{{stateFile}}
 
   event:
+    description: Bloc event
     template: bloc/event.dart.tpl
     output: presentation/bloc/{{eventFile}}
 
   repository:
+    description: Repository contract
     template: domain/repository.dart.tpl
     output: domain/repositories/{{repositoryFile}}
 
   repository_impl:
+    description: Repository implementation
     template: data/repository_impl.dart.tpl
     output: data/repositories/{{repositoryImplFile}}
 
   remote_datasource:
+    description: Remote Datasource contract
     template: data/remote_datasource.dart.tpl
     output: data/datasources/remote/{{remoteDatasourceFile}}
 
   remote_datasource_impl:
+    description: Remote Datasource implementation
     template: data/remote_datasource_impl.dart.tpl
     output: data/datasources/remote/{{remoteDatasourceImplFile}}
 
   local_datasource:
+    description: Local Datasource contract
     template: data/local_datasource.dart.tpl
     output: data/datasources/local/{{localDatasourceFile}}
 
   local_datasource_impl:
+    description: Local Datasource implementation
     template: data/local_datasource_impl.dart.tpl
     output: data/datasources/local/{{localDatasourceImplFile}}
 
   screen:
+    description: Screens to arrange and show UI
     template: presentation/screen.dart.tpl
     output: presentation/screens/{{screenFile}}
 
 groups:
+
   resource:
-    - entity
-    - dto
-    - mapper
-    - usecase
+    description: Generate all domain resource files.
+    components:
+      - entity
+      - dto
+      - mapper
+      - usecase
 
   bloc:
-    - bloc
-    - event
-    - state
+    description: Generate BLoC files.
+    components:
+      - bloc
+      - event
+      - state
 
   datasource:
-    - local_datasource
-    - local_datasource_impl
-    - remote_datasource
-    - remote_datasource_impl
+    description: Generate local and remote datasource files.
+    components:
+      - local_datasource
+      - local_datasource_impl
+      - remote_datasource
+      - remote_datasource_impl
