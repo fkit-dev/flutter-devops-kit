@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../generators/arb_generator.dart';
-import '../generators/l10n_yaml_generator.dart';
+import '../generators/localization/arb_generator.dart';
+import '../generators/localization/l10n_yaml_generator.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';

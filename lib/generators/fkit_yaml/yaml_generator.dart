@@ -1,13 +1,13 @@
-import '../models/init_config.dart';
-import 'sections/build_section.dart';
-import 'sections/entry_section.dart';
-import 'sections/firebase_section.dart';
-import 'sections/flavor_section.dart';
-import 'sections/generator_config_section.dart';
-import 'sections/localization_section.dart';
-import 'sections/platform_section.dart';
-import 'sections/project_section.dart';
-import 'sections/tooling_section.dart';
+import '../../models/init_config.dart';
+import 'build_section.dart';
+import 'entry_section.dart';
+import 'firebase_section.dart';
+import 'flavor_section.dart';
+import 'generator_config_section.dart';
+import 'localization_section.dart';
+import 'platform_section.dart';
+import 'project_section.dart';
+import 'tooling_section.dart';
 
 class YamlGenerator {
   static final _sections = [

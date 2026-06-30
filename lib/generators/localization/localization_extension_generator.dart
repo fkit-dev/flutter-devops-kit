@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../models/init_config.dart';
-import '../services/logger_service.dart';
+import '../../models/init_config.dart';
+import '../../services/logger_service.dart';
 
 class LocalizationExtensionGenerator {
   static Future<void> generate(

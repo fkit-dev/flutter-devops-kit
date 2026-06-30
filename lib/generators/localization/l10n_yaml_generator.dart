@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../models/init_config.dart';
-import '../services/logger_service.dart';
+import '../../models/init_config.dart';
+import '../../services/logger_service.dart';
 
 class L10nYamlGenerator {
   const L10nYamlGenerator._();

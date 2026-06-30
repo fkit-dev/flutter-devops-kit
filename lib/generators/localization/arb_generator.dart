@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../models/init_config.dart';
-import '../services/logger_service.dart';
+import '../../models/init_config.dart';
+import '../../services/logger_service.dart';
 
 class ArbGenerator {
   const ArbGenerator._();

@@ -2,20 +2,21 @@ import 'dart:io';
 
 import 'package:yaml/yaml.dart';
 
-import '../models/template_config.dart';
+import '../generators/core/package_locator.dart';
+import '../models/template/template_definition.dart';
 
 class TemplateService {
-  static Future<TemplateConfig> loadTemplate(String template) async {
-    final file = File('.fkit/templates/$template/folders.yaml');
+  const TemplateService._();
 
-    if (!file.existsSync()) {
-      throw Exception('❌ Template not found: $template');
-    }
+  static Future<TemplateDefinition> load(String template) async {
+    final root = const PackageLocator().packageRoot();
 
-    final content = await file.readAsString();
+    final file = File('${root.path}/templates/$template/template.yaml');
 
-    final yaml = loadYaml(content);
+    if (!file.existsSync()) throw Exception('Template "$template" not found.');
 
-    return TemplateConfig.fromMap(yaml);
+    final yaml = loadYaml(await file.readAsString());
+
+    return TemplateDefinition.fromMap(Map<dynamic, dynamic>.from(yaml));
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../services/logger_service.dart';
+import '../../services/logger_service.dart';
 
 class MediaQueryExtensionGenerator {
   static Future<void> generate() async {

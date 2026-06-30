@@ -13,6 +13,7 @@ import 'package:flutter_devops_kit/commands/get_command.dart';
 import 'package:flutter_devops_kit/commands/help_command.dart';
 import 'package:flutter_devops_kit/commands/init_command.dart';
 import 'package:flutter_devops_kit/commands/localization_command.dart';
+import 'package:flutter_devops_kit/commands/make_command.dart';
 import 'package:flutter_devops_kit/commands/run_command.dart';
 import 'package:flutter_devops_kit/commands/signing_command.dart';
 import 'package:flutter_devops_kit/commands/validate_command.dart';
@@ -39,6 +40,7 @@ Future<void> main(List<String> args) async {
     'validate': ValidateCommand(),
     'signing': SigningCommand(),
     'extension': ExtensionCommand(),
+    'make': MakeCommand(),
   };
 
   if (args.isEmpty) {

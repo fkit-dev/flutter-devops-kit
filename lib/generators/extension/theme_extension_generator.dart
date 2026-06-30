@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../services/logger_service.dart';
+import '../../services/logger_service.dart';
 
 class ThemeExtensionGenerator {
   static Future<void> generate() async {

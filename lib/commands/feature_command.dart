@@ -1,7 +1,9 @@
 import '../core/command.dart';
 import '../core/command_category.dart';
+import '../generators/core/generator_context.dart';
+import '../generators/feature/feature_generator.dart';
 import '../services/config_service.dart';
-import '../services/generator_service.dart';
+import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 import '../services/template_service.dart';
 
@@ -19,11 +21,7 @@ class FeatureCommand extends Command {
   String get usage => 'fkit feat <feature_name>';
 
   @override
-  List<String> get examples => const [
-        'fkit feat auth',
-        'fkit feat profile',
-        'fkit feat dashboard',
-      ];
+  List<String> get examples => const ['fkit feat auth', 'fkit feat profile', 'fkit feat dashboard'];
 
   @override
   bool get requiresConfig => true;
@@ -38,30 +36,18 @@ class FeatureCommand extends Command {
       return;
     }
 
-    final feature = args.first;
-
+    final feature = args.first.trim();
     final config = await ConfigService.load();
 
-    LoggerService.section(
-      'Generating feature: $feature',
-    );
+    final template = await TemplateService.load(config.defaultTemplate);
 
-    final template = await TemplateService.loadTemplate(
-      config.defaultTemplate,
-    );
+    final context = GeneratorContext(config: config, feature: feature, template: template);
+    LoggerService.section('Generating feature: $feature');
 
-    await GeneratorService.generateFeature(
-      feature: feature,
-      templateName: config.defaultTemplate,
-      template: template,
-    );
-
+    await FeatureGenerator().generate(context);
+    await FlutterService(context.config).buildRunner();
     LoggerService.blank();
-
-    LoggerService.success(
-      'Feature generated successfully.',
-    );
-
+    LoggerService.success('Feature "$feature" generated successfully.');
     LoggerService.blank();
   }
 }
