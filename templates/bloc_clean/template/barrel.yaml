@@ -1,0 +1,21 @@
+enabled: true
+
+file: xcore.dart
+
+ignore:
+  - "*.g.dart"
+  - "*.freezed.dart"
+
+exports:
+  - di
+  - presentation/screens
+  - presentation/widgets
+  - presentation/bloc
+  - domain/entities
+  - domain/repositories
+  - domain/usecases
+  - data/models/dtos
+  - data/models/mappers
+  - data/repositories
+  - data/datasources/local
+  - data/datasources/remote

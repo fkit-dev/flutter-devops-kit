@@ -253,6 +253,8 @@ class NamingService {
         'diCamel': diInstance,
         'diBase': diBase,
         'diFile': diFile,
+        'registerFeatureDependencies': 'register${featurePascal}Dependencies',
+        'serviceLocator': 'getIt',
 
         // ---------------------------------------------------------------------------
         // Feature
@@ -276,5 +278,24 @@ class NamingService {
 
         'fromJson': fromJson,
         'toJson': toJson,
+        'repository_impl': repositoryImpl,
+
+        'remote_datasource': remoteDatasource,
+        'remote_datasource_impl': remoteDatasourceImpl,
+
+        'local_datasource': localDatasource,
+        'local_datasource_impl': localDatasourceImpl,
       };
+
+  String resolveClass(String component) {
+    final value = variables[component];
+    if (value == null) throw Exception('Unknown component "$component".');
+    return value;
+  }
+
+  String resolveVariable(String component) {
+    final className = resolveClass(component);
+
+    return className[0].toLowerCase() + className.substring(1);
+  }
 }

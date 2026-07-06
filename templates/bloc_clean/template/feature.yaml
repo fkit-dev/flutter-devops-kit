@@ -1,0 +1,86 @@
+folders:
+  - data/datasources/local
+  - data/datasources/remote
+  - data/repositories
+  - data/models/dtos
+  - data/models/mappers
+  - domain/entities
+  - domain/repositories
+  - domain/usecases
+  - presentation/bloc
+  - presentation/screens
+  - presentation/widgets
+  - di
+
+files:
+
+  # ------------------------------------------------------------------
+  # Feature
+  # ------------------------------------------------------------------
+
+  - template: feature/xcore.dart.tpl
+    output: xcore.dart
+
+  - template: di/di.dart.tpl
+    output: di/{{diFile}}
+
+  # ------------------------------------------------------------------
+  # Presentation
+  # ------------------------------------------------------------------
+
+  - template: presentation/screen.dart.tpl
+    output: presentation/screens/{{screenFile}}
+
+  - template: presentation/widget.dart.tpl
+    output: presentation/widgets/.gitkeep
+
+  # ------------------------------------------------------------------
+  # Bloc
+  # ------------------------------------------------------------------
+
+  - template: bloc/bloc.dart.tpl
+    output: presentation/bloc/{{blocFile}}
+
+  - template: bloc/event.dart.tpl
+    output: presentation/bloc/{{eventFile}}
+
+  - template: bloc/state.dart.tpl
+    output: presentation/bloc/{{stateFile}}
+
+  # ------------------------------------------------------------------
+  # Domain
+  # ------------------------------------------------------------------
+
+  - template: domain/entity.dart.tpl
+    output: domain/entities/{{entityFile}}
+
+  - template: domain/repository.dart.tpl
+    output: domain/repositories/{{repositoryFile}}
+
+  - template: domain/usecase.dart.tpl
+    output: domain/usecases/{{usecaseFile}}
+
+  # ------------------------------------------------------------------
+  # Data
+  # ------------------------------------------------------------------
+
+  - template: data/repository_impl.dart.tpl
+    output: data/repositories/{{repositoryImplFile}}
+
+  - template: data/dto.dart.tpl
+    output: data/models/dtos/{{dtoFile}}
+
+  - template: data/mapper.dart.tpl
+    output: data/models/mappers/{{mapperFile}}
+
+  - template: data/local_datasource.dart.tpl
+    output: data/datasources/local/{{localDatasourceFile}}
+
+  - template: data/local_datasource_impl.dart.tpl
+    output: data/datasources/local/{{localDatasourceImplFile}}
+
+  - template: data/remote_datasource.dart.tpl
+    output: data/datasources/remote/{{remoteDatasourceFile}}
+
+  - template: data/remote_datasource_impl.dart.tpl
+    output: data/datasources/remote/{{remoteDatasourceImplFile}}

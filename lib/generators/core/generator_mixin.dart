@@ -2,7 +2,6 @@ import 'dart:io';
 
 import '../../services/logger_service.dart';
 import '../../services/prompt_service.dart';
-import 'generator_context.dart';
 import 'template_renderer.dart';
 
 mixin GeneratorMixin {
@@ -25,9 +24,7 @@ mixin GeneratorMixin {
   }
 
   Future<void> writeFile({required File file, required String content, bool overwrite = false}) async {
-    final shouldWrite = await shouldGenerate(file, overwrite: overwrite);
-
-    if (!shouldWrite) {
+    if (file.existsSync() && !overwrite) {
       LoggerService.info('Skipped ${file.path}');
       return;
     }
@@ -39,22 +36,25 @@ mixin GeneratorMixin {
     LoggerService.success('Generated ${file.path}');
   }
 
-  String path(GeneratorContext context, String relative) {
-    return '${context.featurePath}/$relative';
+  String path(String featurePath, String relative) {
+    return '$featurePath/$relative';
   }
 
   Future<void> generateTemplate(
-      {required GeneratorContext context,
+      {required String templateRoot,
       required String template,
       required String output,
       required Map<String, String> variables,
       bool overwrite = false}) async {
-    final content = await TemplateRenderer.render(context: context, template: template, variables: variables);
-
+    final content = await TemplateRenderer.render(templateRoot: templateRoot, template: template, variables: variables);
     await writeFile(file: File(output), content: content, overwrite: overwrite);
   }
 
   String resolveVariables(String value, Map<String, String> variables) {
     return TemplateRenderer.renderString(value, variables);
+  }
+
+  Future<bool> confirmOverwrite(String description) async {
+    return PromptService.confirm('$description already exists. Overwrite?', defaultValue: false);
   }
 }

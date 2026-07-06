@@ -1,4 +1,5 @@
 enum CommandCategory {
+  assets('Assets'),
   project('Project'),
   environment('Environment'),
   development('Development'),

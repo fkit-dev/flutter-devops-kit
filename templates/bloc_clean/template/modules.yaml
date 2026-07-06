@@ -1,0 +1,11 @@
+theme:
+  description: Material 3 theme with light and dark mode.
+
+network:
+  description: Dio based networking layer.
+
+storage:
+  description: Secure Storage and Shared Preferences.
+
+router:
+  description: GoRouter configuration.

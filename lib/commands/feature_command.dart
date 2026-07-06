@@ -5,6 +5,7 @@ import '../generators/feature/feature_generator.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
+import '../services/maintenance_service.dart';
 import '../services/template_service.dart';
 
 class FeatureCommand extends Command {
@@ -45,6 +46,7 @@ class FeatureCommand extends Command {
     LoggerService.section('Generating feature: $feature');
 
     await FeatureGenerator().generate(context);
+    await MaintenanceService().synchronize(context);
     await FlutterService(context.config).buildRunner();
     LoggerService.blank();
     LoggerService.success('Feature "$feature" generated successfully.');

@@ -87,4 +87,12 @@ class FlutterService {
   Future<void> build(List<String> args) => runFlutter(['build', ...args]);
 
   Future<void> run(List<String> args) => runFlutter(['run', ...args]);
+
+  Future<void> postGenerate({bool buildRunner = false, bool format = true, bool genL10n = false}) async {
+    if (genL10n) await this.genL10n();
+    if (buildRunner) await this.buildRunner();
+    if (format) await this.format();
+  }
+
+  Future<void> launcherIcons() async => await runPub(['run', 'flutter_launcher_icons']);
 }

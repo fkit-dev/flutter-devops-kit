@@ -30,7 +30,7 @@ class LocalizationExtensionGenerator {
     await file.writeAsString(
       '''
 import 'package:flutter/widgets.dart';
-import 'package:${config.projectName}/$import';
+import '../../gen/l10n/$import';
 
 extension LocalizationExtension on BuildContext {
   AppLocalizations get loc => AppLocalizations.of(this)!;

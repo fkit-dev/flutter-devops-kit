@@ -17,7 +17,7 @@ class ComponentGenerator with GeneratorMixin {
 
     final output = resolveVariables(definition.output, context.naming.variables);
 
-    final file = File(path(context, output));
+    final file = File(path(context.featurePath, output));
 
     final shouldContinue = await shouldGenerate(file, overwrite: overwrite);
 
@@ -26,6 +26,11 @@ class ComponentGenerator with GeneratorMixin {
     await ensureDirectory(file.parent);
 
     await generateTemplate(
-        context: context, template: definition.template, output: file.path, variables: context.naming.variables, overwrite: overwrite);
+      templateRoot: context.template.name,
+      template: definition.template,
+      output: path(context.featurePath, output),
+      variables: context.naming.variables,
+      overwrite: overwrite,
+    );
   }
 }

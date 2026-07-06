@@ -20,7 +20,7 @@ class FirebaseCommand extends BaseArgCommand {
   CommandCategory get category => CommandCategory.distribution;
 
   @override
-  String get usage => 'fkit firebase <flavor> [-p android|ios]';
+  String get usage => 'fkit firebase <flavor> [-p android|ios] [-n "Release Notes"] [-g testers]';
 
   @override
   List<String> get examples => const [
@@ -28,6 +28,9 @@ class FirebaseCommand extends BaseArgCommand {
         'fkit firebase production',
         'fkit firebase production -p ios',
         'fkit firebase production -n "Internal testing"',
+        'fkit firebase production -g qa',
+        'fkit firebase production -g qa,android',
+        'fkit firebase production -g qa -n "Internal testing"',
       ];
 
   @override
@@ -40,13 +43,12 @@ class FirebaseCommand extends BaseArgCommand {
   ArgParser buildParser() {
     return ArgParser()
       ..addOption('platform', abbr: 'p', allowed: AppPlatform.mobile, defaultsTo: AppPlatform.android, help: 'Target platform')
-      ..addOption('notes', abbr: 'n', help: 'Release notes');
+      ..addOption('notes', abbr: 'n', help: 'Release notes')
+      ..addOption('group', abbr: 'g', help: 'Firebase tester group');
   }
 
   @override
-  Future<void> execute(
-    ArgResults results,
-  ) async {
+  Future<void> execute(ArgResults results) async {
     if (results.rest.isEmpty) {
       LoggerService.error('Usage: $usage');
       return;
@@ -56,9 +58,11 @@ class FirebaseCommand extends BaseArgCommand {
 
     final platform = results['platform'] as String;
 
+    final config = await ConfigService.load();
+
     final notes = results['notes'] as String? ?? 'Automated build upload via FKIT';
 
-    final config = await ConfigService.load();
+    final testerGroup = results['group'] as String? ?? config.testerGroup;
 
     final flavorConfig = config.flavors[flavor];
 
@@ -67,48 +71,24 @@ class FirebaseCommand extends BaseArgCommand {
       return;
     }
 
-    if (!PlatformUtils.isEnabled(
-      config,
-      platform,
-    )) {
-      LoggerService.error(
-        '$platform is disabled in fkit.yaml.',
-      );
+    if (!PlatformUtils.isEnabled(config, platform)) {
+      LoggerService.error('$platform is disabled in fkit.yaml.');
       return;
     }
 
-    final appId = PlatformUtils.firebaseAppId(
-      flavorConfig,
-      platform,
-    );
+    final appId = PlatformUtils.firebaseAppId(flavorConfig, platform);
 
     if (appId.isEmpty) {
-      LoggerService.error(
-        '$platform Firebase App ID is not configured.',
-      );
+      LoggerService.error('$platform Firebase App ID is not configured.');
       return;
     }
 
-    final buildResult = await BuildService().build(
-      platform: PlatformUtils.buildPlatform(
-        platform,
-      ),
-      flavor: flavor,
-    );
+    final buildResult = await BuildService().build(platform: PlatformUtils.buildPlatform(platform), flavor: flavor);
 
-    await FirebaseService().upload(
-      appId: appId,
-      artifactPath: buildResult.artifactPath,
-      testerGroup: config.testerGroup,
-      notes: notes,
-    );
+    await FirebaseService().upload(appId: appId, artifactPath: buildResult.artifactPath, testerGroup: testerGroup, notes: notes);
 
     LoggerService.blank();
-
-    LoggerService.success(
-      'Firebase upload completed successfully.',
-    );
-
+    LoggerService.success('Firebase upload completed successfully.');
     LoggerService.blank();
   }
 }

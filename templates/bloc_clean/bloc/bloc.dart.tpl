@@ -12,7 +12,7 @@ class {{bloc}} extends Bloc<{{event}}, {{state}}> {
     on<{{featurePascal}}Started>(_onStarted);
   }
 
-  final {{usecase}} _{{usecaseInstance}};
+   final {{usecase}} _{{usecaseInstance}};
 
   Future<void> _onStarted(
     {{featurePascal}}Started event,

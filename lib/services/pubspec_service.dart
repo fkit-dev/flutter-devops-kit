@@ -27,7 +27,8 @@ class PubspecService {
     await save();
   }
 
-  Future<void> ensureDependency(String package, {String version = 'any'}) async {
+  Future<void> ensureDependency(String package, {String version = 'any', bool ensureLoaded = false}) async {
+    if (ensureLoaded) await _ensureLoaded();
     final dependencies = _dependencies();
 
     if (dependencies.containsKey(package)) return;
@@ -36,9 +37,7 @@ class PubspecService {
     LoggerService.success('Added dependency: $package');
   }
 
-  Future<void> ensureFlutterSdkDependency(
-    String package,
-  ) async {
+  Future<void> ensureFlutterSdkDependency(String package) async {
     final dependencies = _dependencies();
 
     if (dependencies.containsKey(package)) return;
@@ -47,12 +46,26 @@ class PubspecService {
     LoggerService.success('Added Flutter dependency: $package');
   }
 
-  Future<void> ensureDevDependency(String package, {String version = 'any'}) async {
+  Future<void> ensureDevDependency(String package, {String version = 'any', bool ensureLoaded = false}) async {
+    if (ensureLoaded) await _ensureLoaded();
     final devDependencies = _devDependencies();
-
     if (devDependencies.containsKey(package)) return;
     await set(['dev_dependencies', package], version);
     LoggerService.success('Added dev dependency: $package');
+  }
+
+  Future<void> ensureDependencies(Map<String, String> packages) async {
+    await _ensureLoaded();
+    for (final entry in packages.entries) {
+      await ensureDependency(entry.key, version: entry.value);
+    }
+  }
+
+  Future<void> ensureDevDependencies(Map<String, String> packages) async {
+    await _ensureLoaded();
+    for (final entry in packages.entries) {
+      await ensureDevDependency(entry.key, version: entry.value);
+    }
   }
 
   Future<void> ensureFlutterGenerate() async {
@@ -65,9 +78,7 @@ class PubspecService {
   Future<void> save() async {
     if (!_modified) return;
 
-    await _file.writeAsString(
-      _editor.toString(),
-    );
+    await _file.writeAsString(_editor.toString());
     final config = await ConfigService.load();
     await FlutterService(config).pubGet();
     _modified = false;

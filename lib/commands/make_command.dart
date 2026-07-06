@@ -5,6 +5,7 @@ import '../generators/feature/component_generator.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
+import '../services/maintenance_service.dart';
 import '../services/template_service.dart';
 
 class MakeCommand extends Command {
@@ -59,10 +60,12 @@ class MakeCommand extends Command {
 
     if (template.components.containsKey(target)) {
       await generator.generate(context: context, component: target);
+      await MaintenanceService().synchronize(context);
     } else if (template.groups.containsKey(target)) {
       for (final item in template.groups[target]!.components) {
         await generator.generate(context: context, component: item);
       }
+      await MaintenanceService().synchronize(context);
     } else {
       LoggerService.error('Unknown component "$target".');
 

@@ -77,7 +77,7 @@ class FlavorStep extends WizardStep<FlavorSetup> {
             'Android Firebase App ID',
           ),
           options: PromptService.ask('Android Firebase options',
-              defaultValue: enabled ? 'lib/firebase/firebase_options_$flavor.dart' : 'lib/firebase/firebase_options.dart'),
+              defaultValue: enabled ? 'lib/firebase_options_$flavor.dart' : 'lib/firebase_options.dart'),
         );
       }
 
@@ -87,7 +87,7 @@ class FlavorStep extends WizardStep<FlavorSetup> {
             'iOS Firebase App ID',
           ),
           options: PromptService.ask('iOS Firebase options',
-              defaultValue: enabled ? 'lib/firebase/firebase_options_$flavor.dart' : 'lib/firebase/firebase_options.dart'),
+              defaultValue: enabled ? 'lib/firebase_options_$flavor.dart' : 'lib/firebase_options.dart'),
         );
       }
 
@@ -98,7 +98,7 @@ class FlavorStep extends WizardStep<FlavorSetup> {
           ),
           options: PromptService.ask(
             'Web Firebase options',
-            defaultValue: 'lib/firebase/firebase_options_$flavor.dart',
+            defaultValue: 'lib/firebase_options_$flavor.dart',
           ),
         );
       }
@@ -112,6 +112,8 @@ class FlavorStep extends WizardStep<FlavorSetup> {
         ),
       );
     }
+
+    LoggerService.blank();
 
     return FlavorSetup(
       enabled: enabled,

@@ -2,9 +2,9 @@ import '../repositories/{{repositoryFile}}';
 
 /// Use case for {{resourcePascal}}.
 class {{usecase}} {
-  const {{usecase}}(
-    this._repository,
-  );
+  const {{usecase}}({
+    required {{repository}} repository,
+  }) : _repository = repository;
 
   final {{repository}} _repository;
 

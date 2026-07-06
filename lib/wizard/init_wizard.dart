@@ -1,5 +1,6 @@
 import '../models/init_config.dart';
 import '../services/logger_service.dart';
+import 'steps/firebase_step.dart';
 import 'steps/flavor_step.dart';
 import 'steps/generator_step.dart';
 import 'steps/localization_step.dart';
@@ -17,6 +18,7 @@ class InitWizard {
     final useFvm = ToolingStep().collect();
     final platforms = PlatformStep().collect();
     final flavors = FlavorStep(platforms).collect();
+    final testerGroup = FirebaseStep().collect();
     final localization = LocalizationStep().collect();
     final generator = GeneratorStep().collect();
 
@@ -38,7 +40,7 @@ class InitWizard {
       debugInfo: './debug-info',
       obfuscate: true,
       mainEntry: 'lib/main.dart',
-      testerGroup: 'internal-testers',
+      testerGroup: testerGroup,
       defaultTemplate: generator.defaultTemplate,
     );
   }
