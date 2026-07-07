@@ -1,5 +1,7 @@
 import '../core/command.dart';
 import '../core/command_category.dart';
+import '../generators/core/generator_context.dart';
+import '../generators/maintainers/route_maintainer.dart';
 import '../generators/module/module_context.dart';
 import '../generators/module/module_generator.dart';
 import '../services/config_service.dart';
@@ -65,6 +67,14 @@ class InstallCommand extends Command {
     if (module.hasPackages) await pubspec.ensureDependencies(module.requirements.packages);
     if (module.hasDevPackages) await pubspec.ensureDevDependencies(module.requirements.devPackages);
     await pubspec.save();
+
+    LoggerService.info('Installed module name: "$moduleName"');
+
+    //TODO: Clean it later
+    if (moduleName == 'router') {
+      final generatorContext = GeneratorContext(config: config, feature: '', template: template);
+      await const RouteMaintainer().maintain(generatorContext);
+    }
 
     await FlutterService(config).postGenerate(buildRunner: module.requiresBuildRunner);
 

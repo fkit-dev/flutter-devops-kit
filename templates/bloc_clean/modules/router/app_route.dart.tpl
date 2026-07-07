@@ -1,7 +1,10 @@
 enum AppRoute {
   splash('/'),
-  login('/login'),
-  home('/home');
+
+  // <fkit:routes>
+  // </fkit:routes>
+
+  ;
 
   const AppRoute(this.path);
 

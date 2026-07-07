@@ -35,4 +35,5 @@ files:
   groups: template/groups.yaml
   barrel: template/barrel.yaml
   di: template/di.yaml
+  router: template/router.yaml
   modules: template/modules.yaml

@@ -9,7 +9,7 @@ class TemplateService {
   const TemplateService._();
 
   ///ADD NEW MODULE HERE NO OTHER CHANGES REQUIRED
-  static const _sections = <String>['feature', 'components', 'groups', 'barrel', 'di', 'modules'];
+  static const _sections = <String>['feature', 'components', 'groups', 'barrel', 'di', 'router', 'modules'];
 
   static Future<TemplateDefinition> load(String template) async {
     final root = const PackageLocator().packageRoot();

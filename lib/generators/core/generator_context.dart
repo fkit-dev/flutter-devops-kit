@@ -21,7 +21,6 @@ class GeneratorContext {
         config: config ?? this.config, feature: feature ?? this.feature, name: name ?? this.name, template: template ?? this.template);
   }
 
-  String get featurePath => 'lib/features/$feature';
-
+  String get featurePath => '${config.featureDir}/$feature';
   late final NamingService naming = NamingService(feature: feature, name: name);
 }

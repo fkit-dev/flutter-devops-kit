@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+// <fkit:imports>
+// </fkit:imports>
+
 import 'app_route.dart';
 
 class AppRouter {
@@ -14,43 +17,23 @@ class AppRouter {
       GoRoute(
         path: AppRoute.splash.path,
         name: AppRoute.splash.routeName,
-        builder: (_, __) => const _PlaceholderScreen(
-          title: 'Splash Screen',
-        ),
+        builder: (_, _) => const _FkitSplashScreen(),
       ),
-      GoRoute(
-        path: AppRoute.login.path,
-        name: AppRoute.login.routeName,
-        builder: (_, __) => const _PlaceholderScreen(
-          title: 'Login Screen',
-        ),
-      ),
-      GoRoute(
-        path: AppRoute.home.path,
-        name: AppRoute.home.routeName,
-        builder: (_, __) => const _PlaceholderScreen(
-          title: 'Home Screen',
-        ),
-      ),
+
+      // <fkit:routes>
+      // </fkit:routes>
     ],
   );
 }
 
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen({
-    required this.title,
-  });
-
-  final String title;
+class _FkitSplashScreen extends StatelessWidget {
+  const _FkitSplashScreen();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+    return const Scaffold(
       body: Center(
-        child: Text(title),
+        child: Text('FKIT Splash'),
       ),
     );
   }

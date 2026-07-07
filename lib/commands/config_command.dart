@@ -38,6 +38,7 @@ class ConfigCommand extends Command {
     LoggerService.info('Flavoring        : ${config.flavoringEnabled}');
     LoggerService.info('Default Flavor   : ${config.defaultFlavor}');
     LoggerService.info('Tester Group     : ${config.testerGroup}');
+    LoggerService.info('Feature Path     : ${config.featureDir}');
     LoggerService.info('Template         : ${config.defaultTemplate}');
     LoggerService.blank();
 
