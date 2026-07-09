@@ -1,7 +1,11 @@
 import 'registration_lifecycle.dart';
 
 class TemplateRegistration {
-  const TemplateRegistration({required this.component, required this.folder, required this.lifecycle, this.implementation});
+  const TemplateRegistration(
+      {required this.component,
+      required this.folder,
+      required this.lifecycle,
+      this.implementation});
 
   final String component;
 
@@ -11,7 +15,8 @@ class TemplateRegistration {
 
   final String? implementation;
 
-  factory TemplateRegistration.fromMap(String component, Map<dynamic, dynamic> map) {
+  factory TemplateRegistration.fromMap(
+      String component, Map<dynamic, dynamic> map) {
     return TemplateRegistration(
         component: component,
         folder: map['folder'].toString(),

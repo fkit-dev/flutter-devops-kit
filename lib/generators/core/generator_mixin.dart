@@ -9,11 +9,13 @@ mixin GeneratorMixin {
   // Helpers
   // ---------------------------------------------------------------------------
 
-  Future<bool> shouldGenerate(FileSystemEntity entity, {bool overwrite = false}) async {
+  Future<bool> shouldGenerate(FileSystemEntity entity,
+      {bool overwrite = false}) async {
     if (!entity.existsSync()) return true;
     if (overwrite) return true;
 
-    return PromptService.confirm('${entity.path} already exists. Overwrite?', defaultValue: false);
+    return PromptService.confirm('${entity.path} already exists. Overwrite?',
+        defaultValue: false);
   }
 
   Future<void> ensureDirectory(Directory directory) async {
@@ -23,7 +25,10 @@ mixin GeneratorMixin {
     }
   }
 
-  Future<void> writeFile({required File file, required String content, bool overwrite = false}) async {
+  Future<void> writeFile(
+      {required File file,
+      required String content,
+      bool overwrite = false}) async {
     if (file.existsSync() && !overwrite) {
       LoggerService.info('Skipped ${file.path}');
       return;
@@ -46,7 +51,8 @@ mixin GeneratorMixin {
       required String output,
       required Map<String, String> variables,
       bool overwrite = false}) async {
-    final content = await TemplateRenderer.render(templateRoot: templateRoot, template: template, variables: variables);
+    final content = await TemplateRenderer.render(
+        templateRoot: templateRoot, template: template, variables: variables);
     await writeFile(file: File(output), content: content, overwrite: overwrite);
   }
 
@@ -55,6 +61,7 @@ mixin GeneratorMixin {
   }
 
   Future<bool> confirmOverwrite(String description) async {
-    return PromptService.confirm('$description already exists. Overwrite?', defaultValue: false);
+    return PromptService.confirm('$description already exists. Overwrite?',
+        defaultValue: false);
   }
 }

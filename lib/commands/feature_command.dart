@@ -22,7 +22,8 @@ class FeatureCommand extends Command {
   String get usage => 'fkit feat <feature_name>';
 
   @override
-  List<String> get examples => const ['fkit feat auth', 'fkit feat profile', 'fkit feat dashboard'];
+  List<String> get examples =>
+      const ['fkit feat auth', 'fkit feat profile', 'fkit feat dashboard'];
 
   @override
   bool get requiresConfig => true;
@@ -42,7 +43,8 @@ class FeatureCommand extends Command {
 
     final template = await TemplateService.load(config.defaultTemplate);
 
-    final context = GeneratorContext(config: config, feature: feature, template: template);
+    final context =
+        GeneratorContext(config: config, feature: feature, template: template);
     LoggerService.section('Generating feature: $feature');
 
     await FeatureGenerator().generate(context);

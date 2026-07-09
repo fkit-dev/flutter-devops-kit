@@ -17,9 +17,11 @@ class DiMaintainer with GeneratorMixin implements Maintainer {
 
     if (!di.enabled || !di.isGetIt) return;
 
-    final output = path(context.featurePath, resolveVariables(di.file, context.naming.variables));
+    final output = path(context.featurePath,
+        resolveVariables(di.file, context.naming.variables));
 
-    final imports = await const ImportResolver().resolve(context: context, outputFile: output);
+    final imports = await const ImportResolver()
+        .resolve(context: context, outputFile: output);
 
     final registrations = await const RegistrationResolver().resolve(context);
 
@@ -29,7 +31,8 @@ class DiMaintainer with GeneratorMixin implements Maintainer {
     _writeImports(buffer, imports);
     _writeBody(buffer, context, registrations);
 
-    await writeFile(file: File(output), content: buffer.toString(), overwrite: true);
+    await writeFile(
+        file: File(output), content: buffer.toString(), overwrite: true);
   }
 
   void _writeHeader(StringBuffer buffer) {
@@ -46,12 +49,14 @@ class DiMaintainer with GeneratorMixin implements Maintainer {
     }
   }
 
-  void _writeBody(StringBuffer buffer, GeneratorContext context, List<ResolvedRegistration> registrations) {
+  void _writeBody(StringBuffer buffer, GeneratorContext context,
+      List<ResolvedRegistration> registrations) {
     buffer.writeln();
     buffer.writeln('final GetIt sl = GetIt.instance;');
     buffer.writeln();
 
-    buffer.writeln('Future<void> init${context.naming.featurePascal}Dependencies() async {');
+    buffer.writeln(
+        'Future<void> init${context.naming.featurePascal}Dependencies() async {');
 
     for (final registration in registrations) {
       _writeRegistration(buffer, registration);
@@ -60,10 +65,15 @@ class DiMaintainer with GeneratorMixin implements Maintainer {
     buffer.writeln('}');
   }
 
-  void _writeRegistration(StringBuffer buffer, ResolvedRegistration registration) {
+  void _writeRegistration(
+      StringBuffer buffer, ResolvedRegistration registration) {
     final constructor = registration.dependencies.isEmpty
         ? '${registration.implementation}()'
-        : ['${registration.implementation}(', ...registration.dependencies.map((e) => '  $e,'), ')'].join('\n');
+        : [
+            '${registration.implementation}(',
+            ...registration.dependencies.map((e) => '  $e,'),
+            ')'
+          ].join('\n');
 
     switch (registration.lifecycle) {
       case RegistrationLifecycle.factory:

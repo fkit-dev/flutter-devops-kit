@@ -65,8 +65,10 @@ class ConfigCommand extends Command {
 
       for (final firebase in flavor.firebase.entries()) {
         if (!PlatformUtils.isEnabled(config, firebase.name)) continue;
-        LoggerService.info('${firebase.name.toUpperCase()} App ID    : ${firebase.platform.appId}');
-        LoggerService.info('${firebase.name.toUpperCase()} Options   : ${firebase.platform.options}');
+        LoggerService.info(
+            '${firebase.name.toUpperCase()} App ID    : ${firebase.platform.appId}');
+        LoggerService.info(
+            '${firebase.name.toUpperCase()} Options   : ${firebase.platform.options}');
       }
       LoggerService.blank();
     }

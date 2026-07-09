@@ -20,7 +20,8 @@ class FirebaseCommand extends BaseArgCommand {
   CommandCategory get category => CommandCategory.distribution;
 
   @override
-  String get usage => 'fkit firebase <flavor> [-p android|ios] [-n "Release Notes"] [-g testers]';
+  String get usage =>
+      'fkit firebase <flavor> [-p android|ios] [-n "Release Notes"] [-g testers]';
 
   @override
   List<String> get examples => const [
@@ -42,7 +43,11 @@ class FirebaseCommand extends BaseArgCommand {
   @override
   ArgParser buildParser() {
     return ArgParser()
-      ..addOption('platform', abbr: 'p', allowed: AppPlatform.mobile, defaultsTo: AppPlatform.android, help: 'Target platform')
+      ..addOption('platform',
+          abbr: 'p',
+          allowed: AppPlatform.mobile,
+          defaultsTo: AppPlatform.android,
+          help: 'Target platform')
       ..addOption('notes', abbr: 'n', help: 'Release notes')
       ..addOption('group', abbr: 'g', help: 'Firebase tester group');
   }
@@ -60,7 +65,8 @@ class FirebaseCommand extends BaseArgCommand {
 
     final config = await ConfigService.load();
 
-    final notes = results['notes'] as String? ?? 'Automated build upload via FKIT';
+    final notes =
+        results['notes'] as String? ?? 'Automated build upload via FKIT';
 
     final testerGroup = results['group'] as String? ?? config.testerGroup;
 
@@ -83,9 +89,14 @@ class FirebaseCommand extends BaseArgCommand {
       return;
     }
 
-    final buildResult = await BuildService().build(platform: PlatformUtils.buildPlatform(platform), flavor: flavor);
+    final buildResult = await BuildService()
+        .build(platform: PlatformUtils.buildPlatform(platform), flavor: flavor);
 
-    await FirebaseService().upload(appId: appId, artifactPath: buildResult.artifactPath, testerGroup: testerGroup, notes: notes);
+    await FirebaseService().upload(
+        appId: appId,
+        artifactPath: buildResult.artifactPath,
+        testerGroup: testerGroup,
+        notes: notes);
 
     LoggerService.blank();
     LoggerService.success('Firebase upload completed successfully.');

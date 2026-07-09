@@ -1,4 +1,4 @@
-import '../../models/init_config.dart';
+import '../../../models/init_config.dart';
 
 abstract class GeneratorSection {
   void write(

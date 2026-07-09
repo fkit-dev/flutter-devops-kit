@@ -13,9 +13,13 @@ class ComponentGenerator with GeneratorMixin {
   }) async {
     final definition = context.template.components[component];
 
-    if (definition == null) throw Exception('Component "$component" is not supported by template "${context.template.name}".');
+    if (definition == null) {
+      throw Exception(
+          'Component "$component" is not supported by template "${context.template.name}".');
+    }
 
-    final output = resolveVariables(definition.output, context.naming.variables);
+    final output =
+        resolveVariables(definition.output, context.naming.variables);
 
     final file = File(path(context.featurePath, output));
 
@@ -26,11 +30,10 @@ class ComponentGenerator with GeneratorMixin {
     await ensureDirectory(file.parent);
 
     await generateTemplate(
-      templateRoot: context.template.name,
-      template: definition.template,
-      output: path(context.featurePath, output),
-      variables: context.naming.variables,
-      overwrite: overwrite,
-    );
+        templateRoot: context.template.name,
+        template: definition.template,
+        output: path(context.featurePath, output),
+        variables: context.naming.variables,
+        overwrite: overwrite);
   }
 }

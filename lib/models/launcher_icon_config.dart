@@ -34,7 +34,8 @@ class LauncherIconConfig {
       android: map['android'] == true,
       ios: map['ios'] == true,
       web: web['generate'] == true,
-      adaptiveBackground: map['adaptive_icon_background']?.toString() ?? '#FFFFFF',
+      adaptiveBackground:
+          map['adaptive_icon_background']?.toString() ?? '#FFFFFF',
       adaptiveForeground: map['adaptive_icon_foreground']?.toString() ?? '',
       adaptiveMonochrome: map['adaptive_icon_monochrome']?.toString(),
       removeAlphaIos: map['remove_alpha_ios'] == true,
@@ -48,7 +49,8 @@ class LauncherIconConfig {
       'ios': ios,
       'adaptive_icon_background': adaptiveBackground,
       'adaptive_icon_foreground': adaptiveForeground,
-      if (adaptiveMonochrome != null && adaptiveMonochrome!.isNotEmpty) 'adaptive_icon_monochrome': adaptiveMonochrome,
+      if (adaptiveMonochrome != null && adaptiveMonochrome!.isNotEmpty)
+        'adaptive_icon_monochrome': adaptiveMonochrome,
       'remove_alpha_ios': removeAlphaIos,
       'web': {
         'generate': web,

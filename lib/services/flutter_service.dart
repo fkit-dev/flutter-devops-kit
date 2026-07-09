@@ -52,7 +52,8 @@ class FlutterService {
   }
 
   Future<void> watchBuildRunner() async {
-    await runDart(['run', 'build_runner', 'watch', '--delete-conflicting-outputs']);
+    await runDart(
+        ['run', 'build_runner', 'watch', '--delete-conflicting-outputs']);
   }
 
   // ---------------------------------------------------------------------------
@@ -62,7 +63,8 @@ class FlutterService {
   Future<void> runPub(List<String> args) => _execute(_pubCommand, args);
 
   Future<void> buildRunner() async {
-    await runPub(['run', 'build_runner', 'build', '--delete-conflicting-outputs']);
+    await runPub(
+        ['run', 'build_runner', 'build', '--delete-conflicting-outputs']);
   }
 
   // ---------------------------------------------------------------------------
@@ -88,11 +90,15 @@ class FlutterService {
 
   Future<void> run(List<String> args) => runFlutter(['run', ...args]);
 
-  Future<void> postGenerate({bool buildRunner = false, bool format = true, bool genL10n = false}) async {
+  Future<void> postGenerate(
+      {bool buildRunner = false,
+      bool format = true,
+      bool genL10n = false}) async {
     if (genL10n) await this.genL10n();
     if (buildRunner) await this.buildRunner();
     if (format) await this.format();
   }
 
-  Future<void> launcherIcons() async => await runPub(['run', 'flutter_launcher_icons']);
+  Future<void> launcherIcons() async =>
+      await runPub(['run', 'flutter_launcher_icons']);
 }

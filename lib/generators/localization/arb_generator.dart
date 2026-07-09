@@ -43,7 +43,9 @@ class ArbGenerator {
     );
 
     if (!file.existsSync()) {
-      final json = locale == config.defaultLocale ? _defaultTemplate(locale) : _localeTemplate(locale);
+      final json = locale == config.defaultLocale
+          ? _defaultTemplate(locale)
+          : _localeTemplate(locale);
 
       await file.writeAsString(
         const JsonEncoder.withIndent(
@@ -72,7 +74,8 @@ class ArbGenerator {
     File file,
     String locale,
   ) async {
-    final existing = jsonDecode(await file.readAsString()) as Map<String, dynamic>;
+    final existing =
+        jsonDecode(await file.readAsString()) as Map<String, dynamic>;
 
     final defaults = _defaultTemplate(locale);
 

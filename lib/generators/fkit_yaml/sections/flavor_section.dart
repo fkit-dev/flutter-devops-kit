@@ -1,5 +1,5 @@
-import '../../models/flavor_details.dart';
-import '../../models/init_config.dart';
+import '../../../models/flavor_details.dart';
+import '../../../models/init_config.dart';
 import 'generator_section.dart';
 
 class FlavorSection extends GeneratorSection {

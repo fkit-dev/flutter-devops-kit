@@ -1,4 +1,4 @@
-import '../../models/init_config.dart';
+import '../../../models/init_config.dart';
 import 'generator_section.dart';
 
 class EntrySection extends GeneratorSection {

@@ -17,12 +17,17 @@ class NamingService {
   late final String state = _className(featurePascal, 'State');
 // --------------------------------------------------------------------------- // Repository // ---------------------------------------------------------------------------
   late final String repository = _className(featurePascal, 'Repository');
-  late final String repositoryImpl = _className(featurePascal, 'RepositoryImpl');
+  late final String repositoryImpl =
+      _className(featurePascal, 'RepositoryImpl');
 // --------------------------------------------------------------------------- // Datasource // ---------------------------------------------------------------------------
-  late final String remoteDatasource = _className(featurePascal, 'RemoteDatasource');
-  late final String remoteDatasourceImpl = _className(featurePascal, 'RemoteDatasourceImpl');
-  late final String localDatasource = _className(featurePascal, 'LocalDatasource');
-  late final String localDatasourceImpl = _className(featurePascal, 'LocalDatasourceImpl');
+  late final String remoteDatasource =
+      _className(featurePascal, 'RemoteDatasource');
+  late final String remoteDatasourceImpl =
+      _className(featurePascal, 'RemoteDatasourceImpl');
+  late final String localDatasource =
+      _className(featurePascal, 'LocalDatasource');
+  late final String localDatasourceImpl =
+      _className(featurePascal, 'LocalDatasourceImpl');
 // --------------------------------------------------------------------------- // Resource Based // ---------------------------------------------------------------------------
   late final String entity = _className(resourcePascal, 'Entity');
   late final String dto = _className(resourcePascal, 'Dto');
@@ -33,10 +38,14 @@ class NamingService {
   late final String stateFile = '${featureSnake}_state.dart';
   late final String repositoryFile = '${featureSnake}_repository.dart';
   late final String repositoryImplFile = '${featureSnake}_repository_impl.dart';
-  late final String remoteDatasourceFile = '${featureSnake}_remote_datasource.dart';
-  late final String remoteDatasourceImplFile = '${featureSnake}_remote_datasource_impl.dart';
-  late final String localDatasourceFile = '${featureSnake}_local_datasource.dart';
-  late final String localDatasourceImplFile = '${featureSnake}_local_datasource_impl.dart';
+  late final String remoteDatasourceFile =
+      '${featureSnake}_remote_datasource.dart';
+  late final String remoteDatasourceImplFile =
+      '${featureSnake}_remote_datasource_impl.dart';
+  late final String localDatasourceFile =
+      '${featureSnake}_local_datasource.dart';
+  late final String localDatasourceImplFile =
+      '${featureSnake}_local_datasource_impl.dart';
   late final String entityFile = '${resourceSnake}_entity.dart';
   late final String dtoFile = '${resourceSnake}_dto.dart';
   late final String mapperFile = '${resourceSnake}_mapper.dart';
@@ -51,7 +60,8 @@ class NamingService {
     return value
         .replaceAll('-', '_')
         .replaceAll(' ', '_')
-        .replaceAllMapped(RegExp(r'([a-z0-9])([A-Z])'), (match) => '${match.group(1)}_${match.group(2)}')
+        .replaceAllMapped(RegExp(r'([a-z0-9])([A-Z])'),
+            (match) => '${match.group(1)}_${match.group(2)}')
         .toLowerCase();
   }
 
@@ -63,7 +73,11 @@ class NamingService {
 
   String _pascal(String value) {
     if (value.isEmpty) return '';
-    return value.split(RegExp(r'[_\-\s]+')).where((e) => e.isNotEmpty).map((e) => e[0].toUpperCase() + e.substring(1).toLowerCase()).join();
+    return value
+        .split(RegExp(r'[_\-\s]+'))
+        .where((e) => e.isNotEmpty)
+        .map((e) => e[0].toUpperCase() + e.substring(1).toLowerCase())
+        .join();
   }
 
   String _instance(String className) {
@@ -89,9 +103,11 @@ class NamingService {
   late final String repositoryBase = '${featureSnake}_repository';
   late final String repositoryImplBase = '${featureSnake}_repository_impl';
   late final String remoteDatasourceBase = '${featureSnake}_remote_datasource';
-  late final String remoteDatasourceImplBase = '${featureSnake}_remote_datasource_impl';
+  late final String remoteDatasourceImplBase =
+      '${featureSnake}_remote_datasource_impl';
   late final String localDatasourceBase = '${featureSnake}_local_datasource';
-  late final String localDatasourceImplBase = '${featureSnake}_local_datasource_impl';
+  late final String localDatasourceImplBase =
+      '${featureSnake}_local_datasource_impl';
   late final String blocFile = '$blocBase.dart';
 
   late final String blocInstance = _instance(bloc);
@@ -102,9 +118,11 @@ class NamingService {
   late final String repositoryImplInstance = _instance(repositoryImpl);
 
   late final String remoteDatasourceInstance = _instance(remoteDatasource);
-  late final String remoteDatasourceImplInstance = _instance(remoteDatasourceImpl);
+  late final String remoteDatasourceImplInstance =
+      _instance(remoteDatasourceImpl);
   late final String localDatasourceInstance = _instance(localDatasource);
-  late final String localDatasourceImplInstance = _instance(localDatasourceImpl);
+  late final String localDatasourceImplInstance =
+      _instance(localDatasourceImpl);
 
   late final String entityInstance = _instance(entity);
   late final String dtoInstance = _instance(dto);

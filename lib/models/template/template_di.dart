@@ -28,7 +28,8 @@ class TemplateDi {
   final Map<String, TemplateRegistration> registrations;
 
   factory TemplateDi.fromMap(Map<dynamic, dynamic> map) {
-    final registrationsMap = Map<dynamic, dynamic>.from(map['registrations'] ?? const {});
+    final registrationsMap =
+        Map<dynamic, dynamic>.from(map['registrations'] ?? const {});
 
     return TemplateDi(
       strategy: (map['strategy']?.toString() ?? 'manual').trim().toLowerCase(),
@@ -36,8 +37,10 @@ class TemplateDi {
       imports: List<String>.from(map['imports'] ?? const []),
       enabled: map['enabled'],
       ignore: List<String>.from(map['ignore'] ?? const []),
-      registrations: registrationsMap
-          .map((key, value) => MapEntry(key.toString(), TemplateRegistration.fromMap(key.toString(), Map<dynamic, dynamic>.from(value)))),
+      registrations: registrationsMap.map((key, value) => MapEntry(
+          key.toString(),
+          TemplateRegistration.fromMap(
+              key.toString(), Map<dynamic, dynamic>.from(value)))),
     );
   }
 
@@ -51,9 +54,11 @@ class TemplateDi {
 
   bool get isInjectable => strategy == 'injectable';
 
-  bool hasRegistration(String component) => registrations.containsKey(component);
+  bool hasRegistration(String component) =>
+      registrations.containsKey(component);
 
-  TemplateRegistration? getRegistration(String component) => registrations[component];
+  TemplateRegistration? getRegistration(String component) =>
+      registrations[component];
 
   Iterable<TemplateRegistration> get allRegistrations => registrations.values;
 }

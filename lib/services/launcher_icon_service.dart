@@ -25,7 +25,8 @@ class LauncherIconService {
     if (!await exists()) return null;
 
     final yaml = loadYaml(await _file.readAsString());
-    return LauncherIconConfig.fromMap(Map<dynamic, dynamic>.from(yaml['flutter_launcher_icons'] ?? const {}));
+    return LauncherIconConfig.fromMap(
+        Map<dynamic, dynamic>.from(yaml['flutter_launcher_icons'] ?? const {}));
   }
 
   Future<void> save(LauncherIconConfig config) async {
@@ -38,11 +39,15 @@ class LauncherIconService {
     buffer.writeln('  ios: ${config.ios}');
     buffer.writeln();
 
-    buffer.writeln('  adaptive_icon_background: "${config.adaptiveBackground}"');
-    buffer.writeln('  adaptive_icon_foreground: "${config.adaptiveForeground}"');
+    buffer
+        .writeln('  adaptive_icon_background: "${config.adaptiveBackground}"');
+    buffer
+        .writeln('  adaptive_icon_foreground: "${config.adaptiveForeground}"');
 
-    if (config.adaptiveMonochrome != null && config.adaptiveMonochrome!.isNotEmpty) {
-      buffer.writeln('  adaptive_icon_monochrome: "${config.adaptiveMonochrome}"');
+    if (config.adaptiveMonochrome != null &&
+        config.adaptiveMonochrome!.isNotEmpty) {
+      buffer.writeln(
+          '  adaptive_icon_monochrome: "${config.adaptiveMonochrome}"');
     }
 
     buffer.writeln();
@@ -69,11 +74,17 @@ class LauncherIconService {
       return issues;
     }
 
-    if (!File(config.imagePath).existsSync()) issues.add('Icon image not found: ${config.imagePath}');
+    if (!File(config.imagePath).existsSync()) {
+      issues.add('Icon image not found: ${config.imagePath}');
+    }
 
-    if (!File(config.adaptiveForeground).existsSync()) issues.add('Adaptive foreground not found: ${config.adaptiveForeground}');
+    if (!File(config.adaptiveForeground).existsSync()) {
+      issues.add('Adaptive foreground not found: ${config.adaptiveForeground}');
+    }
 
-    if (config.adaptiveMonochrome != null && config.adaptiveMonochrome!.isNotEmpty && !File(config.adaptiveMonochrome!).existsSync()) {
+    if (config.adaptiveMonochrome != null &&
+        config.adaptiveMonochrome!.isNotEmpty &&
+        !File(config.adaptiveMonochrome!).existsSync()) {
       issues.add('Adaptive monochrome not found: ${config.adaptiveMonochrome}');
     }
 
@@ -85,21 +96,29 @@ class LauncherIconService {
 
     LoggerService.info('Launcher Icons');
 
-    final imagePath = PromptService.ask('Icon image path', defaultValue: 'assets/images/app_icon.png');
+    final imagePath = PromptService.ask('Icon image path',
+        defaultValue: 'assets/images/app_icon.png');
 
-    final android = PromptService.confirm('Generate Android icons?', defaultValue: true);
+    final android =
+        PromptService.confirm('Generate Android icons?', defaultValue: true);
 
-    final ios = PromptService.confirm('Generate iOS icons?', defaultValue: true);
+    final ios =
+        PromptService.confirm('Generate iOS icons?', defaultValue: true);
 
-    final web = PromptService.confirm('Generate Web icons?', defaultValue: true);
+    final web =
+        PromptService.confirm('Generate Web icons?', defaultValue: true);
 
-    final adaptiveBackground = PromptService.ask('Adaptive background', defaultValue: '#FFFFFF');
+    final adaptiveBackground =
+        PromptService.ask('Adaptive background', defaultValue: '#FFFFFF');
 
-    final adaptiveForeground = PromptService.ask('Adaptive foreground', defaultValue: imagePath);
+    final adaptiveForeground =
+        PromptService.ask('Adaptive foreground', defaultValue: imagePath);
 
-    final adaptiveMonochrome = PromptService.ask('Adaptive monochrome (optional)', defaultValue: '');
+    final adaptiveMonochrome =
+        PromptService.ask('Adaptive monochrome (optional)', defaultValue: '');
 
-    final removeAlphaIos = PromptService.confirm('Remove alpha for iOS?', defaultValue: true);
+    final removeAlphaIos =
+        PromptService.confirm('Remove alpha for iOS?', defaultValue: true);
 
     return LauncherIconConfig(
       imagePath: imagePath,
@@ -108,7 +127,8 @@ class LauncherIconService {
       web: web,
       adaptiveBackground: adaptiveBackground,
       adaptiveForeground: adaptiveForeground,
-      adaptiveMonochrome: adaptiveMonochrome.isEmpty ? null : adaptiveMonochrome,
+      adaptiveMonochrome:
+          adaptiveMonochrome.isEmpty ? null : adaptiveMonochrome,
       removeAlphaIos: removeAlphaIos,
     );
   }

@@ -23,7 +23,9 @@ class BuildService {
 
     final arguments = <String>['run'];
 
-    if (config.flavoringEnabled && platform != BuildPlatform.web) arguments.addAll(['--flavor', flavor]);
+    if (config.flavoringEnabled && platform != BuildPlatform.web) {
+      arguments.addAll(['--flavor', flavor]);
+    }
 
     arguments.add('--dart-define-from-file=${flavorConfig.env}');
 
@@ -45,7 +47,8 @@ class BuildService {
     await FlutterService(config).runFlutter(arguments);
   }
 
-  Future<BuildResult> build({required BuildPlatform platform, required String flavor}) async {
+  Future<BuildResult> build(
+      {required BuildPlatform platform, required String flavor}) async {
     final config = await ConfigService.load();
 
     InitValidator.validate(config);
@@ -67,17 +70,20 @@ class BuildService {
       arguments.addAll(['--flavor', flavor]);
     }
 
-    arguments.addAll(['--release', '--dart-define-from-file=${flavorConfig.env}']);
+    arguments
+        .addAll(['--release', '--dart-define-from-file=${flavorConfig.env}']);
 
     if (platform != BuildPlatform.web) {
-      arguments.addAll(['--obfuscate', '--split-debug-info=${config.debugInfo}']);
+      arguments
+          .addAll(['--obfuscate', '--split-debug-info=${config.debugInfo}']);
     }
 
     LoggerService.section('Building $buildType ($flavor)');
 
     await FlutterService(config).runFlutter(arguments);
 
-    final artifactPath = await ArtifactService.resolve(platform: platform, flavor: flavor);
+    final artifactPath =
+        await ArtifactService.resolve(platform: platform, flavor: flavor);
 
     LoggerService.success('Artifact generated.');
 

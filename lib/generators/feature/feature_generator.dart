@@ -6,7 +6,8 @@ import '../maintainers/barrel_maintainer.dart';
 import '../maintainers/di_maintainer.dart';
 
 class FeatureGenerator with GeneratorMixin {
-  Future<void> generate(GeneratorContext context, {bool overwrite = false}) async {
+  Future<void> generate(GeneratorContext context,
+      {bool overwrite = false}) async {
     final featureDir = Directory(context.featurePath);
 
     if (featureDir.existsSync() && !overwrite) {
@@ -26,7 +27,8 @@ class FeatureGenerator with GeneratorMixin {
     }
   }
 
-  Future<void> _generateFiles(GeneratorContext context, {required bool overwrite}) async {
+  Future<void> _generateFiles(GeneratorContext context,
+      {required bool overwrite}) async {
     final variables = context.naming.variables;
 
     for (final file in context.template.feature.files) {

@@ -35,8 +35,12 @@ class RouteMaintainer implements Maintainer {
     final paths = <String>{};
 
     for (final route in routes) {
-      if (!names.add(route.name)) throw Exception('Duplicate route name "${route.name}".');
-      if (!paths.add(route.path)) throw Exception('Duplicate route path "${route.path}".');
+      if (!names.add(route.name)) {
+        throw Exception('Duplicate route name "${route.name}".');
+      }
+      if (!paths.add(route.path)) {
+        throw Exception('Duplicate route path "${route.path}".');
+      }
     }
   }
 }

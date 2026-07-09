@@ -5,6 +5,7 @@ class TemplateFile {
   final String output;
 
   factory TemplateFile.fromMap(Map<dynamic, dynamic> map) {
-    return TemplateFile(template: map['template'] as String, output: map['output'] as String);
+    return TemplateFile(
+        template: map['template'] as String, output: map['output'] as String);
   }
 }

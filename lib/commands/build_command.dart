@@ -49,7 +49,8 @@ class BuildCommand extends BaseArgCommand {
 
     final platformArg = results.rest.first;
 
-    final flavor = results.rest.length > 1 ? results.rest[1] : config.defaultFlavor;
+    final flavor =
+        results.rest.length > 1 ? results.rest[1] : config.defaultFlavor;
 
     final platform = BuildPlatform.fromString(platformArg);
 

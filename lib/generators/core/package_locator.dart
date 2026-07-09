@@ -13,7 +13,9 @@ class PackageLocator {
       if (pubspec.existsSync()) return dir;
 
       final parent = dir.parent;
-      if (parent.path == dir.path) throw Exception('Unable to locate flutter_devops_kit package root.');
+      if (parent.path == dir.path) {
+        throw Exception('Unable to locate flutter_devops_kit package root.');
+      }
 
       dir = parent;
     }

@@ -1,3 +1,5 @@
+import 'package:flutter_devops_kit/core/fkit_version.dart';
+
 import '../models/init_config.dart';
 import '../services/logger_service.dart';
 import 'steps/feature_step.dart';
@@ -11,9 +13,7 @@ import 'steps/tooling_step.dart';
 
 class InitWizard {
   Future<InitConfig> start() async {
-    LoggerService.section(
-      'FKIT Project Initialization',
-    );
+    LoggerService.section('FKIT Project Initialization');
 
     final projectName = ProjectStep().collect();
     final featureDir = FeatureStep().collect();
@@ -25,6 +25,7 @@ class InitWizard {
     final generator = GeneratorStep().collect();
 
     return InitConfig(
+      version: FkitVersion.current,
       projectName: projectName,
       useFvm: useFvm,
       android: platforms.android,
@@ -42,8 +43,8 @@ class InitWizard {
       debugInfo: './debug-info',
       obfuscate: true,
       mainEntry: 'lib/main.dart',
-      featureDir: featureDir,
       testerGroup: testerGroup,
+      featureDir: featureDir,
       defaultTemplate: generator.defaultTemplate,
     );
   }

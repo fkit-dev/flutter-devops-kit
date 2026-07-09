@@ -27,7 +27,8 @@ class PubspecService {
     await save();
   }
 
-  Future<void> ensureDependency(String package, {String version = 'any', bool ensureLoaded = false}) async {
+  Future<void> ensureDependency(String package,
+      {String version = 'any', bool ensureLoaded = false}) async {
     if (ensureLoaded) await _ensureLoaded();
     final dependencies = _dependencies();
 
@@ -46,7 +47,8 @@ class PubspecService {
     LoggerService.success('Added Flutter dependency: $package');
   }
 
-  Future<void> ensureDevDependency(String package, {String version = 'any', bool ensureLoaded = false}) async {
+  Future<void> ensureDevDependency(String package,
+      {String version = 'any', bool ensureLoaded = false}) async {
     if (ensureLoaded) await _ensureLoaded();
     final devDependencies = _devDependencies();
     if (devDependencies.containsKey(package)) return;

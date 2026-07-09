@@ -10,8 +10,6 @@ import 'pubspec_service.dart';
 
 class LocalizationService {
   Future<void> setup() async {
-    LoggerService.section('Localization Setup');
-    _ensureFlutterProject();
     await generate();
   }
 
@@ -20,27 +18,31 @@ class LocalizationService {
 
     _ensureFlutterProject();
 
+    final config = await ConfigService.load();
+
     final pubspec = PubspecService();
     await pubspec.ensureLocalization();
-    final config = await ConfigService.load();
+
     await L10nYamlGenerator.generate(config);
     await ArbGenerator.generate(config);
     await FlutterService(config).genL10n();
-    LocalizationValidator.validate(config);
 
+    LocalizationValidator.validate(config);
     LoggerService.success('Localization generated successfully.');
   }
 
   Future<void> doctor() async {
     LoggerService.section('Localization Doctor');
+    _ensureFlutterProject();
+
     final config = await ConfigService.load();
-    LocalizationValidator.validate(
-      config,
-    );
+    LocalizationValidator.validate(config);
     LoggerService.success('Localization configuration looks good.');
   }
 
   void _ensureFlutterProject() {
-    if (!File('pubspec.yaml').existsSync()) throw Exception('Current directory is not a Flutter project.');
+    if (!File('pubspec.yaml').existsSync()) {
+      throw Exception('Current directory is not a Flutter project.');
+    }
   }
 }

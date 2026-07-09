@@ -32,7 +32,12 @@ class FlavorStep extends WizardStep<FlavorSetup> {
         defaultValue: 'development,staging,production',
       );
 
-      flavorNames = flavorsInput.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toSet().toList();
+      flavorNames = flavorsInput
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toSet()
+          .toList();
 
       defaultFlavor = PromptService.ask(
         'Default flavor',
@@ -54,7 +59,8 @@ class FlavorStep extends WizardStep<FlavorSetup> {
 
       LoggerService.command(flavor);
 
-      final env = PromptService.ask('Env file path', defaultValue: enabled ? 'env/$flavor.json' : 'env/env.json');
+      final env = PromptService.ask('Env file path',
+          defaultValue: enabled ? 'env/$flavor.json' : 'env/env.json');
 
       FirebasePlatform android = const FirebasePlatform(
         appId: '',
@@ -77,7 +83,9 @@ class FlavorStep extends WizardStep<FlavorSetup> {
             'Android Firebase App ID',
           ),
           options: PromptService.ask('Android Firebase options',
-              defaultValue: enabled ? 'lib/firebase_options_$flavor.dart' : 'lib/firebase_options.dart'),
+              defaultValue: enabled
+                  ? 'lib/firebase_options_$flavor.dart'
+                  : 'lib/firebase_options.dart'),
         );
       }
 
@@ -87,7 +95,9 @@ class FlavorStep extends WizardStep<FlavorSetup> {
             'iOS Firebase App ID',
           ),
           options: PromptService.ask('iOS Firebase options',
-              defaultValue: enabled ? 'lib/firebase_options_$flavor.dart' : 'lib/firebase_options.dart'),
+              defaultValue: enabled
+                  ? 'lib/firebase_options_$flavor.dart'
+                  : 'lib/firebase_options.dart'),
         );
       }
 

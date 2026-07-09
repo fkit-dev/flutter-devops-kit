@@ -11,19 +11,24 @@ class ExistingRouteResolver {
       required String routerContent,
       required String routerFile}) {
     final statuses = discoveredRoutes.map((route) {
-      final importPath = const RouteImportResolver().resolve(routerFile: routerFile, screenFile: route.file);
+      final importPath = const RouteImportResolver()
+          .resolve(routerFile: routerFile, screenFile: route.file);
       return ExistingRouteStatus(
         route: route,
-        hasDefinition: _containsRouteDefinition(content: routeContent, route: route),
-        hasImport: _containsImport(content: routerContent, importPath: importPath),
-        hasRegistration: _containsRouterRegistration(content: routerContent, route: route),
+        hasDefinition:
+            _containsRouteDefinition(content: routeContent, route: route),
+        hasImport:
+            _containsImport(content: routerContent, importPath: importPath),
+        hasRegistration:
+            _containsRouterRegistration(content: routerContent, route: route),
       );
     });
 
     return statuses.where((status) => !status.isComplete).toList();
   }
 
-  bool _containsRouteDefinition({required String content, required ResolvedRoute route}) {
+  bool _containsRouteDefinition(
+      {required String content, required ResolvedRoute route}) {
     final pattern = RegExp('\\b${RegExp.escape(route.name)}\\s*\\(');
     return pattern.hasMatch(content);
   }
@@ -33,7 +38,8 @@ class ExistingRouteResolver {
     return content.contains(import);
   }
 
-  bool _containsRouterRegistration({required String content, required ResolvedRoute route}) {
+  bool _containsRouterRegistration(
+      {required String content, required ResolvedRoute route}) {
     final pattern = RegExp('name\\s*:\\s*AppRoute\\.'
         '${RegExp.escape(route.name)}'
         '\\.routeName');

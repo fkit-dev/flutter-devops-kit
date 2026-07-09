@@ -26,6 +26,14 @@ files:
   - template: theme_constants.dart.tpl
     output: lib/app/theme/theme_constants.dart
 
+  - template: logger_service.dart.tpl
+    output: lib/core/services/logger_service.dart
+    when: talker_logger
+
+  - template: api_response_log_interceptor.dart.tpl
+    output: lib/core/network/interceptors/api_response_log_interceptor.dart
+    when: talker_logger
+
   - template: xcore.dart.tpl
     output: lib/app/theme/xcore.dart
 

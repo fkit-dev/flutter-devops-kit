@@ -6,6 +6,9 @@ class PlatformConfig {
   PlatformConfig({required this.android, required this.ios, required this.web});
 
   factory PlatformConfig.fromMap(Map<dynamic, dynamic> map) {
-    return PlatformConfig(android: map['android'] ?? false, ios: map['ios'] ?? false, web: map['web'] ?? false);
+    return PlatformConfig(
+        android: map['android'] ?? false,
+        ios: map['ios'] ?? false,
+        web: map['web'] ?? false);
   }
 }

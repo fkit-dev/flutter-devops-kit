@@ -9,7 +9,9 @@ class TemplateFeature {
   factory TemplateFeature.fromMap(Map<dynamic, dynamic> map) {
     return TemplateFeature(
       folders: List<String>.from(map['folders'] ?? const []),
-      files: (map['files'] as List<dynamic>? ?? const []).map((e) => TemplateFile.fromMap(Map<dynamic, dynamic>.from(e))).toList(),
+      files: (map['files'] as List<dynamic>? ?? const [])
+          .map((e) => TemplateFile.fromMap(Map<dynamic, dynamic>.from(e)))
+          .toList(),
     );
   }
 }
