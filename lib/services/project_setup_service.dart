@@ -18,7 +18,9 @@ class ProjectSetupService {
   }) async {
     final setup = template.setup;
 
-    if (setup.modules.isEmpty && setup.features.isEmpty && !setup.bootstrap.enabled) {
+    if (setup.modules.isEmpty &&
+        setup.features.isEmpty &&
+        !setup.bootstrap.enabled) {
       LoggerService.warning(
         'No project setup configuration found for template '
         '"${template.name}".',
@@ -60,7 +62,9 @@ class ProjectSetupService {
     );
 
     await FlutterService(config).postGenerate(
-      buildRunner: template.requirements.buildRunner || moduleRequiresBuildRunner || featuresGenerated,
+      buildRunner: template.requirements.buildRunner ||
+          moduleRequiresBuildRunner ||
+          featuresGenerated,
     );
 
     return true;

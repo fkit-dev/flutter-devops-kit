@@ -9,8 +9,12 @@ class FeatureGenerationService {
   const FeatureGenerationService();
 
   Future<bool> generate(
-      {required InitConfig config, required TemplateDefinition template, required String feature, bool postGenerate = true}) async {
-    final context = GeneratorContext(config: config, feature: feature, template: template);
+      {required InitConfig config,
+      required TemplateDefinition template,
+      required String feature,
+      bool postGenerate = true}) async {
+    final context =
+        GeneratorContext(config: config, feature: feature, template: template);
 
     final generated = await FeatureGenerator().generate(context);
 
