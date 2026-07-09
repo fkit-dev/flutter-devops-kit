@@ -28,6 +28,135 @@ FKIT can be used for both existing Flutter projects and newly initialized projec
 
 ---
 
+# Installation
+
+FKIT can be installed globally using the Dart package manager.
+
+## Prerequisites
+
+Before installing FKIT, make sure the following are available:
+
+* Flutter SDK
+* Dart SDK
+* Git
+
+Verify your Flutter and Dart installations:
+
+```bash
+flutter --version
+dart --version
+```
+
+---
+
+## macOS / Linux
+
+Install FKIT globally:
+
+```bash
+dart pub global activate flutter_devops_kit
+```
+
+Add the Dart global executable directory to your `PATH`.
+
+### Zsh
+
+```bash
+echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### Bash
+
+```bash
+echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+Verify the installation:
+
+```bash
+fkit help
+```
+
+---
+
+## Windows
+
+Install FKIT globally using PowerShell or Command Prompt:
+
+```bash
+dart pub global activate flutter_devops_kit
+```
+
+The Dart global executable directory is typically:
+
+```text
+%LOCALAPPDATA%\Pub\Cache\bin
+```
+
+Add this directory to the Windows `PATH` environment variable.
+
+### Using Windows Settings
+
+1. Open **System Properties**.
+2. Select **Advanced**.
+3. Select **Environment Variables**.
+4. Under **User variables**, select the `Path` variable.
+5. Select **Edit**.
+6. Select **New**.
+7. Add:
+
+```text
+%LOCALAPPDATA%\Pub\Cache\bin
+```
+
+8. Save the changes and restart your terminal.
+
+Verify the installation:
+
+```bash
+fkit help
+```
+
+---
+
+## Update FKIT
+
+To update to the latest published version:
+
+```bash
+dart pub global activate flutter_devops_kit
+```
+
+---
+
+## Uninstall FKIT
+
+To remove FKIT:
+
+```bash
+dart pub global deactivate flutter_devops_kit
+```
+
+---
+
+## Verify Installation
+
+After installation, run:
+
+```bash
+fkit help
+```
+
+You can also verify your development environment with:
+
+```bash
+fkit doctor
+```
+
+Once installed, FKIT is available globally and can be used inside any Flutter project.
+
 # Why FKIT?
 
 Flutter projects often require repetitive setup and maintenance tasks such as:
