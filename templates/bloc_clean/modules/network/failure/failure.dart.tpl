@@ -13,7 +13,8 @@ class Failure {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return const TimeoutError();
+      case DioExceptionType.transformTimeout:
+        return TimeoutError();
 
       case DioExceptionType.badCertificate:
         return const HandshakeError();

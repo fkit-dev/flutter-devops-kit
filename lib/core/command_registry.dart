@@ -1,5 +1,3 @@
-import 'package:flutter_devops_kit/commands/icon_command.dart';
-
 import '../commands/analyze_command.dart';
 import '../commands/build_command.dart';
 import '../commands/clean_command.dart';
@@ -13,11 +11,13 @@ import '../commands/format_command.dart';
 import '../commands/generate_command.dart';
 import '../commands/get_command.dart';
 import '../commands/help_command.dart';
+import '../commands/icon_command.dart';
 import '../commands/init_command.dart';
 import '../commands/install_command.dart';
 import '../commands/localization_command.dart';
 import '../commands/make_command.dart';
 import '../commands/run_command.dart';
+import '../commands/setup_command.dart';
 import '../commands/signing_command.dart';
 import '../commands/validate_command.dart';
 import '../commands/watch_command.dart';
@@ -49,6 +49,7 @@ class CommandRegistry {
     MakeCommand(),
     InstallCommand(),
     IconCommand(),
+    SetupCommand()
   ];
 
   static Command? command(String name) {

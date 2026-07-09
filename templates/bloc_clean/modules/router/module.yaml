@@ -3,6 +3,10 @@ display_name: Router
 description: GoRouter setup.
 version: 1.0.0
 
+integration:
+  enabled: true
+  strategy: router
+
 files:
   - template: app_route.dart.tpl
     output: lib/app/router/app_route.dart

@@ -11,9 +11,10 @@ class ModuleIntegrationService {
       return;
     }
 
-    final key = '${context.template.di.strategy}:${integration.strategy}';
-
-    final integrator = ModuleIntegratorRegistry.integrators[key];
+    final integrator = ModuleIntegratorRegistry.resolve(
+      diStrategy: context.template.di.strategy,
+      integrationStrategy: integration.strategy,
+    );
 
     if (integrator == null) {
       throw UnsupportedError(

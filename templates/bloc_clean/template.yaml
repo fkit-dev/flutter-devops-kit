@@ -20,6 +20,24 @@ documentation:
      - DTO and Entity use Freezed.
     - Run "fkit make resource auth Login" to generate resource files.
 
+setup:
+  modules:
+    - theme
+    - router
+    - network
+
+  features:
+    - auth
+
+requires:
+  packages:
+    get_it: ^9.2.1
+
+  dev_packages: {}
+
+  flutter_gen: false
+  build_runner: false
+
 supports:
   - feature
   - bloc

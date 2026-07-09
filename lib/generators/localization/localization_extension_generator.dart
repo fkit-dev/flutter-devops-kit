@@ -25,13 +25,12 @@ class LocalizationExtensionGenerator {
       '${directory.path}/context_localization_extension.dart',
     );
 
-    final import =
-        '${config.outputDir.replaceFirst('lib/', '')}/${config.outputFile}';
+    final import = '${config.outputDir.replaceFirst('lib/', '')}/${config.outputFile}';
 
     await file.writeAsString(
       '''
 import 'package:flutter/widgets.dart';
-import '../../gen/l10n/$import';
+import '../../$import';
 
 extension LocalizationExtension on BuildContext {
   AppLocalizations get loc => AppLocalizations.of(this)!;
