@@ -6,71 +6,78 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Cross-platform installation documentation for macOS, Linux, and Windows
-- Configurable feature directory support through `generator.feature_dir`
-- Template-driven module installation system
-- Interactive module configuration options
-- Conditional module file generation
-- Conditional package and development dependency installation
-- Module integration infrastructure
-- Dependency-injection-aware module integrator registry
-- Theme module for reusable Material 3 theme setup
-- Router module with GoRouter integration
-- Automatic route discovery based on template configuration
-- Automatic route synchronization when generating screens
-- Existing route detection to prevent duplicate route generation
-- Marker-based route and import maintenance to preserve developer customizations
-- Network module with Dio-based API infrastructure
-- Typed API response models and response mappers
-- Generic API response parsing
-- Freezed and JSON serialization support for network models
-- Centralized API failure and exception handling
-- Dio error-to-application-exception mapping
-- Network connectivity monitoring and request interception
-- Optional Talker application and API logging
-- Conditional Talker dependencies and generated logging files
-- Network module integration infrastructure for dependency injection
-- FKIT configuration version metadata
+- Template-driven project generation architecture.
+- BLoC Clean Architecture template support.
+- Project setup automation with `fkit setup`.
+- Template-defined setup workflows for modules, features, and application bootstrap.
+- Automatic `main.dart` and `app.dart` bootstrap generation.
+- Interactive overwrite handling for existing bootstrap files.
+- Reusable module installation system with `fkit install`.
+- Module-specific configuration options and interactive prompts.
+- Conditional module files and package dependencies.
+- Template-level dependency requirements.
+- Module integration system with generic and DI-specific integrators.
+- Router module integration and automatic route synchronization.
+- Network module with:
+    - Dio-based API service.
+    - Typed API responses.
+    - Response mappers.
+    - Pagination models.
+    - API response extensions.
+    - Centralized failure handling.
+    - Network connectivity monitoring.
+    - Network interceptor.
+    - Authentication interceptor.
+    - Optional Talker logging.
+- Theme module generation.
+- Router module generation.
+- GoRouter route discovery and synchronization.
+- Existing route detection to prevent duplicate route generation.
+- Feature generation service for reusable programmatic feature generation.
+- Component and resource generation workflows.
+- Localization setup, generation, and validation commands.
+- Flutter extension generation.
+- Template setup configuration.
+- Template bootstrap configuration.
+- Windows global CLI installation instructions.
 
 ### Changed
 
-- Improved `fkit init` configuration generation
-- Updated `InitConfig` to support FKIT version metadata and configurable feature directories
-- Simplified localization configuration by deriving the template ARB file from the default locale
-- Improved YAML generation with dedicated configuration sections
-- Improved module package and development dependency resolution
-- Improved module generation cancellation and overwrite handling
-- Improved router generation to append missing routes instead of rewriting developer changes
-- Improved template architecture to support reusable and extensible modules
-- Updated README with current, ongoing, and planned FKIT features
-- Updated package description and metadata for the `0.1.1` release
+- Refactored module installation logic into `ModuleInstallationService`.
+- Refactored module integration into dedicated integrators and registry.
+- Improved dependency synchronization during project setup.
+- Reduced redundant `pub get` and code generation executions during setup.
+- Improved module package handling with conditional dependencies.
+- Improved project configuration model with FKIT version support.
+- Improved generated route formatting and synchronization.
+- Improved generated network response and failure handling.
+- Updated FKIT project configuration examples.
+- Expanded README documentation and feature overview.
+- Improved generator and setup architecture for future template support.
 
 ### Fixed
 
-- Fixed launcher icon generation issues when updating YAML configuration
-- Fixed Flutter package command execution for Flutter projects
-- Fixed uninitialized `PubspecService` editor errors
-- Fixed module option type handling for boolean configuration values
-- Fixed conditional dependency resolution for module packages
-- Fixed router synchronization not running after router module installation
-- Fixed generated route enum syntax when appending new routes
-- Fixed incorrect route import path generation
-- Fixed duplicate route generation during synchronization
-- Fixed generic `const` creation error in generated response mappers
-- Fixed missing dependency installation during network module generation
+- Fixed route generation producing invalid enum syntax.
+- Fixed duplicate and missing route detection.
+- Fixed module options causing boolean-to-string type errors.
+- Fixed conditional package resolution during module installation.
+- Fixed generated response mapper constant generic type error.
+- Fixed missing dependencies during full project setup.
+- Fixed Dio exception handling for newer `DioExceptionType` values.
+- Fixed build runner execution ordering during project setup.
 
 ## 0.1.0
 
 ### Added
 
-- Flutter build automation
-- APK, AAB, IPA, and Web build support
-- Firebase App Distribution integration
-- Android signing setup automation
-- Feature scaffolding
-- Environment validation
-- Interactive FKIT initialization
-- Riverpod clean architecture templates
-- Web flavor handling improvements
-- Enhanced logging system
-- Config validation
+- Flutter build automation.
+- APK, AAB, IPA, and Web build support.
+- Firebase App Distribution integration.
+- Android signing setup automation.
+- Feature scaffolding.
+- Environment validation.
+- Interactive FKIT initialization.
+- Riverpod Clean Architecture templates.
+- Web flavor handling improvements.
+- Enhanced logging system.
+- Configuration validation.

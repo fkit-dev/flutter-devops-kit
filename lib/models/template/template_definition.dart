@@ -1,4 +1,3 @@
-import '../template_setup.dart';
 import 'template_barrel.dart';
 import 'template_component.dart';
 import 'template_di.dart';
@@ -7,6 +6,7 @@ import 'template_group.dart';
 import 'template_module.dart';
 import 'template_requirements.dart';
 import 'template_router.dart';
+import 'template_setup.dart';
 
 class TemplateDefinition {
   const TemplateDefinition({

@@ -1,9 +1,12 @@
 import '../models/init_config.dart';
 import '../models/template/template_definition.dart';
+import 'extension_service.dart';
 import 'feature_generation_service.dart';
 import 'flutter_service.dart';
+import 'localization_service.dart';
 import 'logger_service.dart';
 import 'module_installation_service.dart';
+import 'project_bootstrap_service.dart';
 import 'pubspec_service.dart';
 
 class ProjectSetupService {
@@ -15,7 +18,7 @@ class ProjectSetupService {
   }) async {
     final setup = template.setup;
 
-    if (setup.modules.isEmpty && setup.features.isEmpty) {
+    if (setup.modules.isEmpty && setup.features.isEmpty && !setup.bootstrap.enabled) {
       LoggerService.warning(
         'No project setup configuration found for template '
         '"${template.name}".',
@@ -25,6 +28,10 @@ class ProjectSetupService {
     }
 
     final pubspec = PubspecService();
+
+    await _prepareProject(
+      config: config,
+    );
 
     await _collectTemplateRequirements(
       template: template,
@@ -47,11 +54,28 @@ class ProjectSetupService {
       features: setup.features,
     );
 
+    await const ProjectBootstrapService().bootstrap(
+      config: config,
+      template: template,
+    );
+
     await FlutterService(config).postGenerate(
       buildRunner: template.requirements.buildRunner || moduleRequiresBuildRunner || featuresGenerated,
     );
 
     return true;
+  }
+
+  Future<void> _prepareProject({
+    required InitConfig config,
+  }) async {
+    LoggerService.section('Preparing Project');
+
+    if (config.localizationEnabled) {
+      await LocalizationService().generate();
+    }
+
+    await ExtensionService().generate();
   }
 
   Future<void> _collectTemplateRequirements({
@@ -102,7 +126,10 @@ class ProjectSetupService {
       );
 
       if (!result.installed) {
-        LoggerService.info('Skipped module "$moduleName".');
+        LoggerService.info(
+          'Skipped module "$moduleName".',
+        );
+
         continue;
       }
 
@@ -139,10 +166,13 @@ class ProjectSetupService {
         LoggerService.info(
           'Skipped feature "$feature".',
         );
+
         continue;
       }
+
       generatedAny = true;
     }
+
     return generatedAny;
   }
 }

@@ -29,6 +29,17 @@ setup:
   features:
     - auth
 
+  bootstrap:
+    enabled: true
+
+    app:
+      template: bootstrap/app.dart.tpl
+      output: lib/app/view/app.dart
+
+    main:
+      template: bootstrap/main.dart.tpl
+      output: lib/main.dart
+
 requires:
   packages:
     get_it: ^9.2.1

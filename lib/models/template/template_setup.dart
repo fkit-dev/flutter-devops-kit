@@ -1,11 +1,15 @@
+import 'template_bootstrap.dart';
+
 class TemplateSetup {
   const TemplateSetup({
     required this.modules,
     required this.features,
+    required this.bootstrap,
   });
 
   final List<String> modules;
   final List<String> features;
+  final TemplateBootstrap bootstrap;
 
   factory TemplateSetup.fromMap(Map<dynamic, dynamic> map) {
     return TemplateSetup(
@@ -15,14 +19,11 @@ class TemplateSetup {
       features: List<String>.from(
         map['features'] ?? const [],
       ),
+      bootstrap: TemplateBootstrap.fromMap(
+        Map<dynamic, dynamic>.from(
+          map['bootstrap'] ?? const {},
+        ),
+      ),
     );
   }
-
-  const TemplateSetup.empty()
-      : modules = const [],
-        features = const [];
-
-  bool get isEmpty => modules.isEmpty && features.isEmpty;
-
-  bool get isNotEmpty => !isEmpty;
 }

@@ -3,7 +3,6 @@ import 'dart:io';
 import '../core/command.dart';
 import '../core/command_category.dart';
 import '../generators/fkit_yaml/yaml_generator.dart';
-import '../services/bootstrap_service.dart';
 import '../services/logger_service.dart';
 import '../services/prompt_service.dart';
 import '../wizard/init_wizard.dart';
@@ -80,13 +79,6 @@ class InitCommand extends Command {
     await configFile.writeAsString(
       YamlGenerator.generate(config),
     );
-
-    if (PromptService.confirm(
-      'Configure project now?',
-      defaultValue: true,
-    )) {
-      await BootstrapService().setup(config);
-    }
 
     LoggerService.blank();
 
