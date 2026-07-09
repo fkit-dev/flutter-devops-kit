@@ -13,7 +13,10 @@ class CommandExecutor {
 
     final process = await Process.start(command, arguments, runInShell: true);
 
-    process.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen((line) {
+    process.stdout
+        .transform(utf8.decoder)
+        .transform(const LineSplitter())
+        .listen((line) {
       LoggerService.progressComplete();
 
       print(line);
@@ -21,7 +24,10 @@ class CommandExecutor {
       LoggerService.progress('Executing command...');
     });
 
-    process.stderr.transform(utf8.decoder).transform(const LineSplitter()).listen((line) {
+    process.stderr
+        .transform(utf8.decoder)
+        .transform(const LineSplitter())
+        .listen((line) {
       LoggerService.progressFail();
 
       print(line);

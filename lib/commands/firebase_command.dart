@@ -1,60 +1,105 @@
 import 'package:args/args.dart';
 
 import '../core/base_arg_command.dart';
-import '../models/build_platform.dart';
+import '../core/command_category.dart';
 import '../services/build_service.dart';
 import '../services/config_service.dart';
 import '../services/firebase_service.dart';
 import '../services/logger_service.dart';
+import '../utils/app_platform.dart';
+import '../utils/platform_utils.dart';
 
 class FirebaseCommand extends BaseArgCommand {
   @override
   String get name => 'firebase';
 
   @override
-  String get description => 'Build and upload to Firebase';
+  String get description => 'Build and upload to Firebase App Distribution';
+
+  @override
+  CommandCategory get category => CommandCategory.distribution;
+
+  @override
+  String get usage =>
+      'fkit firebase <flavor> [-p android|ios] [-n "Release Notes"] [-g testers]';
+
+  @override
+  List<String> get examples => const [
+        'fkit firebase development',
+        'fkit firebase production',
+        'fkit firebase production -p ios',
+        'fkit firebase production -n "Internal testing"',
+        'fkit firebase production -g qa',
+        'fkit firebase production -g qa,android',
+        'fkit firebase production -g qa -n "Internal testing"',
+      ];
+
+  @override
+  bool get requiresConfig => true;
+
+  @override
+  bool get requiresFlutterProject => true;
 
   @override
   ArgParser buildParser() {
-    return ArgParser()..addOption('notes', abbr: 'n', help: 'Release notes');
+    return ArgParser()
+      ..addOption('platform',
+          abbr: 'p',
+          allowed: AppPlatform.mobile,
+          defaultsTo: AppPlatform.android,
+          help: 'Target platform')
+      ..addOption('notes', abbr: 'n', help: 'Release notes')
+      ..addOption('group', abbr: 'g', help: 'Firebase tester group');
   }
 
   @override
   Future<void> execute(ArgResults results) async {
     if (results.rest.isEmpty) {
-      LoggerService.error('Usage: fkit firebase <flavor>');
-
+      LoggerService.error('Usage: $usage');
       return;
     }
 
     final flavor = results.rest.first;
 
-    final notes = results['notes'] ?? 'Automated build upload via FKIT';
+    final platform = results['platform'] as String;
 
     final config = await ConfigService.load();
+
+    final notes =
+        results['notes'] as String? ?? 'Automated build upload via FKIT';
+
+    final testerGroup = results['group'] as String? ?? config.testerGroup;
 
     final flavorConfig = config.flavors[flavor];
 
     if (flavorConfig == null) {
-      LoggerService.error('Flavor "$flavor" not found');
-
+      LoggerService.error('Flavor "$flavor" not found.');
       return;
     }
 
-    final buildService = BuildService();
+    if (!PlatformUtils.isEnabled(config, platform)) {
+      LoggerService.error('$platform is disabled in fkit.yaml.');
+      return;
+    }
 
-    final buildResult = await buildService.build(platform: BuildPlatform.apk, flavor: flavor);
+    final appId = PlatformUtils.firebaseAppId(flavorConfig, platform);
 
-    final firebaseService = FirebaseService();
+    if (appId.isEmpty) {
+      LoggerService.error('$platform Firebase App ID is not configured.');
+      return;
+    }
 
-    await firebaseService.upload(
-      appId: flavorConfig.firebase.appDistributionId,
+    final buildResult = await BuildService()
+        .build(platform: PlatformUtils.buildPlatform(platform), flavor: flavor);
 
-      artifactPath: buildResult.artifactPath,
+    await FirebaseService().upload(
+        appId: appId,
+        artifactPath: buildResult.artifactPath,
+        testerGroup: testerGroup,
+        notes: notes);
 
-      testerGroup: config.testerGroup,
-
-      notes: notes,
-    );
+    LoggerService.blank();
+    LoggerService.success('Firebase upload completed successfully.');
+    LoggerService.blank();
   }
 }

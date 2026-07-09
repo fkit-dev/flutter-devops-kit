@@ -1,6 +1,7 @@
 import 'package:args/args.dart';
 
 import '../core/base_arg_command.dart';
+import '../core/command_category.dart';
 import '../services/logger_service.dart';
 import '../services/signing_service.dart';
 
@@ -12,19 +13,48 @@ class SigningCommand extends BaseArgCommand {
   String get description => 'Android signing utilities';
 
   @override
-  ArgParser buildParser() {
-    return ArgParser();
-  }
+  CommandCategory get category => CommandCategory.environment;
+
+  @override
+  String get usage => 'fkit signing <setup|doctor>';
+
+  @override
+  List<String> get examples => const [
+        'fkit signing setup',
+        'fkit signing doctor',
+      ];
+
+  @override
+  bool get requiresFlutterProject => true;
+
+  @override
+  ArgParser buildParser() => ArgParser();
 
   @override
   Future<void> execute(ArgResults results) async {
     if (results.rest.isEmpty) {
-      LoggerService.error('Usage: fkit signing <setup|doctor>');
+      LoggerService.error(
+        'Usage: $usage',
+      );
+
+      LoggerService.blank();
+
+      LoggerService.info(
+        'Available commands:',
+      );
+
+      LoggerService.info(
+        '  setup',
+      );
+
+      LoggerService.info(
+        '  doctor',
+      );
 
       return;
     }
 
-    final action = results.rest.first;
+    final action = results.rest.first.toLowerCase();
 
     final service = SigningService();
 
@@ -38,7 +68,23 @@ class SigningCommand extends BaseArgCommand {
         break;
 
       default:
-        LoggerService.error('Unknown signing command: $action');
+        LoggerService.error(
+          'Unknown signing command: $action',
+        );
+
+        LoggerService.blank();
+
+        LoggerService.info(
+          'Available commands:',
+        );
+
+        LoggerService.info(
+          '  setup',
+        );
+
+        LoggerService.info(
+          '  doctor',
+        );
     }
   }
 }

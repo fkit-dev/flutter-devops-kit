@@ -1,0 +1,13 @@
+enabled: true
+strategy: go_router
+route_file: lib/app/router/app_route.dart
+router_file: lib/app/router/app_router.dart
+initial_route: splash
+
+screens:
+  folder: presentation/screens
+  suffix: "_screen.dart"
+
+ignore:
+  - "*.g.dart"
+  - "*.freezed.dart"

@@ -1,0 +1,42 @@
+enabled: true
+
+strategy: get_it
+
+file: di/{{diFile}}
+
+ignore:
+  - "*.g.dart"
+  - "*.freezed.dart"
+
+imports:
+  - data/datasources/remote
+  - data/datasources/local
+  - data/repositories
+  - domain/repositories
+  - domain/usecases
+  - presentation/bloc
+
+registrations:
+
+  remote_datasource:
+    folder: data/datasources/remote
+    lifecycle: lazy_singleton
+    implementation: remote_datasource_impl
+
+  local_datasource:
+    folder: data/datasources/local
+    lifecycle: lazy_singleton
+    implementation: local_datasource_impl
+
+  repository:
+    folder: data/repositories
+    lifecycle: lazy_singleton
+    implementation: repository_impl
+
+  usecase:
+    folder: domain/usecases
+    lifecycle: factory
+
+  bloc:
+    folder: presentation/bloc
+    lifecycle: factory

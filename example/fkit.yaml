@@ -1,22 +1,145 @@
+# =============================================================================
+# FKIT Configuration
+# =============================================================================
+#
+# Project configuration used by Flutter DevOps Kit.
+#
+# Run:
+#   fkit init
+#
+# to generate or update this configuration.
+#
+# Run:
+#   fkit config
+#
+# to print the currently loaded configuration.
+#
+# =============================================================================
+
+fkit:
+  version: 0.1.0
+
+
+# =============================================================================
+# Project
+# =============================================================================
+
 project_name: scoreloan
+
+
+# =============================================================================
+# Tooling
+# =============================================================================
+#
+# use_fvm:
+#   true  -> Commands run through FVM.
+#   false -> Commands use the globally installed Flutter SDK.
+#
+# Example:
+#   true  -> fvm flutter pub get
+#   false -> flutter pub get
+#
+# =============================================================================
 
 tooling:
   use_fvm: false
+
+
+# =============================================================================
+# Platforms
+# =============================================================================
+#
+# Defines the platforms supported by the project.
+#
+# =============================================================================
 
 platforms:
   android: true
   ios: true
   web: true
 
+
+# =============================================================================
+# Generator
+# =============================================================================
+#
+# Defines the architecture template used by FKIT generators.
+#
+# Available templates:
+#   - bloc_clean
+#
+# Example:
+#   fkit feat auth
+#   fkit make screen auth
+#   fkit install theme
+#
+# =============================================================================
+
+generator:
+  default_template: bloc_clean
+
+
+# =============================================================================
+# Build
+# =============================================================================
+#
+# debug_info:
+#   Directory used to store obfuscation debug symbols.
+#
+# obfuscate:
+#   Enables Dart code obfuscation for supported release builds.
+#
+# =============================================================================
+
 build:
   debug_info: ./debug-info
   obfuscate: true
 
+
+# =============================================================================
+# Application Entry Point
+# =============================================================================
+
 entry:
   main: lib/main.dart
 
+
+# =============================================================================
+# Flavoring
+# =============================================================================
+#
+# enabled:
+#   Enables flavor-aware run, build and distribution commands.
+#
+# The default flavor is used when no explicit flavor is provided.
+#
+# Examples:
+#   fkit run
+#   fkit run development
+#   fkit build apk production
+#
+# =============================================================================
+
 flavoring:
   enabled: true
+
+
+# =============================================================================
+# Flavors
+# =============================================================================
+#
+# Each flavor may define:
+#
+#   env:
+#     Environment configuration file.
+#
+#   firebase.app_distribution_id:
+#     Firebase App Distribution application ID.
+#
+#   firebase.options:
+#     Platform-specific generated Firebase options files.
+#
+# =============================================================================
 
 flavors:
   default: development
@@ -28,9 +151,9 @@ flavors:
       app_distribution_id: YOUR_ANDROID_APP_ID
 
       options:
-        android: lib/firebase/firebase_options_development.dart
-        ios: lib/firebase/firebase_options_development.dart
-        web: lib/firebase/firebase_options_development.dart
+        android: lib/firebase_options_development.dart
+        ios: lib/firebase_options_development.dart
+        web: lib/firebase_options_development.dart
 
   staging:
     env: env/staging.json
@@ -39,9 +162,9 @@ flavors:
       app_distribution_id: YOUR_STAGING_APP_ID
 
       options:
-        android: lib/firebase/firebase_options_staging.dart
-        ios: lib/firebase/firebase_options_staging.dart
-        web: lib/firebase/firebase_options_staging.dart
+        android: lib/firebase_options_staging.dart
+        ios: lib/firebase_options_staging.dart
+        web: lib/firebase_options_staging.dart
 
   production:
     env: env/production.json
@@ -50,9 +173,75 @@ flavors:
       app_distribution_id: YOUR_PRODUCTION_APP_ID
 
       options:
-        android: lib/firebase/firebase_options_production.dart
-        ios: lib/firebase/firebase_options_production.dart
-        web: lib/firebase/firebase_options_production.dart
+        android: lib/firebase_options_production.dart
+        ios: lib/firebase_options_production.dart
+        web: lib/firebase_options_production.dart
+
+
+# =============================================================================
+# Firebase App Distribution
+# =============================================================================
+#
+# Default tester group used when no group is explicitly provided.
+#
+# Example:
+#   fkit firebase production
+#
+# Override:
+#   fkit firebase production -g qa
+#
+# =============================================================================
 
 firebase:
   tester_group: internal-testers
+
+
+# =============================================================================
+# Localization
+# =============================================================================
+#
+# enabled:
+#   Enables Flutter localization support.
+#
+# arb_dir:
+#   Directory containing ARB localization files.
+#
+# template:
+#   Template ARB file used by Flutter gen-l10n.
+#
+# output_dir:
+#   Directory containing generated localization files.
+#
+# output_file:
+#   Generated localization Dart file.
+#
+# default_locale:
+#   Default application locale.
+#
+# locales:
+#   Supported application locales.
+#
+# Commands:
+#   fkit l10n setup
+#   fkit l10n generate
+#   fkit l10n doctor
+#
+# =============================================================================
+
+localization:
+  enabled: true
+
+  arb_dir: lib/l10n
+
+  template: app_en.arb
+
+  output_dir: lib/gen/l10n
+
+  output_file: app_localizations.dart
+
+  default_locale: en
+
+  locales:
+    - en
+    - mr
+    - hi

@@ -1,0 +1,51 @@
+name: theme
+
+display_name: Theme
+
+description: Material 3 theme with light, dark and system mode.
+
+version: 1.0.0
+
+files:
+
+  - template: app_color.dart.tpl
+    output: lib/app/theme/app_color.dart
+
+  - template: app_theme.dart.tpl
+    output: lib/app/theme/app_theme.dart
+
+  - template: theme_state.dart.tpl
+    output: lib/app/theme/theme_state.dart
+
+  - template: theme_cubit.dart.tpl
+    output: lib/app/theme/theme_cubit.dart
+
+  - template: app_typography.dart.tpl
+    output: lib/app/theme/app_typography.dart
+
+  - template: theme_constants.dart.tpl
+    output: lib/app/theme/theme_constants.dart
+
+  - template: logger_service.dart.tpl
+    output: lib/core/services/logger_service.dart
+    when: talker_logger
+
+  - template: api_response_log_interceptor.dart.tpl
+    output: lib/core/network/interceptors/api_response_log_interceptor.dart
+    when: talker_logger
+
+  - template: xcore.dart.tpl
+    output: lib/app/theme/xcore.dart
+
+requires:
+  packages:
+    flutter_bloc: ^9.1.0
+    hive_flutter: ^1.1.0
+    freezed_annotation: ^3.1.0
+
+  dev_packages:
+    build_runner: ^2.5.4
+    freezed: ^3.2.3
+
+  flutter_gen: false
+  build_runner: true

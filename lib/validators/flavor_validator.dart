@@ -1,7 +1,7 @@
-import '../models/project_config.dart';
+import 'package:flutter_devops_kit/models/init_config.dart';
 
 class FlavorValidator {
-  static void validate(ProjectConfig config, String flavor) {
+  static void validate(InitConfig config, String flavor) {
     if (!config.flavors.containsKey(flavor)) {
       throw Exception('❌ Flavor "$flavor" not configured');
     }

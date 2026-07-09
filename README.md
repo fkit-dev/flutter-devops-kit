@@ -1,45 +1,168 @@
 # Flutter DevOps Kit (FKIT)
 
-A scalable Flutter DevOps CLI toolkit for build automation, Firebase distribution, Android signing setup, feature scaffolding, and reusable engineering workflows.
+A scalable, template-driven Flutter CLI toolkit for project automation, code generation, reusable architecture workflows, builds, Firebase distribution, signing, localization, and developer tooling.
+
+FKIT is designed to reduce repetitive Flutter setup and development tasks while remaining flexible enough to support different project architectures and engineering workflows.
 
 ---
 
 # Overview
 
-Flutter DevOps Kit (`fkit`) is a reusable command-line automation toolkit built for Flutter projects.
+Flutter DevOps Kit (`fkit`) is a reusable command-line toolkit built for Flutter developers and teams.
 
-It helps automate:
+Instead of repeatedly configuring project structure, architecture, modules, builds, signing, localization, Firebase distribution, launcher icons, and code generation manually, FKIT provides a unified CLI workflow.
 
-* Flutter project setup
-* Flavor-based builds
-* Firebase App Distribution
-* Android signing configuration
-* Code generation workflows
-* Feature scaffolding
-* Flutter/Dart tooling
-* Multi-project DevOps workflows
+FKIT is installed globally once and configured per Flutter project using:
 
-FKIT is installed globally once and configured per project using `fkit.yaml`.
+```text
+fkit.yaml
+```
+
+The toolkit is designed around three major ideas:
+
+* Project automation
+* Template-driven code generation
+* Reusable development workflows
+
+FKIT can be used for both existing Flutter projects and newly initialized projects.
+
+---
+
+# Why FKIT?
+
+Flutter projects often require repetitive setup and maintenance tasks such as:
+
+* Creating architecture-specific feature folders
+* Generating DTOs, entities, repositories, use cases, BLoCs, and screens
+* Maintaining dependency injection registrations
+* Maintaining application routes
+* Installing reusable project modules
+* Configuring launcher icons
+* Running code generation
+* Managing Flutter and FVM commands
+* Building APK, AAB, IPA, and Web applications
+* Managing flavors
+* Uploading builds to Firebase App Distribution
+* Configuring Android signing
+* Managing localization workflows
+* Running formatting, analysis, and automated fixes
+
+FKIT provides a single CLI interface for these workflows.
+
+```bash
+fkit <command>
+```
+
+---
+
+# Version
+
+Current release:
+
+```text
+0.1.1
+```
+
+FKIT is under active development.
+
+The current release focuses on building the foundation for a scalable Flutter CLI ecosystem, including template-driven generation, reusable modules, project automation, and architecture-aware maintenance.
 
 ---
 
 # Features
 
-## Current Features
+## Available Features
+
+### Project Setup & Configuration
 
 * Global CLI installation
-* Project-based YAML configuration
-* Flutter & Dart command automation
-* APK / AAB / IPA / Web builds
+* Interactive project initialization
+* YAML-based project configuration
+* Template-driven project setup
+* Automated project bootstrap generation
+* Environment diagnostics and validation
+* FVM support
+* Multi-platform project configuration
+
+### Code Generation
+
+* Feature-first architecture scaffolding
+* Feature generation with `fkit feat`
+* Component generation with `fkit make`
+* Resource generation workflows
+* Template-driven generators
+* Automatic barrel file maintenance
+* Automatic dependency injection maintenance
+* Build Runner integration
+
+### Reusable Modules
+
+* Module installation with `fkit install`
+* Template-defined module configuration
+* Interactive module options
+* Conditional file generation
+* Conditional package dependencies
+* Automated dependency management
+* Generic and DI-specific module integrations
+
+Currently available modules:
+
+* Theme
+* Router
+* Network
+
+### Routing
+
+* GoRouter module generation
+* Automatic route discovery
+* Automatic route synchronization
+* Existing route detection
+* Duplicate route prevention
+* Preservation of manually customized routes
+* Automatic route import maintenance
+
+### Network Layer
+
+* Dio-based API service
+* Typed API responses
+* Generic response mappers
+* Object and list response mapping
+* Pagination support
+* API response extensions
+* Centralized failure handling
+* Dio exception mapping
+* Network connectivity monitoring
+* Network interceptor
+* Authentication interceptor
+* Optional Talker application and network logging
+
+### Localization
+
+* Localization setup
+* ARB file generation
+* `l10n.yaml` generation
+* Localization validation
+* Localization diagnostics
+* Automatic Flutter localization dependency configuration
+
+### Build & Distribution
+
+* APK builds
+* Android App Bundle builds
+* IPA builds
+* Flutter Web builds
+* Flavor-aware workflows
 * Firebase App Distribution
 * Android signing setup
-* Environment diagnostics
-* Flavor-aware workflows
-* FVM support
-* Feature scaffolding
-* Code quality automation
-* Interactive project initialization
-* Config validation
+* Dart code obfuscation support
+
+## In Development
+
+* Additional reusable modules
+* Additional architecture templates
+* Improved project setup customization
+* Expanded automated test coverage
+* Additional module integration strategies
 
 ## Planned Features
 
@@ -51,43 +174,7 @@ FKIT is installed globally once and configured per project using `fkit.yaml`.
 * Git tagging
 * Changelog generation
 * CI/CD templates
-* Slack / Discord notifications
-
----
-
-# Installation
-
-## Install Globally
-
-```bash
-dart pub global activate flutter_devops_kit
-```
-
----
-
-## Add Dart Global Bin to PATH
-
-### macOS / Linux (ZSH)
-
-```bash
-echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-### macOS / Linux (Bash)
-
-```bash
-echo 'export PATH="$PATH:$HOME/.pub-cache/bin"' >> ~/.bashrc
-source ~/.bashrc
-```
-
----
-
-## Verify Installation
-
-```bash
-fkit help
-```
+* Slack and Discord notifications
 
 ---
 
@@ -101,15 +188,78 @@ Run inside your Flutter project:
 fkit init
 ```
 
-This generates:
-
-```bash
-fkit.yaml
-```
+This creates the FKIT project configuration and allows you to configure project settings and select the default architecture template.
 
 ---
 
-## 2. Validate Environment
+## 2. Prepare Project Prerequisites
+
+Before running the complete project setup, configure any project-specific prerequisites required by your application.
+
+Examples include:
+
+* Firebase configuration
+* Flutter flavors
+* Environment files
+* Platform-specific configuration
+
+---
+
+## 3. Set up the Project
+
+```bash
+fkit setup
+```
+
+The setup command reads the selected architecture template and automatically performs the configured project setup workflow.
+
+Depending on the selected template, FKIT can:
+
+* Install reusable modules
+* Add required dependencies
+* Generate configured features
+* Synchronize dependency injection
+* Synchronize application routes
+* Generate project bootstrap files
+* Configure project-level requirements
+* Run dependency synchronization
+* Execute required code generation
+
+For example, a template may define:
+
+```yaml
+setup:
+  modules:
+    - theme
+    - router
+    - network
+
+  features:
+    - auth
+
+  bootstrap:
+    enabled: true
+
+    app:
+      template: bootstrap/app.dart.tpl
+      output: lib/app/view/app.dart
+
+    main:
+      template: bootstrap/main.dart.tpl
+      output: lib/main.dart
+```
+
+Running:
+
+```bash
+fkit setup
+```
+
+can transform a fresh Flutter project into a structured, architecture-ready starting point.
+
+---
+
+## 4. Validate the Environment
 
 ```bash
 fkit doctor
@@ -117,7 +267,31 @@ fkit doctor
 
 ---
 
-## 3. Build APK
+## 5. Generate Additional Features
+
+```bash
+fkit feat profile
+```
+
+---
+
+## 6. Generate Feature Components
+
+```bash
+fkit make screen auth login
+```
+
+---
+
+## 7. Install Additional Modules
+
+```bash
+fkit install network
+```
+
+---
+
+## 8. Build the Application
 
 ```bash
 fkit build apk production
@@ -125,7 +299,7 @@ fkit build apk production
 
 ---
 
-## 4. Upload to Firebase
+## 9. Upload to Firebase App Distribution
 
 ```bash
 fkit firebase production
@@ -133,141 +307,233 @@ fkit firebase production
 
 ---
 
-# Example `fkit.yaml`
-
-```yaml
-project_name: sample_project
-
-tooling:
-  use_fvm: false
-
-platforms:
-  android: true
-  ios: true
-  web: true
-
-build:
-  debug_info: ./debug-info
-  obfuscate: true
-
-entry:
-  main: lib/main.dart
-
-flavoring:
-  enabled: true
-
-flavors:
-  default: production
-
-  development:
-    env: env/development.json
-
-    firebase:
-      app_distribution_id: YOUR_DEV_APP_ID
-
-      options:
-        android: lib/firebase_options_development.dart
-        ios: lib/firebase_options_development.dart
-        web: lib/firebase_options_development.dart
-
-  production:
-    env: env/production.json
-
-    firebase:
-      app_distribution_id: YOUR_PROD_APP_ID
-
-      options:
-        android: lib/firebase_options_production.dart
-        ios: lib/firebase_options_production.dart
-        web: lib/firebase_options_production.dart
-
-firebase:
-  tester_group: internal-testers
-```
-
----
-
 # Core Commands
 
-| Command                     | Description              |
-| --------------------------- | ------------------------ |
-| `fkit help`                 | Show available commands  |
-| `fkit doctor`               | Validate environment     |
-| `fkit init`                 | Initialize FKIT config   |
-| `fkit build apk production` | Build APK                |
-| `fkit build web`            | Build web app            |
-| `fkit firebase production`  | Upload build to Firebase |
-| `fkit signing setup`        | Setup Android signing    |
-| `fkit feat auth`            | Generate feature module  |
+| Command | Description |
+| --- | --- |
+| `fkit help` | Show available commands |
+| `fkit doctor` | Validate the development environment |
+| `fkit init` | Initialize FKIT configuration |
+| `fkit setup` | Setup the project using the selected architecture template |
+| `fkit config` | Display the currently loaded FKIT configuration |
+| `fkit feat auth` | Generate a complete feature module |
+| `fkit make screen auth login` | Generate a feature component |
+| `fkit install theme` | Install the theme module |
+| `fkit install router` | Install the router module |
+| `fkit install network` | Install the network module |
+| `fkit l10n setup` | Setup Flutter localization |
+| `fkit l10n generate` | Generate localization files |
+| `fkit l10n doctor` | Validate localization configuration |
+| `fkit build apk production` | Build an APK |
+| `fkit build aab production` | Build an Android App Bundle |
+| `fkit build ipa production` | Build an IPA |
+| `fkit build web production` | Build the Flutter Web application |
+| `fkit firebase production` | Upload a build to Firebase App Distribution |
+| `fkit signing setup` | Setup Android signing |
 
 ---
 
-# Documentation
+# Template-Driven Architecture
 
-Detailed documentation:
+FKIT uses reusable architecture templates to define how projects, features, components, modules, routing, dependency injection, and project setup workflows are generated.
 
-* `doc/configuration.md`
-* `doc/commands.md`
-* `doc/firebase.md`
-* `dos/installation.md`
-* `dos/signing.md`
-* `doc/feature-scaffolding.md`
-* `dos/roadmap.md`
+The currently available template is:
 
+* `bloc_clean` — Feature-first Clean Architecture using `flutter_bloc`
+
+Templates can define:
+
+* Feature structure
+* Components
+* Component groups
+* Barrel files
+* Dependency injection
+* Routing
+* Reusable modules
+* Project requirements
+* Project setup workflows
+* Application bootstrap files
+
+This architecture allows FKIT to support additional project structures and state-management approaches in future releases without coupling generators directly to a single architecture.
+
+---
+
+# Reusable Modules
+
+FKIT modules provide reusable project-level functionality that can be installed independently.
+
+```bash
+fkit install <module>
+```
+
+Available modules include:
+
+```bash
+fkit install theme
+fkit install router
+fkit install network
+```
+
+Modules can define:
+
+* Generated files
+* Required dependencies
+* Development dependencies
+* Interactive configuration options
+* Conditional files
+* Conditional dependencies
+* Build Runner requirements
+* Template and DI-specific integrations
+
+This allows modules to remain reusable while adapting their integration behavior to the selected architecture template.
 ---
 
 # Architecture
 
-FKIT follows:
+FKIT follows a configuration-driven and template-driven architecture.
 
-* Config-driven architecture
-* Reusable global tooling
-* Multi-project support
-* Flavor-aware workflows
-* Future CI/CD scalability
+The CLI is organized around:
+
+```text
+Commands
+    ↓
+Services
+    ↓
+Templates
+    ↓
+Generators
+    ↓
+Resolvers
+    ↓
+Maintainers
+    ↓
+Integrators
+```
+
+Major architectural concepts include:
+
+* Commands for user-facing workflows
+* Services for reusable application logic
+* Templates for architecture-specific behavior
+* Generators for file creation
+* Resolvers for project discovery
+* Maintainers for existing code synchronization
+* Integrators for module and architecture integration
+
+This structure is designed to prevent architecture-specific logic from being hardcoded directly into CLI commands.
 
 ---
 
-# Recommended Project Structure
+# Recommended Flutter Project Structure
 
-```bash
+A configured Flutter project may look like:
+
+```text
 my_flutter_project/
 ├── android/
 ├── ios/
+├── web/
 ├── lib/
+│   ├── app/
+│   ├── core/
+│   └── features/
 ├── env/
 ├── pubspec.yaml
 └── fkit.yaml
 ```
 
+The exact project structure depends on the selected FKIT architecture template.
+
 ---
 
 # Development
 
-Run locally:
+Clone the FKIT repository and retrieve dependencies:
+
+```bash
+dart pub get
+```
+
+Run FKIT locally:
 
 ```bash
 dart run bin/fkit.dart help
 ```
 
-Re-activate global CLI after changes:
+Activate the local package globally:
 
 ```bash
 dart pub global activate --source path .
 ```
 
+After making CLI changes, reactivate the package:
+
+```bash
+dart pub global activate --source path .
+```
+
+Run FKIT inside a test Flutter project:
+
+```bash
+fkit help
+```
+
+---
+
+# Publishing
+
+Before publishing a new FKIT version:
+
+```bash
+dart format .
+```
+
+```bash
+dart analyze
+```
+
+```bash
+dart test
+```
+
+Run a dry publish:
+
+```bash
+dart pub publish --dry-run
+```
+
+If validation succeeds:
+
+```bash
+dart pub publish
+```
+
+---
+
+# Project Status
+
+FKIT is under active development.
+
+The `0.1.x` releases focus on establishing the core architecture, template system, generators, maintainers, reusable modules, and project automation foundation.
+
+Breaking changes may occur while the architecture evolves toward a stable release.
+
 ---
 
 # Contributing
 
-Contributions and automation ideas are welcome.
+Contributions, bug reports, architecture templates, modules, and automation ideas are welcome.
 
-Areas of contribution:
+Areas of contribution include:
 
 * Build automation
 * Deployment workflows
-* CI/CD templates
+* Architecture templates
+* Module development
 * Feature generators
+* Maintainers
+* Integrators
+* CI/CD templates
 * Documentation
 * Testing
 

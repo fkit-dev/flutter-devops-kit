@@ -1,0 +1,68 @@
+schema: 2
+
+name: bloc_clean
+
+display_name: BLoC Clean Architecture
+
+description: Feature-first Clean Architecture using flutter_bloc
+
+version: 1.0.0
+
+author: FKIT
+
+documentation:
+  overview: >
+    Feature-first Clean Architecture using flutter_bloc.
+    Uses Freezed, json_serializable and build_runner.
+
+  notes:
+    - Feature generation creates a complete feature module.
+     - DTO and Entity use Freezed.
+    - Run "fkit make resource auth Login" to generate resource files.
+
+setup:
+  modules:
+    - theme
+    - router
+    - network
+
+  features:
+    - auth
+
+  bootstrap:
+    enabled: true
+
+    app:
+      template: bootstrap/app.dart.tpl
+      output: lib/app/view/app.dart
+
+    main:
+      template: bootstrap/main.dart.tpl
+      output: lib/main.dart
+
+requires:
+  packages:
+    get_it: ^9.2.1
+
+  dev_packages: {}
+
+  flutter_gen: false
+  build_runner: false
+
+supports:
+  - feature
+  - bloc
+  - entity
+  - dto
+  - mapper
+  - repository
+  - usecase
+
+files:
+  feature: template/feature.yaml
+  components: template/components.yaml
+  groups: template/groups.yaml
+  barrel: template/barrel.yaml
+  di: template/di.yaml
+  router: template/router.yaml
+  modules: template/modules.yaml

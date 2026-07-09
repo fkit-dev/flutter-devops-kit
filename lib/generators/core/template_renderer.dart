@@ -1,0 +1,38 @@
+import 'template_locator.dart';
+
+class TemplateRenderer {
+  const TemplateRenderer._();
+
+  static String renderString(
+    String value,
+    Map<String, String> variables,
+  ) {
+    var result = value;
+
+    for (final entry in variables.entries) {
+      result = result.replaceAll(
+        '{{${entry.key}}}',
+        entry.value,
+      );
+    }
+
+    return result;
+  }
+
+  static Future<String> render({
+    required String templateRoot,
+    required String template,
+    Map<String, String> variables = const {},
+  }) async {
+    final file = await const TemplateLocator().resolve(
+      '$templateRoot/$template',
+    );
+
+    final content = await file.readAsString();
+
+    return renderString(
+      content,
+      variables,
+    );
+  }
+}

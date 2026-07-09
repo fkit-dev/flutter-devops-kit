@@ -1,26 +1,38 @@
 import '../core/command.dart';
+import '../core/command_category.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
-import '../utils/command_executor.dart';
 
 class FormatCommand extends Command {
   @override
   String get name => 'format';
 
   @override
-  String get description => 'Format dart files';
+  String get description => 'Format Dart files';
+
+  @override
+  CommandCategory get category => CommandCategory.development;
+
+  @override
+  String get usage => 'fkit format';
+
+  @override
+  List<String> get examples => const ['fkit format'];
+
+  @override
+  bool get requiresConfig => true;
+
+  @override
+  bool get requiresFlutterProject => true;
 
   @override
   Future<void> run(List<String> args) async {
     LoggerService.section('Formatting project');
+
     final config = await ConfigService.load();
 
-    final flutterService = FlutterService(config);
-
-    final command = flutterService.dartCommand;
-
-    await CommandExecutor.run(command.first, [...command.skip(1), 'format', 'lib']);
+    await FlutterService(config).format();
 
     LoggerService.blank();
 

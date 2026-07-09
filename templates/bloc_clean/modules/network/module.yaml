@@ -1,0 +1,150 @@
+name: network
+
+display_name: Network
+
+description: Dio-based network layer with typed responses, failure handling and optional Talker logging.
+
+version: 1.0.0
+
+options:
+  talker_logger:
+    type: boolean
+    prompt: Use Talker for application and network logging?
+    default: true
+
+integration:
+  enabled: true
+  strategy: network
+
+files:
+  # ---------------------------------------------------------------------------
+  # Configuration
+  # ---------------------------------------------------------------------------
+
+  - template: config/api_config.dart.tpl
+    output: lib/core/network/config/api_config.dart
+
+  - template: config/dio_factory.dart.tpl
+    output: lib/core/network/config/dio_factory.dart
+
+  # ---------------------------------------------------------------------------
+  # Constants
+  # ---------------------------------------------------------------------------
+
+  - template: constants/header_key.dart.tpl
+    output: lib/core/network/constants/header_key.dart
+
+  # ---------------------------------------------------------------------------
+  # API Services
+  # ---------------------------------------------------------------------------
+
+  - template: base_api_service.dart.tpl
+    output: lib/core/network/base_api_service.dart
+
+  - template: network_api_service.dart.tpl
+    output: lib/core/network/network_api_service.dart
+
+  # ---------------------------------------------------------------------------
+  # Parser
+  # ---------------------------------------------------------------------------
+
+  - template: parser.dart.tpl
+    output: lib/core/network/parser.dart
+
+  # ---------------------------------------------------------------------------
+  # Responses
+  # ---------------------------------------------------------------------------
+
+  - template: response/base_response.dart.tpl
+    output: lib/core/network/response/base_response.dart
+
+  - template: response/pagination.dart.tpl
+    output: lib/core/network/response/pagination.dart
+
+  - template: response/paginated_result.dart.tpl
+    output: lib/core/network/response/paginated_result.dart
+
+  - template: response/response_mapper.dart.tpl
+    output: lib/core/network/response/response_mapper.dart
+
+  - template: response/result.dart.tpl
+    output: lib/core/network/response/result.dart
+
+  - template: response/result_message.dart.tpl
+    output: lib/core/network/response/result_message.dart
+
+  - template: response/api_response_extensions.dart.tpl
+    output: lib/core/network/response/api_response_extensions.dart
+
+  # ---------------------------------------------------------------------------
+  # Failures
+  # ---------------------------------------------------------------------------
+
+  - template: failure/app_exception.dart.tpl
+    output: lib/core/network/failure/app_exception.dart
+
+  - template: failure/error_model.dart.tpl
+    output: lib/core/network/failure/error_model.dart
+
+  - template: failure/failure.dart.tpl
+    output: lib/core/network/failure/failure.dart
+
+  # ---------------------------------------------------------------------------
+  # Logger
+  # ---------------------------------------------------------------------------
+
+  - template: ../../services/logger_service.dart.tpl
+    output: lib/core/services/logger/logger_service.dart
+    when: talker_logger
+
+  # ---------------------------------------------------------------------------
+  # Network Monitoring
+  # ---------------------------------------------------------------------------
+
+  - template: services/network_monitor_service.dart.tpl
+    output: lib/core/network/services/network_monitor_service.dart
+
+  # ---------------------------------------------------------------------------
+  # Interceptors
+  # ---------------------------------------------------------------------------
+
+  - template: interceptors/network_interceptor.dart.tpl
+    output: lib/core/network/interceptors/network_interceptor.dart
+
+  - template: interceptors/auth_interceptor.dart.tpl
+    output: lib/core/network/interceptors/auth_interceptor.dart
+
+  - template: interceptors/api_response_log_interceptor.dart.tpl
+    output: lib/core/network/interceptors/api_response_log_interceptor.dart
+    when: talker_logger
+
+  # ---------------------------------------------------------------------------
+  # Barrel
+  # ---------------------------------------------------------------------------
+
+  - template: xcore.dart.tpl
+    output: lib/core/network/xcore.dart
+
+requires:
+  packages:
+    dio: ^5.8.0+1
+    dartz: ^0.10.1
+    connectivity_plus: ^6.1.4
+    freezed_annotation: ^3.1.0
+    json_annotation: ^4.12.0
+
+    talker_flutter:
+      version: ^5.1.13
+      when: talker_logger
+
+    talker_dio_logger:
+      version: ^5.1.13
+      when: talker_logger
+
+  dev_packages:
+    build_runner: ^2.5.4
+    freezed: ^3.2.3
+    json_serializable: ^6.9.5
+
+  flutter_gen: false
+  build_runner: true

@@ -1,0 +1,22 @@
+resource:
+  description: Generate all domain resource files.
+  components:
+    - entity
+    - dto
+    - mapper
+    - usecase
+
+bloc:
+  description: Generate BLoC files.
+  components:
+    - bloc
+    - event
+    - state
+
+datasource:
+  description: Generate local and remote datasource files.
+  components:
+    - local_datasource
+    - local_datasource_impl
+    - remote_datasource
+    - remote_datasource_impl

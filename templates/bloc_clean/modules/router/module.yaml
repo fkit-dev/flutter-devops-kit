@@ -1,0 +1,27 @@
+name: router
+display_name: Router
+description: GoRouter setup.
+version: 1.0.0
+
+integration:
+  enabled: true
+  strategy: router
+
+files:
+  - template: app_route.dart.tpl
+    output: lib/app/router/app_route.dart
+
+  - template: app_router.dart.tpl
+    output: lib/app/router/app_router.dart
+
+  - template: xcore.dart.tpl
+    output: lib/app/router/xcore.dart
+
+requires:
+  packages:
+    go_router: ^16.0.0
+
+  dev_packages: {}
+
+  flutter_gen: false
+  build_runner: false

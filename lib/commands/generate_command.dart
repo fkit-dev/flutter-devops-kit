@@ -1,8 +1,8 @@
 import '../core/command.dart';
+import '../core/command_category.dart';
 import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
-import '../utils/command_executor.dart';
 
 class GenerateCommand extends Command {
   @override
@@ -12,15 +12,27 @@ class GenerateCommand extends Command {
   String get description => 'Run build_runner build';
 
   @override
+  CommandCategory get category => CommandCategory.codeGeneration;
+
+  @override
+  String get usage => 'fkit generate';
+
+  @override
+  List<String> get examples => const ['fkit generate'];
+
+  @override
+  bool get requiresConfig => true;
+
+  @override
+  bool get requiresFlutterProject => true;
+
+  @override
   Future<void> run(List<String> args) async {
     LoggerService.section('Generating files');
+
     final config = await ConfigService.load();
 
-    final flutterService = FlutterService(config);
-
-    final command = flutterService.flutterPubCommand;
-
-    await CommandExecutor.run(command.first, [...command.skip(1), 'run', 'build_runner', 'build', '--delete-conflicting-outputs']);
+    await FlutterService(config).buildRunner();
 
     LoggerService.blank();
 
