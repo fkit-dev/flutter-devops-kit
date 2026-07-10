@@ -4,6 +4,9 @@ import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 
+/// Formats Dart source files in the current FKIT project.
+///
+/// Runs the configured Dart formatter on project source files.
 class FormatCommand extends Command {
   @override
   String get name => 'format';

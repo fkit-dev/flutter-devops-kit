@@ -3,9 +3,13 @@ import 'dart:io';
 import '../models/init_config.dart';
 import '../services/logger_service.dart';
 
+/// Validates localization configuration for an FKIT project.
 class LocalizationValidator {
   const LocalizationValidator._();
 
+  /// Validates the project's localization configuration.
+  ///
+  /// Throws an exception when the configuration is invalid or incomplete.
   static void validate(
     InitConfig config,
   ) {

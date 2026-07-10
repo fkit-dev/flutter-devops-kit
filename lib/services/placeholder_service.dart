@@ -1,5 +1,10 @@
+/// Provides utilities for replacing placeholders in generated content.
 class PlaceholderService {
-  static String replace({required String input, required String feature}) {
+  /// Replaces placeholders in [input] using the provided [feature] name.
+  static String replace({
+    required String input,
+    required String feature,
+  }) {
     final snake = _toSnake(feature);
 
     final pascal = _toPascal(feature);
@@ -18,10 +23,7 @@ class PlaceholderService {
   }
 
   static String _toPascal(String input) {
-    return input
-        .split('_')
-        .map((e) => e[0].toUpperCase() + e.substring(1))
-        .join();
+    return input.split('_').map((e) => e[0].toUpperCase() + e.substring(1)).join();
   }
 
   static String _toCamel(String input) {

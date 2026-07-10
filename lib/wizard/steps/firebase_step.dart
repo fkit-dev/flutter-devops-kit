@@ -2,6 +2,7 @@ import '../../services/logger_service.dart';
 import '../../services/prompt_service.dart';
 import '../wizard_step.dart';
 
+/// Collects Firebase configuration during the initialization wizard.
 class FirebaseStep extends WizardStep<String> {
   @override
   String collect() {

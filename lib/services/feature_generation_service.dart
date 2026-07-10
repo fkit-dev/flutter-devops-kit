@@ -5,16 +5,17 @@ import '../models/template/template_definition.dart';
 import 'flutter_service.dart';
 import 'maintenance_service.dart';
 
+/// Manages feature generation for FKIT projects.
 class FeatureGenerationService {
+  /// Creates a feature generation service.
   const FeatureGenerationService();
 
+  /// Generates a feature using the provided generation configuration.
+  ///
+  /// Returns whether the feature generation process completed successfully.
   Future<bool> generate(
-      {required InitConfig config,
-      required TemplateDefinition template,
-      required String feature,
-      bool postGenerate = true}) async {
-    final context =
-        GeneratorContext(config: config, feature: feature, template: template);
+      {required InitConfig config, required TemplateDefinition template, required String feature, bool postGenerate = true}) async {
+    final context = GeneratorContext(config: config, feature: feature, template: template);
 
     final generated = await FeatureGenerator().generate(context);
 

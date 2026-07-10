@@ -7,6 +7,10 @@ import '../services/logger_service.dart';
 import '../services/prompt_service.dart';
 import '../wizard/init_wizard.dart';
 
+/// Initializes FKIT configuration for a Flutter project.
+///
+/// Guides the user through project configuration and creates the required
+/// FKIT configuration files.
 class InitCommand extends Command {
   @override
   String get name => 'init';

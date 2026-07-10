@@ -4,20 +4,19 @@ import '../services/logger_service.dart';
 import '../services/prompt_service.dart';
 import '../utils/command_executor.dart';
 
+/// Manages application signing setup and validation for FKIT projects.
 class SigningService {
+  /// Configures application signing for the current project.
   Future<void> setup() async {
     LoggerService.section('Android Signing Setup');
 
     final alias = PromptService.ask('Keystore alias', defaultValue: 'fkit.jks');
 
-    final storePassword =
-        PromptService.ask('Store password', defaultValue: 'Fkit@1215');
+    final storePassword = PromptService.ask('Store password', defaultValue: 'Fkit@1215');
 
-    final keyPassword =
-        PromptService.ask('Key password', defaultValue: 'Fkit@1215');
+    final keyPassword = PromptService.ask('Key password', defaultValue: 'Fkit@1215');
 
-    final company =
-        PromptService.ask('Company/Organization', defaultValue: 'Fkit');
+    final company = PromptService.ask('Company/Organization', defaultValue: 'Fkit');
 
     final keystoreName = '$alias-keystore.jks';
 
@@ -28,8 +27,7 @@ class SigningService {
     final keystoreFile = File(keystorePath);
 
     if (keystoreFile.existsSync()) {
-      final overwrite =
-          PromptService.confirm('Keystore already exists. Overwrite?');
+      final overwrite = PromptService.confirm('Keystore already exists. Overwrite?');
 
       if (!overwrite) {
         LoggerService.warning('Operation cancelled.');
@@ -93,6 +91,7 @@ storeFile=$keystoreName
     LoggerService.info('Configure signingConfigs in Gradle.');
   }
 
+  /// Validates the application's signing configuration.
   Future<void> doctor() async {
     LoggerService.section('Signing Doctor');
 
@@ -154,11 +153,7 @@ storeFile=$keystoreName
 
     final content = await gitignore.readAsString();
 
-    final entries = [
-      'android/key.properties',
-      'android/app/*.jks',
-      'android/app/*.keystore'
-    ];
+    final entries = ['android/key.properties', 'android/app/*.jks', 'android/app/*.keystore'];
 
     final buffer = StringBuffer(content);
 

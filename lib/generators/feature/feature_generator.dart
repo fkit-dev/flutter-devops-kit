@@ -3,7 +3,11 @@ import 'dart:io';
 import '../core/generator_context.dart';
 import '../core/generator_mixin.dart';
 
+/// Generates feature files from FKIT template definitions.
 class FeatureGenerator with GeneratorMixin {
+  /// Generates a feature using the provided generation configuration.
+  ///
+  /// Returns whether the feature generation process completed successfully.
   Future<bool> generate(
     GeneratorContext context, {
     bool overwrite = false,

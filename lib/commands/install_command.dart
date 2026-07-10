@@ -5,6 +5,10 @@ import '../services/logger_service.dart';
 import '../services/module_installation_service.dart';
 import '../services/template_service.dart';
 
+/// Installs modules into the current FKIT project.
+///
+/// Handles module generation, dependency configuration, and project
+/// integration tasks.
 class InstallCommand extends Command {
   @override
   String get name => 'install';

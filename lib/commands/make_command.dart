@@ -8,6 +8,9 @@ import '../services/logger_service.dart';
 import '../services/maintenance_service.dart';
 import '../services/template_service.dart';
 
+/// Runs predefined FKIT project automation tasks.
+///
+/// Provides access to configured development and build workflows.
 class MakeCommand extends Command {
   @override
   String get name => 'make';

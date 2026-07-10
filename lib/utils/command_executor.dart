@@ -3,7 +3,12 @@ import 'dart:io';
 
 import '../services/logger_service.dart';
 
+/// Executes system commands used by FKIT.
 class CommandExecutor {
+  /// Executes the specified [command] with the provided [arguments].
+  ///
+  /// Completes when the command finishes successfully and throws an exception
+  /// when command execution fails.
   static Future<void> run(String command, List<String> arguments) async {
     final fullCommand = '$command ${arguments.join(' ')}';
 
@@ -13,10 +18,7 @@ class CommandExecutor {
 
     final process = await Process.start(command, arguments, runInShell: true);
 
-    process.stdout
-        .transform(utf8.decoder)
-        .transform(const LineSplitter())
-        .listen((line) {
+    process.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen((line) {
       LoggerService.progressComplete();
 
       print(line);
@@ -24,10 +26,7 @@ class CommandExecutor {
       LoggerService.progress('Executing command...');
     });
 
-    process.stderr
-        .transform(utf8.decoder)
-        .transform(const LineSplitter())
-        .listen((line) {
+    process.stderr.transform(utf8.decoder).transform(const LineSplitter()).listen((line) {
       LoggerService.progressFail();
 
       print(line);

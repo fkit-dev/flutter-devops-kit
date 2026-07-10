@@ -4,9 +4,11 @@ import 'dart:io';
 import '../../models/init_config.dart';
 import '../../services/logger_service.dart';
 
+/// Generates ARB files for project localization.
 class ArbGenerator {
   const ArbGenerator._();
 
+  /// Generates localization ARB files using the provided [config].
   static Future<void> generate(
     InitConfig config,
   ) async {
@@ -43,9 +45,7 @@ class ArbGenerator {
     );
 
     if (!file.existsSync()) {
-      final json = locale == config.defaultLocale
-          ? _defaultTemplate(locale)
-          : _localeTemplate(locale);
+      final json = locale == config.defaultLocale ? _defaultTemplate(locale) : _localeTemplate(locale);
 
       await file.writeAsString(
         const JsonEncoder.withIndent(
@@ -74,8 +74,7 @@ class ArbGenerator {
     File file,
     String locale,
   ) async {
-    final existing =
-        jsonDecode(await file.readAsString()) as Map<String, dynamic>;
+    final existing = jsonDecode(await file.readAsString()) as Map<String, dynamic>;
 
     final defaults = _defaultTemplate(locale);
 

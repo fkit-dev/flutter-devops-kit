@@ -5,6 +5,9 @@ import '../core/command_category.dart';
 import '../services/extension_service.dart';
 import '../services/logger_service.dart';
 
+/// Generates extension files for FKIT projects.
+///
+/// Supports generating configured utility extensions for the current project.
 class ExtensionCommand extends BaseArgCommand {
   @override
   String get name => 'extension';

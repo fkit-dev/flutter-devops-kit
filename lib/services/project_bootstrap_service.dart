@@ -6,9 +6,19 @@ import '../models/template/template_definition.dart';
 import '../services/logger_service.dart';
 import '../services/prompt_service.dart';
 
+/// Bootstraps a Flutter project using the selected FKIT template.
+///
+/// Performs template-defined project setup and generation tasks using the
+/// provided project configuration.
 class ProjectBootstrapService with GeneratorMixin {
+  /// Creates a project bootstrap service.
   const ProjectBootstrapService();
 
+  /// Bootstraps the project using the provided [config] and [template].
+  ///
+  /// Returns `false` when project bootstrapping is disabled for the selected
+  /// template. Otherwise, performs the configured bootstrap operations and
+  /// returns whether the bootstrap process completed successfully.
   Future<bool> bootstrap({
     required InitConfig config,
     required TemplateDefinition template,

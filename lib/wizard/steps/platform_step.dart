@@ -3,6 +3,7 @@ import '../../services/prompt_service.dart';
 import '../models/platform_setup.dart';
 import '../wizard_step.dart';
 
+/// Collects platform configuration during the initialization wizard.
 class PlatformStep extends WizardStep<PlatformSetup> {
   @override
   PlatformSetup collect() {

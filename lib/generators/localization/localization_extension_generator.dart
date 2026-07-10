@@ -3,7 +3,9 @@ import 'dart:io';
 import '../../models/init_config.dart';
 import '../../services/logger_service.dart';
 
+/// Generates localization extension files for FKIT projects.
 class LocalizationExtensionGenerator {
+  /// Generates localization extensions using the provided configuration.
   static Future<void> generate(
     InitConfig config,
   ) async {
@@ -25,8 +27,7 @@ class LocalizationExtensionGenerator {
       '${directory.path}/context_localization_extension.dart',
     );
 
-    final import =
-        '${config.outputDir.replaceFirst('lib/', '')}/${config.outputFile}';
+    final import = '${config.outputDir.replaceFirst('lib/', '')}/${config.outputFile}';
 
     await file.writeAsString(
       '''

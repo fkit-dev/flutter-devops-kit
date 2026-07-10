@@ -5,6 +5,9 @@ import '../services/feature_generation_service.dart';
 import '../services/logger_service.dart';
 import '../services/template_service.dart';
 
+/// Generates features for the current FKIT project.
+///
+/// Uses the configured template and project settings to create feature files.
 class FeatureCommand extends Command {
   @override
   String get name => 'feat';

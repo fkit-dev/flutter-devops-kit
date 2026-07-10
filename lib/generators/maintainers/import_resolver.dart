@@ -3,11 +3,13 @@ import 'dart:io';
 import '../../utils/path_utils.dart';
 import '../core/generator_context.dart';
 
+/// Resolves import statements for generated project files.
 class ImportResolver {
+  /// Creates an import resolver.
   const ImportResolver();
 
-  Future<List<String>> resolve(
-      {required GeneratorContext context, required String outputFile}) async {
+  /// Resolves the imports required by the provided configuration.
+  Future<List<String>> resolve({required GeneratorContext context, required String outputFile}) async {
     final imports = <String>{};
 
     final di = context.template.di;
@@ -17,11 +19,7 @@ class ImportResolver {
 
       if (!directory.existsSync()) continue;
 
-      final files = directory
-          .listSync(recursive: false)
-          .whereType<File>()
-          .where((file) => _isValid(file, di.ignore))
-          .toList()
+      final files = directory.listSync(recursive: false).whereType<File>().where((file) => _isValid(file, di.ignore)).toList()
         ..sort((a, b) => a.path.compareTo(b.path));
 
       for (final file in files) {

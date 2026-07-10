@@ -2,6 +2,7 @@ import '../../../models/flavor_details.dart';
 import '../../../models/init_config.dart';
 import 'generator_section.dart';
 
+/// Generates the flavor configuration section of the FKIT YAML file.
 class FlavorSection extends GeneratorSection {
   @override
   void write(

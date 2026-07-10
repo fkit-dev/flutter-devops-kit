@@ -3,6 +3,7 @@ import '../../services/prompt_service.dart';
 import '../models/generator_setup.dart';
 import '../wizard_step.dart';
 
+/// Collects code generator configuration during the initialization wizard.
 class GeneratorStep extends WizardStep<GeneratorSetup> {
   @override
   GeneratorSetup collect() {

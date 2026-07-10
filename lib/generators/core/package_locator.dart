@@ -1,8 +1,14 @@
 import 'dart:io';
 
+/// Locates the root directory of the installed FKIT package.
 class PackageLocator {
+  /// Creates a package locator.
   const PackageLocator();
 
+  /// Resolves the root directory of the FKIT package.
+  ///
+  /// Uses the currently executing Dart script to determine the package
+  /// installation location.
   Directory packageRoot() {
     final snapshot = File.fromUri(Platform.script);
 

@@ -2,7 +2,9 @@ import 'dart:io';
 
 import '../../services/logger_service.dart';
 
+/// Generates MediaQuery extension files for FKIT projects.
 class MediaQueryExtensionGenerator {
+  /// Generates the configured MediaQuery extension files for the current project.
   static Future<void> generate() async {
     final directory = Directory(
       'lib/core/extensions',

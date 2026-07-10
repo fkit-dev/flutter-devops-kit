@@ -5,6 +5,9 @@ import '../core/command_category.dart';
 import '../services/localization_service.dart';
 import '../services/logger_service.dart';
 
+/// Manages localization workflows for FKIT projects.
+///
+/// Supports localization setup, generation, and validation operations.
 class LocalizationCommand extends BaseArgCommand {
   @override
   String get name => 'l10n';

@@ -10,6 +10,7 @@ import 'sections/platform_section.dart';
 import 'sections/project_section.dart';
 import 'sections/tooling_section.dart';
 
+/// Generates FKIT YAML configuration content.
 class YamlGenerator {
   static final _sections = [
     FkitSection(),
@@ -24,6 +25,7 @@ class YamlGenerator {
     GeneratorConfigSection(),
   ];
 
+  /// Generates YAML configuration content from the provided [config].
   static String generate(InitConfig config) {
     final buffer = StringBuffer();
 

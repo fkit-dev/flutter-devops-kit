@@ -4,6 +4,9 @@ import '../services/config_service.dart';
 import '../services/logger_service.dart';
 import '../validators/init_validator.dart';
 
+/// Validates the current FKIT project configuration.
+///
+/// Checks the project configuration for invalid or unsupported settings.
 class ValidateCommand extends Command {
   @override
   String get name => 'validate';

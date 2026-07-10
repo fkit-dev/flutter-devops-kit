@@ -1,6 +1,8 @@
 import '../../models/template/registration_lifecycle.dart';
 
+/// Represents a resolved dependency injection registration.
 class ResolvedRegistration {
+  /// Creates a resolved dependency injection registration.
   const ResolvedRegistration({
     required this.lifecycle,
     required this.abstraction,
@@ -9,6 +11,7 @@ class ResolvedRegistration {
     required this.dependencies,
   });
 
+  /// The lifecycle used to register the dependency.
   final RegistrationLifecycle lifecycle;
 
   /// HomeRepository

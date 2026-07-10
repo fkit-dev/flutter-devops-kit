@@ -3,6 +3,9 @@ import '../core/command_category.dart';
 import '../services/logger_service.dart';
 import '../utils/process_utils.dart';
 
+/// Checks the FKIT development environment for configuration issues.
+///
+/// Verifies required tools and dependencies and reports their availability.
 class DoctorCommand extends Command {
   @override
   String get name => 'doctor';

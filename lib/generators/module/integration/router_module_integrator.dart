@@ -3,7 +3,9 @@ import '../../maintainers/route_maintainer.dart';
 import '../module_context.dart';
 import 'module_integrator.dart';
 
+/// Integrates generated module routes into the project's routing configuration.
 class RouterModuleIntegrator implements ModuleIntegrator {
+  /// Creates a router module integrator.
   const RouterModuleIntegrator();
 
   @override

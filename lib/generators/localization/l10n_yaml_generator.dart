@@ -3,9 +3,12 @@ import 'dart:io';
 import '../../models/init_config.dart';
 import '../../services/logger_service.dart';
 
+/// Generates the `l10n.yaml` configuration file for Flutter localization.
 class L10nYamlGenerator {
   const L10nYamlGenerator._();
 
+  /// Generates the localization configuration file using the provided project
+  /// configuration.
   static Future<void> generate(
     InitConfig config,
   ) async {

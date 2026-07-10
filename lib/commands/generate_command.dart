@@ -4,6 +4,10 @@ import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 
+/// Generates project artifacts using FKIT templates.
+///
+/// Supports generating configured features and components for the current
+/// project.
 class GenerateCommand extends Command {
   @override
   String get name => 'generate';

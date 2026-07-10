@@ -4,6 +4,9 @@ import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 
+/// Analyzes Dart source files in the current FKIT project.
+///
+/// Runs the configured Dart analyzer to report code issues.
 class AnalyzeCommand extends Command {
   @override
   String get name => 'analyze';

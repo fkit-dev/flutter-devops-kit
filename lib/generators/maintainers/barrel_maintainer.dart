@@ -3,6 +3,10 @@ import 'dart:io';
 import '../core/generator_context.dart';
 import 'maintainer.dart';
 
+/// Maintains barrel export files for generated features.
+///
+/// Synchronizes exports according to the barrel configuration defined by the
+/// selected template.
 class BarrelMaintainer implements Maintainer {
   @override
   Future<void> maintain(GeneratorContext context) async {
@@ -18,17 +22,12 @@ class BarrelMaintainer implements Maintainer {
       final files = directory
           .listSync()
           .whereType<File>()
-          .where((file) =>
-              file.path.endsWith('.dart') &&
-              !file.path.endsWith('.g.dart') &&
-              !file.path.endsWith('.freezed.dart'))
+          .where((file) => file.path.endsWith('.dart') && !file.path.endsWith('.g.dart') && !file.path.endsWith('.freezed.dart'))
           .toList()
         ..sort((a, b) => a.path.compareTo(b.path));
 
       for (final file in files) {
-        final relative = file.path
-            .replaceFirst('${context.featurePath}/', '')
-            .replaceAll('\\', '/');
+        final relative = file.path.replaceFirst('${context.featurePath}/', '').replaceAll('\\', '/');
         exports.add("export '$relative';");
       }
     }

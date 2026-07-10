@@ -4,7 +4,12 @@ import '../../core/generator_mixin.dart';
 import '../module_context.dart';
 import 'module_integrator.dart';
 
+/// Integrates generated network module dependencies with GetIt.
+///
+/// Updates the project's dependency injection configuration with registrations
+/// required by the generated network module.
 class GetItNetworkIntegrator with GeneratorMixin implements ModuleIntegrator {
+  /// Creates a GetIt network module integrator.
   const GetItNetworkIntegrator();
 
   @override

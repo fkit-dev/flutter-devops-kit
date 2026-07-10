@@ -1,6 +1,7 @@
 import '../../../models/init_config.dart';
 import 'generator_section.dart';
 
+/// Generates the FKIT metadata section of the FKIT YAML file.
 class FkitSection extends GeneratorSection {
   @override
   void write(StringBuffer buffer, InitConfig config) {

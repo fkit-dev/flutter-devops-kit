@@ -5,6 +5,9 @@ import '../services/logger_service.dart';
 import '../services/project_setup_service.dart';
 import '../services/template_service.dart';
 
+/// Sets up the current Flutter project using its FKIT configuration.
+///
+/// Applies the project setup tasks defined by the selected template.
 class SetupCommand extends Command {
   @override
   String get name => 'setup';

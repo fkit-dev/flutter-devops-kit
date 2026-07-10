@@ -3,9 +3,15 @@ import 'dart:io';
 import '../core/generator_context.dart';
 import 'resolved_route.dart';
 
+/// Resolves application routes from generated feature screens.
 class RouteResolver {
+  /// Creates a route resolver.
   const RouteResolver();
 
+  /// Resolves application routes using the provided [context].
+  ///
+  /// Returns the routes derived from the generated feature and template
+  /// routing configuration.
   Future<List<ResolvedRoute>> resolve(GeneratorContext context) async {
     final router = context.template.router;
 
@@ -16,8 +22,7 @@ class RouteResolver {
 
     final routes = <ResolvedRoute>[];
 
-    await for (final entity
-        in featuresDirectory.list(recursive: true, followLinks: false)) {
+    await for (final entity in featuresDirectory.list(recursive: true, followLinks: false)) {
       if (entity is! File) continue;
 
       final fileName = _fileName(entity.path);
@@ -47,16 +52,14 @@ class RouteResolver {
   bool _isInsideScreenFolder(String filePath, String screenFolder) {
     final normalizedFile = filePath.replaceAll('\\', '/');
 
-    final normalizedFolder =
-        screenFolder.replaceAll('\\', '/').replaceAll(RegExp(r'^/+|/+$'), '');
+    final normalizedFolder = screenFolder.replaceAll('\\', '/').replaceAll(RegExp(r'^/+|/+$'), '');
 
     return normalizedFile.contains('/$normalizedFolder/');
   }
 
   bool _isIgnored(String fileName, List<String> patterns) {
     for (final pattern in patterns) {
-      final regex =
-          RegExp('^${RegExp.escape(pattern).replaceAll(r'\*', '.*')}\$');
+      final regex = RegExp('^${RegExp.escape(pattern).replaceAll(r'\*', '.*')}\$');
       if (regex.hasMatch(fileName)) return true;
     }
     return false;

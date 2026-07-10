@@ -1,4 +1,7 @@
+/// Defines barrel file generation and synchronization configuration for an
+/// FKIT template.
 class TemplateBarrel {
+  /// Creates a template barrel configuration.
   const TemplateBarrel({
     required this.enabled,
     required this.file,
@@ -18,6 +21,7 @@ class TemplateBarrel {
   /// Glob patterns to ignore.
   final List<String> ignore;
 
+  /// Creates a template barrel configuration from the provided [map].
   factory TemplateBarrel.fromMap(Map<dynamic, dynamic> map) {
     return TemplateBarrel(
       enabled: map['enabled'] ?? true,

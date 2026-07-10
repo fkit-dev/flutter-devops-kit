@@ -4,6 +4,9 @@ import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 
+/// Fetches project dependencies for the current FKIT project.
+///
+/// Runs the configured Flutter dependency resolution command.
 class GetCommand extends Command {
   @override
   String get name => 'get';

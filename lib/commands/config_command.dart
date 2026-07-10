@@ -4,6 +4,9 @@ import '../services/config_service.dart';
 import '../services/logger_service.dart';
 import '../utils/platform_utils.dart';
 
+/// Displays the current FKIT project configuration.
+///
+/// Loads and presents the configuration defined for the current project.
 class ConfigCommand extends Command {
   @override
   String get name => 'config';
@@ -65,10 +68,8 @@ class ConfigCommand extends Command {
 
       for (final firebase in flavor.firebase.entries()) {
         if (!PlatformUtils.isEnabled(config, firebase.name)) continue;
-        LoggerService.info(
-            '${firebase.name.toUpperCase()} App ID    : ${firebase.platform.appId}');
-        LoggerService.info(
-            '${firebase.name.toUpperCase()} Options   : ${firebase.platform.options}');
+        LoggerService.info('${firebase.name.toUpperCase()} App ID    : ${firebase.platform.appId}');
+        LoggerService.info('${firebase.name.toUpperCase()} Options   : ${firebase.platform.options}');
       }
       LoggerService.blank();
     }

@@ -23,9 +23,11 @@ import '../commands/validate_command.dart';
 import '../commands/watch_command.dart';
 import 'command.dart';
 
+/// Provides access to the commands supported by FKIT.
 class CommandRegistry {
   const CommandRegistry._();
 
+  /// The commands registered with the FKIT command-line interface.
   static final List<Command> commands = [
     AnalyzeCommand(),
     CleanCommand(),
@@ -49,9 +51,12 @@ class CommandRegistry {
     MakeCommand(),
     InstallCommand(),
     IconCommand(),
-    SetupCommand()
+    SetupCommand(),
   ];
 
+  /// Returns the command registered with the specified [name].
+  ///
+  /// Returns `null` when no matching command is registered.
   static Command? command(String name) {
     for (final command in commands) {
       if (command.name == name) return command;

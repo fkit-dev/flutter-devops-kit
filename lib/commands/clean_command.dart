@@ -4,6 +4,9 @@ import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 
+/// Cleans generated build files for the current FKIT project.
+///
+/// Runs the configured Flutter clean command.
 class CleanCommand extends Command {
   @override
   String get name => 'clean';

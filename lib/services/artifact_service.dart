@@ -2,9 +2,10 @@ import 'dart:io';
 
 import '../models/build_platform.dart';
 
+/// Provides utilities for resolving generated build artifacts.
 class ArtifactService {
-  static Future<String> resolve(
-      {required BuildPlatform platform, required String flavor}) async {
+  /// Resolves the path to a generated build artifact.
+  static Future<String> resolve({required BuildPlatform platform, required String flavor}) async {
     final directory = switch (platform) {
       BuildPlatform.apk => Directory('build/app/outputs/flutter-apk'),
       BuildPlatform.aab => Directory('build/app/outputs/bundle'),
@@ -30,11 +31,7 @@ class ArtifactService {
       return directory.path;
     }
 
-    final files = directory
-        .listSync(recursive: true)
-        .whereType<File>()
-        .where((file) => file.path.endsWith(extension))
-        .toList();
+    final files = directory.listSync(recursive: true).whereType<File>().where((file) => file.path.endsWith(extension)).toList();
 
     if (files.isEmpty) {
       throw Exception('❌ No build artifact found');

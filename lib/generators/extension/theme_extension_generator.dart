@@ -2,7 +2,9 @@ import 'dart:io';
 
 import '../../services/logger_service.dart';
 
+/// Generates theme extension files for FKIT projects.
 class ThemeExtensionGenerator {
+  /// Generates the configured theme extension files for the current project.
   static Future<void> generate() async {
     final directory = Directory(
       'lib/core/extensions',

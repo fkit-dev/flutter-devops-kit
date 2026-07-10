@@ -3,6 +3,7 @@ import '../../services/prompt_service.dart';
 import '../models/localization_setup.dart';
 import '../wizard_step.dart';
 
+/// Collects localization configuration during the initialization wizard.
 class LocalizationStep extends WizardStep<LocalizationSetup> {
   @override
   LocalizationSetup collect() {
@@ -51,12 +52,7 @@ class LocalizationStep extends WizardStep<LocalizationSetup> {
       defaultValue: defaultLocale,
     );
 
-    final locales = localeInput
-        .split(',')
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toSet()
-        .toList();
+    final locales = localeInput.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toSet().toList();
 
     return LocalizationSetup(
       enabled: true,

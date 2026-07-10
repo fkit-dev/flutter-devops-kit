@@ -9,9 +9,24 @@ import 'module_integration_service.dart';
 import 'module_service.dart';
 import 'pubspec_service.dart';
 
+/// Installs FKIT modules into a Flutter project.
+///
+/// Handles module generation using the provided project configuration,
+/// template definition, and installation options.
 class ModuleInstallationService {
+  /// Creates a module installation service.
   const ModuleInstallationService();
 
+  /// Installs a module using the specified configuration and template.
+  ///
+  /// The [config] defines the project configuration, [template] describes the
+  /// module to generate, and [moduleName] identifies the module being installed.
+  ///
+  /// An optional [pubspecService] can be provided to manage dependency changes.
+  /// When [syncDependencies] is `true`, required dependencies are synchronized.
+  /// When [postGenerate] is `true`, post-generation tasks are executed.
+  ///
+  /// Returns a [ModuleInstallationResult] describing the installation outcome.
   Future<ModuleInstallationResult> install({
     required InitConfig config,
     required TemplateDefinition template,

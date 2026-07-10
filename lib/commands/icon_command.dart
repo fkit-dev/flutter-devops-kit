@@ -7,6 +7,9 @@ import '../services/launcher_icon_service.dart';
 import '../services/logger_service.dart';
 import '../services/pubspec_service.dart';
 
+/// Manages launcher icon configuration and generation for FKIT projects.
+///
+/// Supports configuring, generating, and validating application launcher icons.
 class IconCommand extends Command {
   @override
   String get name => 'icon';
@@ -21,8 +24,7 @@ class IconCommand extends Command {
   String get usage => 'fkit icon <generate|configure|doctor>';
 
   @override
-  List<String> get examples =>
-      const ['fkit icon generate', 'fkit icon configure', 'fkit icon doctor'];
+  List<String> get examples => const ['fkit icon generate', 'fkit icon configure', 'fkit icon doctor'];
 
   @override
   bool get requiresFlutterProject => true;
@@ -83,8 +85,7 @@ class IconCommand extends Command {
     }
 
     final pubspec = PubspecService();
-    await pubspec.ensureDevDependency('flutter_launcher_icons',
-        version: PackageVersion.flutterLauncherIcons, ensureLoaded: true);
+    await pubspec.ensureDevDependency('flutter_launcher_icons', version: PackageVersion.flutterLauncherIcons, ensureLoaded: true);
     await pubspec.save();
 
     final config = await ConfigService.load();

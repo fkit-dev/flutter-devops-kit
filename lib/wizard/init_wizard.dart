@@ -11,7 +11,11 @@ import 'steps/platform_step.dart';
 import 'steps/project_step.dart';
 import 'steps/tooling_step.dart';
 
+/// Guides the user through interactive FKIT project configuration.
 class InitWizard {
+  /// Starts the initialization wizard and collects project configuration.
+  ///
+  /// Returns the resulting [InitConfig] based on the user's selections.
   Future<InitConfig> start() async {
     LoggerService.section('FKIT Project Initialization');
 

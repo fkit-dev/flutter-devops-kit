@@ -5,7 +5,12 @@ import '../route/resolved_route.dart';
 import '../route/route_resolver.dart';
 import 'maintainer.dart';
 
+/// Maintains application routing configuration for generated features.
+///
+/// Resolves generated routes and synchronizes them with the routing strategy
+/// configured by the selected template.
 class RouteMaintainer implements Maintainer {
+  /// Creates a route maintainer.
   const RouteMaintainer();
 
   @override

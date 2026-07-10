@@ -7,6 +7,10 @@ import '../services/build_service.dart';
 import '../services/config_service.dart';
 import '../services/logger_service.dart';
 
+/// Builds the current FKIT project.
+///
+/// Supports command-line arguments for configuring the target platform, build
+/// mode, flavor, and other build options.
 class BuildCommand extends BaseArgCommand {
   @override
   String get name => 'build';
@@ -49,8 +53,7 @@ class BuildCommand extends BaseArgCommand {
 
     final platformArg = results.rest.first;
 
-    final flavor =
-        results.rest.length > 1 ? results.rest[1] : config.defaultFlavor;
+    final flavor = results.rest.length > 1 ? results.rest[1] : config.defaultFlavor;
 
     final platform = BuildPlatform.fromString(platformArg);
 

@@ -4,6 +4,10 @@ import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 
+/// Runs code generation in watch mode.
+///
+/// Continuously monitors project files and regenerates code when changes are
+/// detected.
 class WatchCommand extends Command {
   @override
   String get name => 'watch';

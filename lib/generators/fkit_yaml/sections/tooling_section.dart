@@ -1,6 +1,7 @@
 import '../../../models/init_config.dart';
 import 'generator_section.dart';
 
+/// Generates the tooling configuration section of the FKIT YAML file.
 class ToolingSection extends GeneratorSection {
   @override
   void write(

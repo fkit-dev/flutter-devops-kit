@@ -4,7 +4,11 @@ import 'package:yaml/yaml.dart';
 
 import '../models/init_config.dart';
 
+/// Provides utilities for loading FKIT project configuration.
 class ConfigService {
+  /// Loads and parses the configuration for the current FKIT project.
+  ///
+  /// Returns the resulting [InitConfig].
   static Future<InitConfig> load() async {
     final file = File('fkit.yaml');
 

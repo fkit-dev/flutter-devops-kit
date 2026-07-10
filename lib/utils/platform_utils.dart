@@ -3,9 +3,13 @@ import '../models/firebase_platform.dart';
 import '../models/flavor_details.dart';
 import '../models/init_config.dart';
 
+/// Provides utility methods for resolving platform-specific configuration.
 class PlatformUtils {
   const PlatformUtils._();
 
+  /// Determines whether the specified [platform] is enabled in [config].
+  ///
+  /// Returns `false` when the platform is not supported.
   static bool isEnabled(
     InitConfig config,
     String platform,
@@ -25,6 +29,9 @@ class PlatformUtils {
     }
   }
 
+  /// Resolves the build platform associated with the specified [platform].
+  ///
+  /// Throws an [UnsupportedError] when the platform is not supported.
   static BuildPlatform buildPlatform(
     String platform,
   ) {
@@ -45,6 +52,10 @@ class PlatformUtils {
     }
   }
 
+  /// Resolves the Firebase configuration for the specified [platform].
+  ///
+  /// Uses the platform configuration defined by the provided [flavor].
+  /// Throws an [UnsupportedError] when the platform is not supported.
   static FirebasePlatform firebasePlatform(
     FlavorDetails flavor,
     String platform,
@@ -66,6 +77,7 @@ class PlatformUtils {
     }
   }
 
+  /// Returns the Firebase application ID for the specified [platform].
   static String firebaseAppId(
     FlavorDetails flavor,
     String platform,
@@ -76,6 +88,7 @@ class PlatformUtils {
     ).appId;
   }
 
+  /// Returns the Firebase options file path for the specified [platform].
   static String firebaseOptions(
     FlavorDetails flavor,
     String platform,

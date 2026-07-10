@@ -7,6 +7,9 @@ import '../models/build_platform.dart';
 import '../services/build_service.dart';
 import '../services/config_service.dart';
 
+/// Runs the Flutter application using FKIT project configuration.
+///
+/// Supports command-line arguments for configuring the application run.
 class RunCommand extends BaseArgCommand {
   @override
   String get name => 'run';
@@ -69,8 +72,7 @@ class RunCommand extends BaseArgCommand {
   ) async {
     final config = await ConfigService.load();
 
-    final flavor =
-        results.rest.isEmpty ? config.defaultFlavor : results.rest.first;
+    final flavor = results.rest.isEmpty ? config.defaultFlavor : results.rest.first;
 
     final platform = switch (results['platform'] as String) {
       'android' => BuildPlatform.apk,

@@ -5,6 +5,10 @@ import '../core/command_category.dart';
 import '../services/logger_service.dart';
 import '../services/signing_service.dart';
 
+/// Manages application signing configuration.
+///
+/// Supports setting up and validating signing configuration for the current
+/// FKIT project.
 class SigningCommand extends BaseArgCommand {
   @override
   String get name => 'signing';

@@ -1,4 +1,6 @@
+/// Represents a route resolved from generated application configuration.
 class ResolvedRoute {
+  /// Creates a resolved route.
   const ResolvedRoute({
     required this.name,
     required this.path,

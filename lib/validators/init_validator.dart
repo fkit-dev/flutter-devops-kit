@@ -3,7 +3,12 @@ import '../services/logger_service.dart';
 import '../utils/platform_utils.dart';
 import 'file_validator.dart';
 
+/// Validates FKIT project initialization configuration.
 class InitValidator {
+  /// Validates the provided project [config].
+  ///
+  /// Throws an exception when the configuration contains invalid or
+  /// unsupported values.
   static void validate(InitConfig config) {
     _validateFlavoring(config);
 

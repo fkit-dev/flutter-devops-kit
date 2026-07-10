@@ -4,6 +4,9 @@ import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 
+/// Applies automated Dart fixes to the current FKIT project.
+///
+/// Runs the Dart fix command to resolve supported analysis issues.
 class FixCommand extends Command {
   @override
   String get name => 'fix';

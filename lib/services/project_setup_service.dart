@@ -9,18 +9,24 @@ import 'module_installation_service.dart';
 import 'project_bootstrap_service.dart';
 import 'pubspec_service.dart';
 
+/// Configures an FKIT project using the selected template.
+///
+/// Performs project setup tasks based on the provided project configuration
+/// and template definition.
 class ProjectSetupService {
+  /// Creates a project setup service.
   const ProjectSetupService();
 
+  /// Sets up the project using the provided [config] and [template].
+  ///
+  /// Returns whether the project setup process completed successfully.
   Future<bool> setup({
     required InitConfig config,
     required TemplateDefinition template,
   }) async {
     final setup = template.setup;
 
-    if (setup.modules.isEmpty &&
-        setup.features.isEmpty &&
-        !setup.bootstrap.enabled) {
+    if (setup.modules.isEmpty && setup.features.isEmpty && !setup.bootstrap.enabled) {
       LoggerService.warning(
         'No project setup configuration found for template '
         '"${template.name}".',
@@ -62,9 +68,7 @@ class ProjectSetupService {
     );
 
     await FlutterService(config).postGenerate(
-      buildRunner: template.requirements.buildRunner ||
-          moduleRequiresBuildRunner ||
-          featuresGenerated,
+      buildRunner: template.requirements.buildRunner || moduleRequiresBuildRunner || featuresGenerated,
     );
 
     return true;

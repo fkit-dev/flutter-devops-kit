@@ -7,7 +7,9 @@ import 'config_service.dart';
 import 'flutter_service.dart';
 import 'logger_service.dart';
 
+/// Manages application build and run operations for FKIT projects.
 class BuildService {
+  /// Runs the application using the provided configuration and options.
   Future<void> run({
     required BuildPlatform platform,
     required String flavor,
@@ -47,8 +49,8 @@ class BuildService {
     await FlutterService(config).runFlutter(arguments);
   }
 
-  Future<BuildResult> build(
-      {required BuildPlatform platform, required String flavor}) async {
+  /// Builds the application and returns the generated build result.
+  Future<BuildResult> build({required BuildPlatform platform, required String flavor}) async {
     final config = await ConfigService.load();
 
     InitValidator.validate(config);
@@ -70,20 +72,17 @@ class BuildService {
       arguments.addAll(['--flavor', flavor]);
     }
 
-    arguments
-        .addAll(['--release', '--dart-define-from-file=${flavorConfig.env}']);
+    arguments.addAll(['--release', '--dart-define-from-file=${flavorConfig.env}']);
 
     if (platform != BuildPlatform.web) {
-      arguments
-          .addAll(['--obfuscate', '--split-debug-info=${config.debugInfo}']);
+      arguments.addAll(['--obfuscate', '--split-debug-info=${config.debugInfo}']);
     }
 
     LoggerService.section('Building $buildType ($flavor)');
 
     await FlutterService(config).runFlutter(arguments);
 
-    final artifactPath =
-        await ArtifactService.resolve(platform: platform, flavor: flavor);
+    final artifactPath = await ArtifactService.resolve(platform: platform, flavor: flavor);
 
     LoggerService.success('Artifact generated.');
 

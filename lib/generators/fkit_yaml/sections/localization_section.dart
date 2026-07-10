@@ -1,6 +1,7 @@
 import '../../../models/init_config.dart';
 import 'generator_section.dart';
 
+/// Generates the localization configuration section of the FKIT YAML file.
 class LocalizationSection extends GeneratorSection {
   @override
   void write(StringBuffer buffer, InitConfig config) {
