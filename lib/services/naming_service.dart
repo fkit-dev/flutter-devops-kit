@@ -158,12 +158,11 @@ class NamingService {
   String _snake(String value) {
     if (value.isEmpty) return '';
     return value
-        .replaceAll('-', '')
-        .replaceAll(' ', '')
         .replaceAllMapped(
-          RegExp(r'([a-z0-9])([A-Z])'),
-          (match) => '${match.group(1)}${match.group(2)}',
+          RegExp(r'(?<=[a-z0-9])(?=[A-Z])'),
+          (_) => '_',
         )
+        .replaceAll(RegExp(r'[-\s]+'), '_')
         .toLowerCase();
   }
 
@@ -175,7 +174,15 @@ class NamingService {
 
   String _pascal(String value) {
     if (value.isEmpty) return '';
-    return value.split(RegExp(r'[-\s]+')).where((e) => e.isNotEmpty).map((e) => e[0].toUpperCase() + e.substring(1).toLowerCase()).join();
+    return value
+        .replaceAllMapped(
+          RegExp(r'(?<=[a-z0-9])(?=[A-Z])'),
+          (_) => '_',
+        )
+        .split(RegExp(r'[_\-\s]+'))
+        .where((e) => e.isNotEmpty)
+        .map((e) => e[0].toUpperCase() + e.substring(1).toLowerCase())
+        .join();
   }
 
   String _instance(String className) {

@@ -60,6 +60,7 @@ class CommandRegistry {
   static Command? command(String name) {
     for (final command in commands) {
       if (command.name == name) return command;
+      if (command.aliases.contains(name)) return command;
     }
     return null;
   }

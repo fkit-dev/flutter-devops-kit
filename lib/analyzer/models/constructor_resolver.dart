@@ -41,6 +41,15 @@ class ConstructorResolver {
 
       if (isRequired) line = line.substring('required '.length);
 
+      // Handle initializing formal parameters (this.name)
+      if (line.startsWith('this.')) {
+        final name = line.substring('this.'.length);
+        parameters.add(ConstructorParameter(
+          type: '', name: name, isNamed: true, isRequired: isRequired,
+        ));
+        continue;
+      }
+
       final parts = line.split(RegExp(r'\s+'));
 
       if (parts.length != 2) continue;

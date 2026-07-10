@@ -13,7 +13,7 @@ class ConfigService {
     final file = File('fkit.yaml');
 
     if (!file.existsSync()) {
-      throw Exception('❌ fkit.yaml not found in init root');
+      throw Exception('❌ fkit.yaml not found in project root');
     }
 
     final content = await file.readAsString();
