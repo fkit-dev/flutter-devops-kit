@@ -1,7 +1,7 @@
 name: flutter_devops_kit
 
 description: >
-  A Flutter CLI toolkit for build automation, Firebase distribution,
+  FKIT (Flutter DevOps Kit) is a CLI for Flutter toolkit for build automation, Firebase distribution,
   Android signing, feature scaffolding, reusable modules,
   code generation, and project workflows.
 

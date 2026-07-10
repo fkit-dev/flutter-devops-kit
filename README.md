@@ -1,4 +1,6 @@
-# Flutter DevOps Kit (FKIT)
+# FKIT — Flutter DevOps Kit
+
+FKIT is a command-line toolkit for Flutter project automation, code generation, builds, Firebase distribution, flavors, and Clean Architecture.
 
 A scalable, template-driven Flutter CLI toolkit for project automation, code generation, reusable architecture workflows, builds, Firebase distribution, signing, localization, and developer tooling.
 
@@ -8,7 +10,7 @@ FKIT is designed to reduce repetitive Flutter setup and development tasks while 
 
 # Overview
 
-Flutter DevOps Kit (`fkit`) is a reusable command-line toolkit built for Flutter developers and teams.
+FKIT (`Flutter DevOps Kit`) is a reusable command-line toolkit built for Flutter developers and teams.
 
 Instead of repeatedly configuring project structure, architecture, modules, builds, signing, localization, Firebase distribution, launcher icons, and code generation manually, FKIT provides a unified CLI workflow.
 
