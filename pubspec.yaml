@@ -5,7 +5,7 @@ description: >
   Android signing, feature scaffolding, reusable modules,
   code generation, and project workflows.
 
-version: 0.1.1
+version: 0.1.2
 
 homepage: https://github.com/TejasD36/flutter-devops-kit
 repository: https://github.com/TejasD36/flutter-devops-kit

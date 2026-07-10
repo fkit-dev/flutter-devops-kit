@@ -1,6 +1,23 @@
-# Changelog
+# Changelog 
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. 
+
+## 0.1.2
+
+### Added
+
+- Added Dart documentation comments for public APIs. 
+- Added automated tests covering: 
+- Command registry behavior. 
+- Constructor dependency resolution. 
+- Naming service functionality. 
+- Template rendering and output generation. 
+- Added `example/example.dart` demonstrating the standard FKIT CLI workflow. 
+
+### Changed
+
+- Expanded README documentation with package installation and setup instructions.
+- Improved public API documentation and overall documentation coverage.
 
 ## 0.1.1
 
