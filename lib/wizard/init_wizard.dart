@@ -1,7 +1,7 @@
-import 'package:flutter_devops_kit/core/fkit_version.dart';
-
+import '../core/fkit_version.dart';
 import '../models/init_config.dart';
 import '../services/logger_service.dart';
+import 'steps/environment_step.dart';
 import 'steps/feature_step.dart';
 import 'steps/firebase_step.dart';
 import 'steps/flavor_step.dart';
@@ -23,8 +23,18 @@ class InitWizard {
     final featureDir = FeatureStep().collect();
     final useFvm = ToolingStep().collect();
     final platforms = PlatformStep().collect();
-    final flavors = FlavorStep(platforms).collect();
-    final testerGroup = FirebaseStep().collect();
+
+    final flavors = FlavorStep().collect();
+
+    final environment = EnvironmentStep(
+      flavors,
+    ).collect();
+
+    final firebase = FirebaseStep(
+      platforms: platforms,
+      flavors: flavors,
+    ).collect();
+
     final localization = LocalizationStep().collect();
     final generator = GeneratorStep().collect();
 
@@ -38,16 +48,12 @@ class InitWizard {
       flavoringEnabled: flavors.enabled,
       defaultFlavor: flavors.defaultFlavor,
       flavors: flavors.flavors,
-      localizationEnabled: localization.enabled,
-      arbDir: localization.arbDir,
-      outputDir: localization.outputDir,
-      outputFile: localization.outputFile,
-      defaultLocale: localization.defaultLocale,
-      locales: localization.locales,
+      environment: environment,
+      firebase: firebase,
+      localization: localization,
       debugInfo: './debug-info',
       obfuscate: true,
       mainEntry: 'lib/main.dart',
-      testerGroup: testerGroup,
       featureDir: featureDir,
       defaultTemplate: generator.defaultTemplate,
     );

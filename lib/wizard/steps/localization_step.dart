@@ -1,14 +1,13 @@
+import '../../models/localization/localization_config.dart';
 import '../../services/logger_service.dart';
 import '../../services/prompt_service.dart';
-import '../models/localization_setup.dart';
 import '../wizard_step.dart';
 
 /// Collects localization configuration during the initialization wizard.
-class LocalizationStep extends WizardStep<LocalizationSetup> {
+class LocalizationStep extends WizardStep<LocalizationConfig> {
   @override
-  LocalizationSetup collect() {
+  LocalizationConfig collect() {
     LoggerService.blank();
-
     LoggerService.info('Localization');
 
     final enabled = PromptService.confirm(
@@ -17,9 +16,10 @@ class LocalizationStep extends WizardStep<LocalizationSetup> {
     );
 
     if (!enabled) {
-      return const LocalizationSetup(
+      return const LocalizationConfig(
         enabled: false,
         arbDir: 'lib/l10n',
+        templateArb: 'app_en.arb',
         outputDir: 'lib/gen/l10n',
         outputFile: 'app_localizations.dart',
         defaultLocale: 'en',
@@ -32,6 +32,16 @@ class LocalizationStep extends WizardStep<LocalizationSetup> {
       defaultValue: 'lib/l10n',
     );
 
+    final defaultLocale = PromptService.ask(
+      'Default locale',
+      defaultValue: 'en',
+    );
+
+    final templateArb = PromptService.ask(
+      'Template ARB file',
+      defaultValue: 'app_$defaultLocale.arb',
+    );
+
     final outputDir = PromptService.ask(
       'Generated output directory',
       defaultValue: 'lib/gen/l10n',
@@ -42,21 +52,17 @@ class LocalizationStep extends WizardStep<LocalizationSetup> {
       defaultValue: 'app_localizations.dart',
     );
 
-    final defaultLocale = PromptService.ask(
-      'Default locale',
-      defaultValue: 'en',
-    );
-
     final localeInput = PromptService.ask(
       'Supported locales',
       defaultValue: defaultLocale,
     );
 
-    final locales = localeInput.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toSet().toList();
+    final locales = localeInput.split(',').map((locale) => locale.trim()).where((locale) => locale.isNotEmpty).toSet().toList();
 
-    return LocalizationSetup(
+    return LocalizationConfig(
       enabled: true,
       arbDir: arbDir,
+      templateArb: templateArb,
       outputDir: outputDir,
       outputFile: outputFile,
       defaultLocale: defaultLocale,
