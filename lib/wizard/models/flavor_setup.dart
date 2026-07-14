@@ -1,18 +1,20 @@
-import '../../models/flavor_details.dart';
-
 /// Defines the flavor configuration for an FKIT project.
 ///
 /// Contains settings for enabling flavors, selecting the default flavor,
-/// and configuring the available project flavors.
+/// and defining the available project flavors.
 class FlavorSetup {
   /// Whether flavor support is enabled.
   final bool enabled;
 
   /// The name of the default flavor used by the project.
+  ///
+  /// Defaults to `main` when flavoring is disabled.
   final String defaultFlavor;
 
-  /// The available flavors mapped by their names.
-  final Map<String, FlavorDetails> flavors;
+  /// The available application flavors.
+  ///
+  /// Projects without flavoring use `main` as the only target.
+  final List<String> flavors;
 
   /// Creates a flavor configuration.
   const FlavorSetup({

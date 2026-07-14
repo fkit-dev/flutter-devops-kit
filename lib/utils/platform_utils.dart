@@ -1,5 +1,5 @@
 import '../models/build_platform.dart';
-import '../models/firebase_platform.dart';
+import '../models/firebase/firebase_platform.dart';
 import '../models/flavor_details.dart';
 import '../models/init_config.dart';
 
