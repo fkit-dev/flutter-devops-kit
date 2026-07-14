@@ -9,7 +9,7 @@ class LocalizationExtensionGenerator {
   static Future<void> generate(
     InitConfig config,
   ) async {
-    if (!config.localizationEnabled) {
+    if (!config.localization.enabled) {
       return;
     }
 
@@ -27,7 +27,7 @@ class LocalizationExtensionGenerator {
       '${directory.path}/context_localization_extension.dart',
     );
 
-    final import = '${config.outputDir.replaceFirst('lib/', '')}/${config.outputFile}';
+    final import = '${config.localization.outputDir.replaceFirst('lib/', '')}/${config.localization.outputFile}';
 
     await file.writeAsString(
       '''

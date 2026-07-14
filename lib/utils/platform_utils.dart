@@ -1,6 +1,6 @@
 import '../models/build_platform.dart';
+import '../models/firebase/firebase_details.dart';
 import '../models/firebase/firebase_platform.dart';
-import '../models/flavor_details.dart';
 import '../models/init_config.dart';
 
 /// Provides utility methods for resolving platform-specific configuration.
@@ -54,21 +54,21 @@ class PlatformUtils {
 
   /// Resolves the Firebase configuration for the specified [platform].
   ///
-  /// Uses the platform configuration defined by the provided [flavor].
+  /// Returns `null` when Firebase is not configured for the platform.
   /// Throws an [UnsupportedError] when the platform is not supported.
-  static FirebasePlatform firebasePlatform(
-    FlavorDetails flavor,
+  static FirebasePlatform? firebasePlatform(
+    FirebaseDetails firebase,
     String platform,
   ) {
     switch (platform) {
       case 'android':
-        return flavor.firebase.android;
+        return firebase.android;
 
       case 'ios':
-        return flavor.firebase.ios;
+        return firebase.ios;
 
       case 'web':
-        return flavor.firebase.web;
+        return firebase.web;
 
       default:
         throw UnsupportedError(
@@ -78,24 +78,28 @@ class PlatformUtils {
   }
 
   /// Returns the Firebase application ID for the specified [platform].
-  static String firebaseAppId(
-    FlavorDetails flavor,
+  ///
+  /// Returns `null` when Firebase is not configured for the platform.
+  static String? firebaseAppId(
+    FirebaseDetails firebase,
     String platform,
   ) {
     return firebasePlatform(
-      flavor,
+      firebase,
       platform,
-    ).appId;
+    )?.appId;
   }
 
   /// Returns the Firebase options file path for the specified [platform].
-  static String firebaseOptions(
-    FlavorDetails flavor,
+  ///
+  /// Returns `null` when Firebase is not configured for the platform.
+  static String? firebaseOptions(
+    FirebaseDetails firebase,
     String platform,
   ) {
     return firebasePlatform(
-      flavor,
+      firebase,
       platform,
-    ).options;
+    )?.options;
   }
 }

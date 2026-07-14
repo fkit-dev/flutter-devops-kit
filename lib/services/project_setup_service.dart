@@ -79,7 +79,7 @@ class ProjectSetupService {
   }) async {
     LoggerService.section('Preparing Project');
 
-    if (config.localizationEnabled) {
+    if (config.localization.enabled) {
       await LocalizationService().generate();
     }
 

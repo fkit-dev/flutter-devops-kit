@@ -18,7 +18,7 @@ class ExtensionService {
 
     final config = await ConfigService.load();
 
-    if (config.localizationEnabled) {
+    if (config.localization.enabled) {
       await LocalizationExtensionGenerator.generate(
         config,
       );

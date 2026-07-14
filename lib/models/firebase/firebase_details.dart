@@ -3,69 +3,37 @@ import 'firebase_platform.dart';
 /// Defines Firebase configuration for all supported application platforms.
 class FirebaseDetails {
   /// The Firebase configuration for Android.
-  final FirebasePlatform android;
+  final FirebasePlatform? android;
 
   /// The Firebase configuration for iOS.
-  final FirebasePlatform ios;
+  final FirebasePlatform? ios;
 
   /// The Firebase configuration for web.
-  final FirebasePlatform web;
+  final FirebasePlatform? web;
 
   /// Creates Firebase configuration for the supported platforms.
-  const FirebaseDetails({
-    required this.android,
-    required this.ios,
-    required this.web,
-  });
+  const FirebaseDetails({this.android, this.ios, this.web});
 
   /// Creates Firebase platform configuration from the provided [map].
-  factory FirebaseDetails.fromMap(
-    Map<String, dynamic> map,
-  ) {
-    return FirebaseDetails(
-      android: FirebasePlatform.fromMap(
-        Map<String, dynamic>.from(
-          map['android'] ?? {},
-        ),
-      ),
-      ios: FirebasePlatform.fromMap(
-        Map<String, dynamic>.from(
-          map['ios'] ?? {},
-        ),
-      ),
-      web: FirebasePlatform.fromMap(
-        Map<String, dynamic>.from(
-          map['web'] ?? {},
-        ),
-      ),
-    );
+  factory FirebaseDetails.fromMap(Map<String, dynamic> map) {
+    return FirebaseDetails(android: _platformFromMap(map['android']), ios: _platformFromMap(map['ios']), web: _platformFromMap(map['web']));
   }
 
   /// Converts this Firebase configuration to a map.
   Map<String, dynamic> toMap() {
-    return {
-      'android': android.toMap(),
-      'ios': ios.toMap(),
-      'web': web.toMap(),
-    };
+    return {if (android != null) 'android': android!.toMap(), if (ios != null) 'ios': ios!.toMap(), if (web != null) 'web': web!.toMap()};
   }
 
-  /// Returns the Firebase configurations as named platform entries.
+  /// Returns the configured Firebase platforms as named entries.
   Iterable<FirebasePlatformEntry> entries() sync* {
-    yield FirebasePlatformEntry(
-      'android',
-      android,
-    );
+    if (android != null) yield FirebasePlatformEntry('android', android!);
+    if (ios != null) yield FirebasePlatformEntry('ios', ios!);
+    if (web != null) yield FirebasePlatformEntry('web', web!);
+  }
 
-    yield FirebasePlatformEntry(
-      'ios',
-      ios,
-    );
-
-    yield FirebasePlatformEntry(
-      'web',
-      web,
-    );
+  static FirebasePlatform? _platformFromMap(dynamic value) {
+    if (value is! Map) return null;
+    return FirebasePlatform.fromMap(Map<String, dynamic>.from(value));
   }
 }
 
@@ -78,8 +46,5 @@ class FirebasePlatformEntry {
   final FirebasePlatform platform;
 
   /// Creates a Firebase platform entry.
-  const FirebasePlatformEntry(
-    this.name,
-    this.platform,
-  );
+  const FirebasePlatformEntry(this.name, this.platform);
 }

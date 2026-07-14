@@ -11,74 +11,106 @@ class InitValidator {
   /// unsupported values.
   static void validate(InitConfig config) {
     _validateFlavoring(config);
-
     _validateMainEntry(config);
-
-    _validateFlavorEnvFiles(config);
-
-    _validateFirebaseOptions(config);
+    _validateEnvironment(config);
+    _validateFirebase(config);
   }
 
   static void _validateFlavoring(InitConfig config) {
-    if (!config.flavoringEnabled && config.flavors.length > 1) {
-      throw Exception('❌ Flavoring disabled but multiple flavors configured');
+    if (!config.flavoringEnabled && config.flavors.length > 1) throw Exception('❌ Flavoring disabled but multiple flavors configured');
+
+    if (!config.flavors.contains(config.defaultFlavor)) {
+      throw Exception(
+        '❌ Default flavor "${config.defaultFlavor}" '
+        'is not configured',
+      );
     }
 
     LoggerService.success('Flavoring validated');
   }
 
   static void _validateMainEntry(InitConfig config) {
-    if (!FileValidator.exists(config.mainEntry)) {
-      throw Exception(
-        '❌ Main entry not found: '
-        '${config.mainEntry}',
-      );
-    }
+    if (!FileValidator.exists(config.mainEntry)) throw Exception('❌ Main entry not found: ${config.mainEntry}');
 
     LoggerService.success('Main entry validated');
   }
 
-  static void _validateFlavorEnvFiles(InitConfig config) {
-    for (final flavor in config.flavors.entries) {
-      final envFile = flavor.value.env;
+  static void _validateEnvironment(InitConfig config) {
+    final environment = config.environment;
 
-      if (!FileValidator.exists(envFile)) {
+    if (!environment.enabled) return;
+
+    for (final entry in environment.configurations.entries) {
+      final target = entry.key;
+      final details = entry.value;
+
+      if (!config.flavors.contains(target)) throw Exception('❌ Environment target "$target" is not configured');
+
+      if (details.file.isEmpty) throw Exception('❌ Environment file not configured for "$target"');
+
+      if (!FileValidator.exists(details.file)) {
         throw Exception(
-          '❌ Env file missing for '
-          '${flavor.key}: $envFile',
+          '❌ Environment file missing for '
+          '$target: ${details.file}',
         );
       }
 
-      LoggerService.success('Env validated: ${flavor.key}');
+      LoggerService.success('Environment validated: $target');
     }
   }
 
-  static void _validateFirebaseOptions(
-    InitConfig config,
-  ) {
-    for (final flavor in config.flavors.entries) {
-      for (final entry in flavor.value.firebase.entries()) {
-        if (!PlatformUtils.isEnabled(
-          config,
-          entry.name,
-        )) {
-          continue;
-        }
+  static void _validateFirebase(InitConfig config) {
+    final firebase = config.firebase;
 
-        if (entry.platform.options.isEmpty) {
-          continue;
-        }
+    if (!firebase.enabled) {
+      return;
+    }
 
-        if (!FileValidator.exists(entry.platform.options)) {
-          throw Exception(
-            '❌ ${entry.name} Firebase options missing: '
-            '${entry.platform.options}',
-          );
-        }
+    for (final entry in firebase.configurations.entries) {
+      final target = entry.key;
+      final details = entry.value;
+
+      if (!config.flavors.contains(target)) {
+        throw Exception(
+          '❌ Firebase target "$target" is not configured',
+        );
       }
 
-      LoggerService.success(
-        'Firebase validated: ${flavor.key}',
+      _validateFirebasePlatform(
+        config: config,
+        target: target,
+        platformName: 'android',
+        options: details.android?.options,
+      );
+
+      _validateFirebasePlatform(
+        config: config,
+        target: target,
+        platformName: 'ios',
+        options: details.ios?.options,
+      );
+
+      _validateFirebasePlatform(
+        config: config,
+        target: target,
+        platformName: 'web',
+        options: details.web?.options,
+      );
+
+      LoggerService.success('Firebase validated: $target');
+    }
+  }
+
+  static void _validateFirebasePlatform(
+      {required InitConfig config, required String target, required String platformName, required String? options}) {
+    if (!PlatformUtils.isEnabled(config, platformName)) return;
+
+    if (options == null || options.isEmpty) return;
+
+    if (!FileValidator.exists(options)) {
+      throw Exception(
+        '❌ $platformName Firebase options missing '
+        'for "$target": $options',
       );
     }
   }

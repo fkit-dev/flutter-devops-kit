@@ -6,8 +6,6 @@ class FlavorValidator {
   ///
   /// Throws an exception when the flavor is invalid or not configured.
   static void validate(InitConfig config, String flavor) {
-    if (!config.flavors.containsKey(flavor)) {
-      throw Exception('❌ Flavor "$flavor" not configured');
-    }
+    if (!config.flavors.contains(flavor)) throw Exception('❌ Flavor "$flavor" not configured');
   }
 }
