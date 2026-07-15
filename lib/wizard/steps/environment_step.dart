@@ -21,7 +21,8 @@ class EnvironmentStep extends WizardStep<EnvironmentConfig> {
     LoggerService.blank();
     LoggerService.info('Environment');
 
-    final enabled = PromptService.confirm('Does project use environment files?', defaultValue: current?.enabled ?? true);
+    final enabled = PromptService.confirm('Does project use environment files?',
+        defaultValue: current?.enabled ?? true);
 
     if (!enabled) {
       return const EnvironmentConfig(enabled: false, configurations: {});
@@ -36,7 +37,9 @@ class EnvironmentStep extends WizardStep<EnvironmentConfig> {
       final currentDetails = current?.configurationFor(target);
 
       configurations[target] = EnvironmentDetails(
-          file: PromptService.ask('Environment file path', defaultValue: _resolvePath(target: target, current: currentDetails)));
+          file: PromptService.ask('Environment file path',
+              defaultValue:
+                  _resolvePath(target: target, current: currentDetails)));
     }
 
     return EnvironmentConfig(enabled: true, configurations: configurations);

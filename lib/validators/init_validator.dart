@@ -110,7 +110,10 @@ class InitValidator {
   }
 
   static void _validateFirebasePlatform(
-      {required InitConfig config, required String target, required String platformName, required String? options}) {
+      {required InitConfig config,
+      required String target,
+      required String platformName,
+      required String? options}) {
     if (!PlatformUtils.isEnabled(config, platformName)) return;
 
     if (options == null || options.isEmpty) return;

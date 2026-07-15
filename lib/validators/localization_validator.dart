@@ -36,7 +36,8 @@ class LocalizationValidator {
   }
 
   static void _validateTemplate(InitConfig config) {
-    final template = File('${config.localization.arbDir}/app_${config.localization.defaultLocale}.arb');
+    final template = File(
+        '${config.localization.arbDir}/app_${config.localization.defaultLocale}.arb');
 
     if (!template.existsSync()) {
       throw Exception('Template ARB not found: ${template.path}');
@@ -68,7 +69,8 @@ class LocalizationValidator {
   }
 
   static void _validateDefaultLocale(InitConfig config) {
-    if (!config.localization.locales.contains(config.localization.defaultLocale)) {
+    if (!config.localization.locales
+        .contains(config.localization.defaultLocale)) {
       throw Exception('Default locale "${config.localization.defaultLocale}" '
           'is not included in supported locales.');
     }
