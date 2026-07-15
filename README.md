@@ -1,4 +1,3 @@
-````markdown
 <p align="center">
   <img src="assets/branding/fkit-banner.png" alt="FKIT Banner">
 </p>
@@ -52,8 +51,6 @@ FKIT is built around four core principles:
 Whether you're starting a brand-new Flutter application or maintaining a large production codebase, FKIT helps you automate repetitive tasks, enforce consistency, and accelerate development.
 
 ---
-````
-
 
 # Installation
 
