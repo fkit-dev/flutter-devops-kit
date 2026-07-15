@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/branding/fkit-banner.png" alt="FKIT Banner">
+  <img src="assets/branding/fkit_banner.png" alt="FKIT Banner">
 </p>
 
 <h1 align="center">FKIT — Flutter DevOps Kit</h1>
