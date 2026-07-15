@@ -12,7 +12,7 @@ class L10nYamlGenerator {
   static Future<void> generate(
     InitConfig config,
   ) async {
-    if (!config.localizationEnabled) {
+    if (!config.localization.enabled) {
       return;
     }
 
@@ -38,10 +38,11 @@ class L10nYamlGenerator {
     InitConfig config,
   ) {
     final buffer = StringBuffer()
-      ..writeln('arb-dir: ${config.arbDir}')
-      ..writeln('template-arb-file: app_${config.defaultLocale}.arb')
-      ..writeln('output-localization-file: ${config.outputFile}')
-      ..writeln('output-dir: ${config.outputDir}');
+      ..writeln('arb-dir: ${config.localization.arbDir}')
+      ..writeln(
+          'template-arb-file: app_${config.localization.defaultLocale}.arb')
+      ..writeln('output-localization-file: ${config.localization.outputFile}')
+      ..writeln('output-dir: ${config.localization.outputDir}');
 
     return buffer.toString();
   }

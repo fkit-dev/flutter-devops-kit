@@ -20,7 +20,8 @@ class ModuleService {
   }) async {
     final root = const PackageLocator().packageRoot();
 
-    final file = File('${root.path}/templates/$template/modules/$module/module.yaml');
+    final file =
+        File('${root.path}/templates/$template/modules/$module/module.yaml');
 
     if (!file.existsSync()) {
       throw Exception('Module "$module" not found in template "$template".');

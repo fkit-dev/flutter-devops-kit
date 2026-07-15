@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. 
 
+## 0.1.3
+
+### Added
+
+- Added `fkit setup` command for automated project bootstrap.
+- Added interactive project bootstrapping with generated `main.dart` and `app.dart`.
+- Added configurable template bootstrap support.
+- Added project setup workflow for installing modules and generating default features.
+- Added configuration update commands:
+  - `fkit config flavors`
+  - `fkit config environment`
+  - `fkit config firebase`
+  - `fkit config localization`
+- Added configuration reconciliation to preserve dependent configuration when flavor targets change.
+- Added centralized configuration mapping utilities.
+- Added support for standalone Environment configuration.
+- Added support for standalone Firebase configuration.
+- Added support for standalone Localization configuration.
+- Added configurable template setup and bootstrap definitions.
+
+### Changed
+
+- Refactored FKIT configuration model to separate:
+  - Flavor configuration
+  - Environment configuration
+  - Firebase configuration
+  - Localization configuration
+- Refactored `fkit.yaml` to use dedicated configuration sections.
+- Refactored project initialization wizard to use the new configuration model.
+- Refactored module installation workflow to support deferred dependency synchronization and post-generation tasks.
+- Refactored project setup into reusable services.
+- Refactored router integration into the generic module integration system.
+- Improved template architecture with configurable setup and bootstrap support.
+- Improved configuration display and update workflow.
+- Improved project validation for Environment, Firebase, Localization, and Flavor configurations.
+- Improved localization generation workflow.
+- Improved Firebase configuration to support projects with and without flavors.
+
+### Fixed
+
+- Fixed router integration during module installation.
+- Fixed dependency synchronization during multi-module project setup.
+- Fixed build runner execution to run only once during project setup.
+- Fixed Firebase configuration handling for non-flavored projects.
+- Fixed environment configuration handling for non-flavored projects.
+- Fixed configuration updates when adding or removing flavor targets.
+
 ## 0.1.2
 
 ### Added

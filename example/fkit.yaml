@@ -7,7 +7,7 @@
 # Run:
 #   fkit init
 #
-# to generate or update this configuration.
+# to generate the initial project configuration.
 #
 # Run:
 #   fkit config
@@ -17,7 +17,7 @@
 # =============================================================================
 
 fkit:
-  version: 0.1.0
+  version: 0.1.1
 
 
 # =============================================================================
@@ -63,19 +63,22 @@ platforms:
 # Generator
 # =============================================================================
 #
-# Defines the architecture template used by FKIT generators.
+# Defines the architecture template and feature output directory used by FKIT
+# generators.
 #
 # Available templates:
 #   - bloc_clean
 #
-# Example:
+# Examples:
 #   fkit feat auth
 #   fkit make screen auth
 #   fkit install theme
+#   fkit setup
 #
 # =============================================================================
 
 generator:
+  feature_dir: lib/features
   default_template: bloc_clean
 
 
@@ -109,91 +112,155 @@ entry:
 # =============================================================================
 #
 # enabled:
-#   Enables flavor-aware run, build and distribution commands.
+#   Enables flavor-aware run, build, Firebase distribution, environment, and
+#   other target-based workflows.
 #
-# The default flavor is used when no explicit flavor is provided.
+# default:
+#   Target used when no explicit target is provided.
 #
-# Examples:
-#   fkit run
-#   fkit run development
-#   fkit build apk production
+# Projects without flavors use:
+#
+#   enabled: false
+#   default: main
 #
 # =============================================================================
 
 flavoring:
   enabled: true
+  default: development
 
 
 # =============================================================================
-# Flavors
+# Targets / Flavors
 # =============================================================================
 #
-# Each flavor may define:
+# Defines the available project targets.
 #
-#   env:
-#     Environment configuration file.
+# When flavoring is enabled, these values represent application flavors.
 #
-#   firebase.app_distribution_id:
-#     Firebase App Distribution application ID.
+# When flavoring is disabled, FKIT uses:
 #
-#   firebase.options:
-#     Platform-specific generated Firebase options files.
+#   flavors:
+#     - main
+#
+# Environment and Firebase configuration are intentionally defined separately.
 #
 # =============================================================================
 
 flavors:
-  default: development
-
-  development:
-    env: env/development.json
-
-    firebase:
-      app_distribution_id: YOUR_ANDROID_APP_ID
-
-      options:
-        android: lib/firebase_options_development.dart
-        ios: lib/firebase_options_development.dart
-        web: lib/firebase_options_development.dart
-
-  staging:
-    env: env/staging.json
-
-    firebase:
-      app_distribution_id: YOUR_STAGING_APP_ID
-
-      options:
-        android: lib/firebase_options_staging.dart
-        ios: lib/firebase_options_staging.dart
-        web: lib/firebase_options_staging.dart
-
-  production:
-    env: env/production.json
-
-    firebase:
-      app_distribution_id: YOUR_PRODUCTION_APP_ID
-
-      options:
-        android: lib/firebase_options_production.dart
-        ios: lib/firebase_options_production.dart
-        web: lib/firebase_options_production.dart
+  - development
+  - staging
+  - production
 
 
 # =============================================================================
-# Firebase App Distribution
+# Environment
 # =============================================================================
 #
-# Default tester group used when no group is explicitly provided.
+# Environment configuration is independent from application flavoring.
+#
+# enabled:
+#   Enables --dart-define-from-file support for run and build commands.
+#
+# configurations:
+#   Maps each project target to its environment file.
+#
+# A project without flavors may use:
+#
+#   configurations:
+#     main:
+#       file: env/env.json
+#
+# =============================================================================
+
+environment:
+  enabled: true
+
+  configurations:
+    development:
+      file: env/development.json
+
+    staging:
+      file: env/staging.json
+
+    production:
+      file: env/production.json
+
+
+# =============================================================================
+# Firebase
+# =============================================================================
+#
+# Firebase configuration is independent from application flavoring and
+# environment configuration.
+#
+# enabled:
+#   Enables Firebase workflows.
+#
+# tester_group:
+#   Default Firebase App Distribution tester group.
+#
+# configurations:
+#   Maps each project target to its platform-specific Firebase configuration.
+#
+# app_id:
+#   Firebase App Distribution application identifier.
+#
+# options:
+#   Path to the generated FlutterFire options file.
 #
 # Example:
 #   fkit firebase production
 #
-# Override:
+# Override tester group:
 #   fkit firebase production -g qa
 #
 # =============================================================================
 
 firebase:
+  enabled: true
+
   tester_group: internal-testers
+
+  configurations:
+    development:
+      android:
+        app_id: YOUR_DEVELOPMENT_ANDROID_APP_ID
+        options: lib/firebase_options_development.dart
+
+      ios:
+        app_id: YOUR_DEVELOPMENT_IOS_APP_ID
+        options: lib/firebase_options_development.dart
+
+      web:
+        app_id: YOUR_DEVELOPMENT_WEB_APP_ID
+        options: lib/firebase_options_development.dart
+
+    staging:
+      android:
+        app_id: YOUR_STAGING_ANDROID_APP_ID
+        options: lib/firebase_options_staging.dart
+
+      ios:
+        app_id: YOUR_STAGING_IOS_APP_ID
+        options: lib/firebase_options_staging.dart
+
+      web:
+        app_id: YOUR_STAGING_WEB_APP_ID
+        options: lib/firebase_options_staging.dart
+
+    production:
+      android:
+        app_id: YOUR_PRODUCTION_ANDROID_APP_ID
+        options: lib/firebase_options_production.dart
+
+      ios:
+        app_id: YOUR_PRODUCTION_IOS_APP_ID
+        options: lib/firebase_options_production.dart
+
+      web:
+        app_id: YOUR_PRODUCTION_WEB_APP_ID
+        options: lib/firebase_options_production.dart
 
 
 # =============================================================================

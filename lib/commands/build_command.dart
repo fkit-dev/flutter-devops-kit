@@ -4,7 +4,7 @@ import '../core/base_arg_command.dart';
 import '../core/command_category.dart';
 import '../models/build_platform.dart';
 import '../services/build_service.dart';
-import '../services/config_service.dart';
+import '../services/config/config_service.dart';
 import '../services/logger_service.dart';
 
 /// Builds the current FKIT project.
@@ -53,7 +53,8 @@ class BuildCommand extends BaseArgCommand {
 
     final platformArg = results.rest.first;
 
-    final flavor = results.rest.length > 1 ? results.rest[1] : config.defaultFlavor;
+    final flavor =
+        results.rest.length > 1 ? results.rest[1] : config.defaultFlavor;
 
     final platform = BuildPlatform.fromString(platformArg);
 

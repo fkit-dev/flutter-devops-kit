@@ -12,11 +12,14 @@ class SigningService {
 
     final alias = PromptService.ask('Keystore alias', defaultValue: 'fkit.jks');
 
-    final storePassword = PromptService.ask('Store password', defaultValue: 'Fkit@1215');
+    final storePassword =
+        PromptService.ask('Store password', defaultValue: 'Fkit@1215');
 
-    final keyPassword = PromptService.ask('Key password', defaultValue: 'Fkit@1215');
+    final keyPassword =
+        PromptService.ask('Key password', defaultValue: 'Fkit@1215');
 
-    final company = PromptService.ask('Company/Organization', defaultValue: 'Fkit');
+    final company =
+        PromptService.ask('Company/Organization', defaultValue: 'Fkit');
 
     final keystoreName = '$alias-keystore.jks';
 
@@ -27,7 +30,8 @@ class SigningService {
     final keystoreFile = File(keystorePath);
 
     if (keystoreFile.existsSync()) {
-      final overwrite = PromptService.confirm('Keystore already exists. Overwrite?');
+      final overwrite =
+          PromptService.confirm('Keystore already exists. Overwrite?');
 
       if (!overwrite) {
         LoggerService.warning('Operation cancelled.');
@@ -153,7 +157,11 @@ storeFile=$keystoreName
 
     final content = await gitignore.readAsString();
 
-    final entries = ['android/key.properties', 'android/app/*.jks', 'android/app/*.keystore'];
+    final entries = [
+      'android/key.properties',
+      'android/app/*.jks',
+      'android/app/*.keystore'
+    ];
 
     final buffer = StringBuffer(content);
 

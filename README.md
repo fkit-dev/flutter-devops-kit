@@ -1,33 +1,109 @@
-# Flutter DevOps Kit (FKIT)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/fkit-dev/flutter-devops-kit/main/assets/branding/fkit_banner.png" alt="FKIT Banner" width="100%">
+</p>
 
-A scalable, template-driven Flutter CLI toolkit for project automation, code generation, reusable architecture workflows, builds, Firebase distribution, signing, localization, and developer tooling.
+<p align="center">
 
-FKIT is designed to reduce repetitive Flutter setup and development tasks while remaining flexible enough to support different project architectures and engineering workflows.
+<a href="https://pub.dev/packages/flutter_devops_kit">
+<img src="https://img.shields.io/pub/v/flutter_devops_kit.svg" alt="Pub Version">
+</a>
+
+<a href="https://pub.dev/packages/flutter_devops_kit">
+<img src="https://img.shields.io/pub/likes/flutter_devops_kit" alt="Pub Likes">
+</a>
+
+<a href="https://pub.dev/packages/flutter_devops_kit">
+<img src="https://img.shields.io/pub/points/flutter_devops_kit" alt="Pub Points">
+</a>
+
+<a href="LICENSE">
+<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+</a>
+
+<a href="https://github.com/fkit-dev/flutter-devops-kit">
+<img src="https://img.shields.io/github/stars/fkit-dev/flutter-devops-kit?style=social" alt="GitHub Stars">
+</a>
+
+</p>
+
+<p align="center">
+<b>The modern Flutter CLI for project scaffolding, automation, code generation, builds, flavors, Firebase App Distribution, and developer productivity.</b>
+</p>
+
+<p align="center">
+🚀 Scaffold &nbsp; • &nbsp;
+⚙️ Automate &nbsp; • &nbsp;
+🏗️ Generate &nbsp; • &nbsp;
+📦 Build &nbsp; • &nbsp;
+🔥 Deploy
+</p>
 
 ---
 
-# Overview
+# ⚡ Installation
 
-Flutter DevOps Kit (`fkit`) is a reusable command-line toolkit built for Flutter developers and teams.
-
-Instead of repeatedly configuring project structure, architecture, modules, builds, signing, localization, Firebase distribution, launcher icons, and code generation manually, FKIT provides a unified CLI workflow.
-
-FKIT is installed globally once and configured per Flutter project using:
-
-```text
-fkit.yaml
+```bash
+dart pub global activate flutter_devops_kit
 ```
 
-The toolkit is designed around three major ideas:
+Verify the installation:
 
-* Project automation
-* Template-driven code generation
-* Reusable development workflows
-
-FKIT can be used for both existing Flutter projects and newly initialized projects.
+```bash
+fkit doctor
+```
 
 ---
 
+# 🚀 Quick Start
+
+```bash
+# Check your development environment
+fkit doctor
+
+# Initialize FKIT inside your Flutter project
+fkit init
+
+# Generate a new feature
+fkit gen feature
+```
+
+---
+
+# ✨ Features
+
+- 🏗️ Project initialization & setup
+- 📂 Feature & module code generation
+- 🎯 Clean Architecture templates
+- 🧩 BLoC, Riverpod & Provider support
+- 📦 APK, AAB & IPA build automation
+- 🔥 Firebase App Distribution
+- 🎨 Multi-flavor project management
+- 📱 Launcher icon & asset generation
+- 🌍 Localization support
+- ⚡ FVM integration
+- 🛠️ Developer productivity commands
+- 🔄 Reusable template system
+
+---
+
+# 📖 Overview
+
+**FKIT (Flutter DevOps Kit)** is a reusable command-line toolkit built for Flutter developers, teams, and organizations.
+
+Instead of repeatedly configuring project structure, architecture, modules, builds, signing, localization, launcher icons, Firebase App Distribution, and code generation manually, FKIT provides a unified, scalable, and consistent CLI workflow.
+
+Install FKIT once, configure your project using a simple `fkit.yaml` file, and automate the repetitive parts of Flutter development.
+
+FKIT is built around four core principles:
+
+- ⚡ **Project Automation** — Eliminate repetitive Flutter setup tasks.
+- 🏗️ **Template-Driven Code Generation** — Generate production-ready architecture and boilerplate.
+- 🚀 **Build & Release Automation** — Simplify APK, AAB, IPA builds, flavors, signing, and Firebase App Distribution.
+- 🛠️ **Developer Productivity** — Standardize workflows across personal, team, and enterprise projects.
+
+Whether you're starting a brand-new Flutter application or maintaining a large production codebase, FKIT helps you automate repetitive tasks, enforce consistency, and accelerate development.
+
+---
 # Installation
 
 FKIT can be installed globally using the Dart package manager.
@@ -105,12 +181,7 @@ Add this directory to the Windows `PATH` environment variable.
 4. Under **User variables**, select the `Path` variable.
 5. Select **Edit**.
 6. Select **New**.
-7. Add:
-
-```text
-%LOCALAPPDATA%\Pub\Cache\bin
-```
-
+7. Add:    `%LOCALAPPDATA%\Pub\Cache\bin`
 8. Save the changes and restart your terminal.
 
 Verify the installation:
@@ -162,7 +233,7 @@ Once installed, FKIT is available globally and can be used inside any Flutter pr
 Flutter projects often require repetitive setup and maintenance tasks such as:
 
 * Creating architecture-specific feature folders
-* Generating DTOs, entities, repositories, use cases, BLoCs, and screens
+* Generating DTOs, entities, repositories, use cases, BLoC's, and screens
 * Maintaining dependency injection registrations
 * Maintaining application routes
 * Installing reusable project modules
@@ -438,27 +509,27 @@ fkit firebase production
 
 # Core Commands
 
-| Command | Description |
-| --- | --- |
-| `fkit help` | Show available commands |
-| `fkit doctor` | Validate the development environment |
-| `fkit init` | Initialize FKIT configuration |
-| `fkit setup` | Setup the project using the selected architecture template |
-| `fkit config` | Display the currently loaded FKIT configuration |
-| `fkit feat auth` | Generate a complete feature module |
-| `fkit make screen auth login` | Generate a feature component |
-| `fkit install theme` | Install the theme module |
-| `fkit install router` | Install the router module |
-| `fkit install network` | Install the network module |
-| `fkit l10n setup` | Setup Flutter localization |
-| `fkit l10n generate` | Generate localization files |
-| `fkit l10n doctor` | Validate localization configuration |
-| `fkit build apk production` | Build an APK |
-| `fkit build aab production` | Build an Android App Bundle |
-| `fkit build ipa production` | Build an IPA |
-| `fkit build web production` | Build the Flutter Web application |
-| `fkit firebase production` | Upload a build to Firebase App Distribution |
-| `fkit signing setup` | Setup Android signing |
+| Command                       | Description                                                |
+|-------------------------------|------------------------------------------------------------|
+| `fkit help`                   | Show available commands                                    |
+| `fkit doctor`                 | Validate the development environment                       |
+| `fkit init`                   | Initialize FKIT configuration                              |
+| `fkit setup`                  | Setup the project using the selected architecture template |
+| `fkit config`                 | Display the currently loaded FKIT configuration            |
+| `fkit feat auth`              | Generate a complete feature module                         |
+| `fkit make screen auth login` | Generate a feature component                               |
+| `fkit install theme`          | Install the theme module                                   |
+| `fkit install router`         | Install the router module                                  |
+| `fkit install network`        | Install the network module                                 |
+| `fkit l10n setup`             | Setup Flutter localization                                 |
+| `fkit l10n generate`          | Generate localization files                                |
+| `fkit l10n doctor`            | Validate localization configuration                        |
+| `fkit build apk production`   | Build an APK                                               |
+| `fkit build aab production`   | Build an Android App Bundle                                |
+| `fkit build ipa production`   | Build an IPA                                               |
+| `fkit build web production`   | Build the Flutter Web application                          |
+| `fkit firebase production`    | Upload a build to Firebase App Distribution                |
+| `fkit signing setup`          | Setup Android signing                                      |
 
 ---
 

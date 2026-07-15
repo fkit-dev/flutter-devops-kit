@@ -1,6 +1,7 @@
 import '../../models/init_config.dart';
 import 'sections/build_section.dart';
 import 'sections/entry_section.dart';
+import 'sections/environment_section.dart';
 import 'sections/firebase_section.dart';
 import 'sections/fkit_section.dart';
 import 'sections/flavor_section.dart';
@@ -20,6 +21,7 @@ class YamlGenerator {
     BuildSection(),
     EntrySection(),
     FlavorSection(),
+    EnvironmentSection(),
     LocalizationSection(),
     FirebaseSection(),
     GeneratorConfigSection(),

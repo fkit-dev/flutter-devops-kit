@@ -23,7 +23,10 @@ class PlaceholderService {
   }
 
   static String _toPascal(String input) {
-    return input.split('_').map((e) => e[0].toUpperCase() + e.substring(1)).join();
+    return input
+        .split('_')
+        .map((e) => e[0].toUpperCase() + e.substring(1))
+        .join();
   }
 
   static String _toCamel(String input) {

@@ -9,7 +9,8 @@ class ImportResolver {
   const ImportResolver();
 
   /// Resolves the imports required by the provided configuration.
-  Future<List<String>> resolve({required GeneratorContext context, required String outputFile}) async {
+  Future<List<String>> resolve(
+      {required GeneratorContext context, required String outputFile}) async {
     final imports = <String>{};
 
     final di = context.template.di;
@@ -19,7 +20,11 @@ class ImportResolver {
 
       if (!directory.existsSync()) continue;
 
-      final files = directory.listSync(recursive: false).whereType<File>().where((file) => _isValid(file, di.ignore)).toList()
+      final files = directory
+          .listSync(recursive: false)
+          .whereType<File>()
+          .where((file) => _isValid(file, di.ignore))
+          .toList()
         ..sort((a, b) => a.path.compareTo(b.path));
 
       for (final file in files) {

@@ -2,7 +2,7 @@ import '../core/command.dart';
 import '../core/command_category.dart';
 import '../generators/core/generator_context.dart';
 import '../generators/feature/component_generator.dart';
-import '../services/config_service.dart';
+import '../services/config/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 import '../services/maintenance_service.dart';

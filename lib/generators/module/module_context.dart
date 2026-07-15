@@ -37,13 +37,15 @@ class ModuleContext {
   ///
   /// Conditional packages are included only when their associated option is
   /// enabled.
-  Map<String, String> get enabledPackages => _resolvePackages(module.requirements.packages);
+  Map<String, String> get enabledPackages =>
+      _resolvePackages(module.requirements.packages);
 
   /// The enabled development packages required by the module.
   ///
   /// Conditional packages are included only when their associated option is
   /// enabled.
-  Map<String, String> get enabledDevPackages => _resolvePackages(module.requirements.devPackages);
+  Map<String, String> get enabledDevPackages =>
+      _resolvePackages(module.requirements.devPackages);
 
   /// Returns whether the specified module [option] is enabled.
   bool isEnabled(String option) => options[option] == true;

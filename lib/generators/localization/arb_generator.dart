@@ -12,11 +12,11 @@ class ArbGenerator {
   static Future<void> generate(
     InitConfig config,
   ) async {
-    if (!config.localizationEnabled) {
+    if (!config.localization.enabled) {
       return;
     }
 
-    final directory = Directory(config.arbDir);
+    final directory = Directory(config.localization.arbDir);
 
     if (!directory.existsSync()) {
       await directory.create(
@@ -24,43 +24,33 @@ class ArbGenerator {
       );
 
       LoggerService.success(
-        'Created ${config.arbDir}',
+        'Created ${config.localization.arbDir}',
       );
     }
 
-    for (final locale in config.locales) {
-      await _createOrUpdateArb(
-        config,
-        locale,
-      );
+    for (final locale in config.localization.locales) {
+      await _createOrUpdateArb(config, locale);
     }
   }
 
   static Future<void> _createOrUpdateArb(
-    InitConfig config,
-    String locale,
-  ) async {
-    final file = File(
-      '${config.arbDir}/app_$locale.arb',
-    );
+      InitConfig config, String locale) async {
+    final file = File('${config.localization.arbDir}/app_$locale.arb');
 
     if (!file.existsSync()) {
-      final json = locale == config.defaultLocale ? _defaultTemplate(locale) : _localeTemplate(locale);
+      final json = locale == config.localization.defaultLocale
+          ? _defaultTemplate(locale)
+          : _localeTemplate(locale);
 
-      await file.writeAsString(
-        const JsonEncoder.withIndent(
-          '  ',
-        ).convert(json),
-      );
+      await file
+          .writeAsString(const JsonEncoder.withIndent('  ').convert(json));
 
-      LoggerService.success(
-        'Generated app_$locale.arb',
-      );
+      LoggerService.success('Generated app_$locale.arb');
 
       return;
     }
 
-    if (locale != config.defaultLocale) {
+    if (locale != config.localization.defaultLocale) {
       LoggerService.info(
         'app_$locale.arb already exists.',
       );
@@ -74,7 +64,8 @@ class ArbGenerator {
     File file,
     String locale,
   ) async {
-    final existing = jsonDecode(await file.readAsString()) as Map<String, dynamic>;
+    final existing =
+        jsonDecode(await file.readAsString()) as Map<String, dynamic>;
 
     final defaults = _defaultTemplate(locale);
 
@@ -105,27 +96,17 @@ class ArbGenerator {
     );
   }
 
-  static Map<String, dynamic> _defaultTemplate(
-    String locale,
-  ) {
+  static Map<String, dynamic> _defaultTemplate(String locale) {
     return {
       '@@locale': locale,
       'hello': 'Hello',
-      '@hello': {
-        'description': 'Greeting message',
-      },
+      '@hello': {'description': 'Greeting message'},
       'welcome': 'Welcome',
-      '@welcome': {
-        'description': 'Welcome message',
-      },
+      '@welcome': {'description': 'Welcome message'},
     };
   }
 
-  static Map<String, dynamic> _localeTemplate(
-    String locale,
-  ) {
-    return {
-      '@@locale': locale,
-    };
+  static Map<String, dynamic> _localeTemplate(String locale) {
+    return {'@@locale': locale};
   }
 }

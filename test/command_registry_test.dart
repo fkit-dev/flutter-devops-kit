@@ -29,7 +29,8 @@ void main() {
 
     test('all commands have non-empty descriptions', () {
       for (final cmd in CommandRegistry.commands) {
-        expect(cmd.description, isNotEmpty, reason: 'Command "${cmd.name}" has empty description');
+        expect(cmd.description, isNotEmpty,
+            reason: 'Command "${cmd.name}" has empty description');
       }
     });
 
@@ -46,7 +47,8 @@ void main() {
     test('each command has unique name', () {
       final names = <String>{};
       for (final cmd in CommandRegistry.commands) {
-        expect(names.add(cmd.name), isTrue, reason: 'Duplicate command name: ${cmd.name}');
+        expect(names.add(cmd.name), isTrue,
+            reason: 'Duplicate command name: ${cmd.name}');
       }
     });
   });

@@ -7,5 +7,6 @@ import '../resolved_route.dart';
 /// configuration.
 abstract interface class RouteRenderer {
   /// Renders resolved routes using the provided generation configuration.
-  Future<void> render({required GeneratorContext context, required List<ResolvedRoute> routes});
+  Future<void> render(
+      {required GeneratorContext context, required List<ResolvedRoute> routes});
 }

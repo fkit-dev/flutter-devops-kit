@@ -2,7 +2,7 @@ import '../generators/extension/media_query_extension_generator.dart';
 import '../generators/extension/theme_extension_generator.dart';
 import '../generators/localization/localization_extension_generator.dart';
 import '../services/logger_service.dart';
-import 'config_service.dart';
+import 'config/config_service.dart';
 
 /// Manages extension generation for FKIT projects.
 class ExtensionService {
@@ -18,7 +18,7 @@ class ExtensionService {
 
     final config = await ConfigService.load();
 
-    if (config.localizationEnabled) {
+    if (config.localization.enabled) {
       await LocalizationExtensionGenerator.generate(
         config,
       );

@@ -1,127 +1,105 @@
-import '../../models/firebase_details.dart';
-import '../../models/firebase_platform.dart';
-import '../../models/flavor_details.dart';
+import '../../models/init_config.dart';
 import '../../services/logger_service.dart';
 import '../../services/prompt_service.dart';
 import '../models/flavor_setup.dart';
-import '../models/platform_setup.dart';
 import '../wizard_step.dart';
 
 /// Collects flavor configuration during the initialization wizard.
 class FlavorStep extends WizardStep<FlavorSetup> {
-  /// The platform configuration used when collecting flavor settings.
-  final PlatformSetup platforms;
+  /// The existing project configuration.
+  final InitConfig? current;
 
-  /// Creates a flavor configuration step for the specified [platforms].
-  FlavorStep(this.platforms);
+  /// Creates a flavor configuration step.
+  FlavorStep({
+    this.current,
+  });
 
   @override
   FlavorSetup collect() {
     LoggerService.blank();
-
     LoggerService.info('Flavors');
 
     final enabled = PromptService.confirm(
       'Does project use flavors?',
-      defaultValue: false,
+      defaultValue: current?.flavoringEnabled ?? false,
     );
 
-    late final List<String> flavorNames;
-    late final String defaultFlavor;
+    if (!enabled) {
+      LoggerService.info('Using default target: main');
 
-    if (enabled) {
-      final flavorsInput = PromptService.ask(
-        'Flavors (comma separated)',
-        defaultValue: 'development,staging,production',
-      );
-
-      flavorNames = flavorsInput.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toSet().toList();
-
-      defaultFlavor = PromptService.ask(
-        'Default flavor',
-        defaultValue: flavorNames.first,
-      );
-    } else {
-      LoggerService.info(
-        'Using default flavor: main',
-      );
-
-      flavorNames = ['main'];
-      defaultFlavor = 'main';
-    }
-
-    final configs = <String, FlavorDetails>{};
-
-    for (final flavor in flavorNames) {
-      LoggerService.blank();
-
-      LoggerService.command(flavor);
-
-      final env = PromptService.ask('Env file path', defaultValue: enabled ? 'env/$flavor.json' : 'env/env.json');
-
-      FirebasePlatform android = const FirebasePlatform(
-        appId: '',
-        options: '',
-      );
-
-      FirebasePlatform ios = const FirebasePlatform(
-        appId: '',
-        options: '',
-      );
-
-      FirebasePlatform web = const FirebasePlatform(
-        appId: '',
-        options: '',
-      );
-
-      if (platforms.android) {
-        android = FirebasePlatform(
-          appId: PromptService.ask(
-            'Android Firebase App ID',
-          ),
-          options: PromptService.ask('Android Firebase options',
-              defaultValue: enabled ? 'lib/firebase_options_$flavor.dart' : 'lib/firebase_options.dart'),
-        );
-      }
-
-      if (platforms.ios) {
-        ios = FirebasePlatform(
-          appId: PromptService.ask(
-            'iOS Firebase App ID',
-          ),
-          options: PromptService.ask('iOS Firebase options',
-              defaultValue: enabled ? 'lib/firebase_options_$flavor.dart' : 'lib/firebase_options.dart'),
-        );
-      }
-
-      if (platforms.web) {
-        web = FirebasePlatform(
-          appId: PromptService.ask(
-            'Web Firebase App ID',
-          ),
-          options: PromptService.ask(
-            'Web Firebase options',
-            defaultValue: 'lib/firebase_options_$flavor.dart',
-          ),
-        );
-      }
-
-      configs[flavor] = FlavorDetails(
-        env: env,
-        firebase: FirebaseDetails(
-          android: android,
-          ios: ios,
-          web: web,
-        ),
+      return const FlavorSetup(
+        enabled: false,
+        defaultFlavor: 'main',
+        flavors: ['main'],
       );
     }
 
-    LoggerService.blank();
+    final flavorsInput = PromptService.ask(
+      'Flavors (comma separated)',
+      defaultValue: _currentFlavors(),
+    );
+
+    final flavors = flavorsInput
+        .split(',')
+        .map((value) => value.trim())
+        .where((value) => value.isNotEmpty)
+        .toSet()
+        .toList();
+
+    if (flavors.isEmpty) {
+      LoggerService.warning(
+        'No valid flavors provided. Using default target: main',
+      );
+
+      return const FlavorSetup(
+        enabled: false,
+        defaultFlavor: 'main',
+        flavors: ['main'],
+      );
+    }
+
+    final requestedDefaultFlavor = PromptService.ask(
+      'Default flavor',
+      defaultValue: _currentDefaultFlavor(flavors),
+    );
+
+    final defaultFlavor = flavors.contains(requestedDefaultFlavor)
+        ? requestedDefaultFlavor
+        : flavors.first;
+
+    if (defaultFlavor != requestedDefaultFlavor) {
+      LoggerService.warning(
+        'Unknown default flavor "$requestedDefaultFlavor". '
+        'Using "$defaultFlavor" instead.',
+      );
+    }
 
     return FlavorSetup(
-      enabled: enabled,
+      enabled: true,
       defaultFlavor: defaultFlavor,
-      flavors: configs,
+      flavors: flavors,
     );
+  }
+
+  String _currentFlavors() {
+    final flavors = current?.flavors;
+
+    if (flavors == null || flavors.isEmpty || !current!.flavoringEnabled) {
+      return 'development,staging,production';
+    }
+
+    return flavors.join(',');
+  }
+
+  String _currentDefaultFlavor(
+    List<String> flavors,
+  ) {
+    final currentDefault = current?.defaultFlavor;
+
+    if (currentDefault != null && flavors.contains(currentDefault)) {
+      return currentDefault;
+    }
+
+    return flavors.first;
   }
 }

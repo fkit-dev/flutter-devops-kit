@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:yaml/yaml.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
-import 'config_service.dart';
+import 'config/config_service.dart';
 import 'flutter_service.dart';
 import 'logger_service.dart';
 

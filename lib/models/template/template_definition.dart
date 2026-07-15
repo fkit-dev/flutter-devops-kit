@@ -80,7 +80,8 @@ class TemplateDefinition {
 
   /// Creates a template definition from the provided [map].
   factory TemplateDefinition.fromMap(Map<dynamic, dynamic> map) {
-    final componentMap = Map<dynamic, dynamic>.from(map['components'] ?? const {});
+    final componentMap =
+        Map<dynamic, dynamic>.from(map['components'] ?? const {});
     final groupMap = Map<dynamic, dynamic>.from(map['groups'] ?? const {});
     final moduleMap = Map<dynamic, dynamic>.from(map['modules'] ?? const {});
 

@@ -35,17 +35,19 @@ class LocalizationConfig {
   /// Creates a localization configuration from the provided [map].
   ///
   /// Uses default localization settings for values that are not specified.
-  factory LocalizationConfig.fromMap(Map map) {
-    final localization = map['localization'] as Map? ?? {};
-
+  factory LocalizationConfig.fromMap(Map<dynamic, dynamic> map) {
     return LocalizationConfig(
-      enabled: localization['enabled'] ?? false,
-      arbDir: localization['arb_dir'] ?? 'lib/l10n',
-      templateArb: localization['template'] ?? 'app_en.arb',
-      outputDir: localization['output_dir'] ?? 'lib/gen/l10n',
-      outputFile: localization['output_file'] ?? 'app_localizations.dart',
-      defaultLocale: localization['default_locale'] ?? 'en',
-      locales: List<String>.from(localization['locales'] ?? ['en']),
+      enabled: map['enabled'] ?? false,
+      arbDir: map['arb_dir']?.toString() ?? 'lib/l10n',
+      templateArb: map['template']?.toString() ?? 'app_en.arb',
+      outputDir: map['output_dir']?.toString() ?? 'lib/gen/l10n',
+      outputFile: map['output_file']?.toString() ?? 'app_localizations.dart',
+      defaultLocale: map['default_locale']?.toString() ?? 'en',
+      locales: (map['locales'] as List?)
+              ?.map((locale) => locale.toString())
+              .where((locale) => locale.isNotEmpty)
+              .toList() ??
+          const ['en'],
     );
   }
 }
