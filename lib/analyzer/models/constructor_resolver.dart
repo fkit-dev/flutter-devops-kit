@@ -19,7 +19,8 @@ class ConstructorResolver {
 
     final content = await file.readAsString();
 
-    final constructor = RegExp(r'(?:const\s+)?\w+\s*\(\{([\s\S]*?)\}\)', multiLine: true);
+    final constructor =
+        RegExp(r'(?:const\s+)?\w+\s*\(\{([\s\S]*?)\}\)', multiLine: true);
 
     final match = constructor.firstMatch(content);
 
@@ -45,7 +46,10 @@ class ConstructorResolver {
       if (line.startsWith('this.')) {
         final name = line.substring('this.'.length);
         parameters.add(ConstructorParameter(
-          type: '', name: name, isNamed: true, isRequired: isRequired,
+          type: '',
+          name: name,
+          isNamed: true,
+          isRequired: isRequired,
         ));
         continue;
       }
@@ -54,7 +58,11 @@ class ConstructorResolver {
 
       if (parts.length != 2) continue;
 
-      parameters.add(ConstructorParameter(type: parts[0], name: parts[1], isNamed: true, isRequired: isRequired));
+      parameters.add(ConstructorParameter(
+          type: parts[0],
+          name: parts[1],
+          isNamed: true,
+          isRequired: isRequired));
     }
 
     return parameters;

@@ -21,8 +21,13 @@ class ConfigCommand extends Command {
   String get usage => 'fkit config [section]';
 
   @override
-  List<String> get examples =>
-      const ['fkit config', 'fkit config firebase', 'fkit config environment', 'fkit config localization', 'fkit config flavors'];
+  List<String> get examples => const [
+        'fkit config',
+        'fkit config firebase',
+        'fkit config environment',
+        'fkit config localization',
+        'fkit config flavors'
+      ];
 
   @override
   bool get requiresConfig => true;

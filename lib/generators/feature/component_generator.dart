@@ -19,10 +19,12 @@ class ComponentGenerator with GeneratorMixin {
     final definition = context.template.components[component];
 
     if (definition == null) {
-      throw Exception('Component "$component" is not supported by template "${context.template.name}".');
+      throw Exception(
+          'Component "$component" is not supported by template "${context.template.name}".');
     }
 
-    final output = resolveVariables(definition.output, context.naming.variables);
+    final output =
+        resolveVariables(definition.output, context.naming.variables);
 
     final file = File(path(context.featurePath, output));
 

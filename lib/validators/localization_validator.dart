@@ -29,12 +29,14 @@ class LocalizationValidator {
   static void _validateArbDirectory(InitConfig config) {
     final directory = Directory(config.localization.arbDir);
 
-    if (!directory.existsSync()) throw Exception('ARB directory not found: ${config.localization.arbDir}');
+    if (!directory.existsSync())
+      throw Exception('ARB directory not found: ${config.localization.arbDir}');
     LoggerService.success('ARB directory found.');
   }
 
   static void _validateTemplate(InitConfig config) {
-    final template = File('${config.localization.arbDir}/app_${config.localization.defaultLocale}.arb');
+    final template = File(
+        '${config.localization.arbDir}/app_${config.localization.defaultLocale}.arb');
 
     if (!template.existsSync()) {
       throw Exception('Template ARB not found: ${template.path}');
@@ -47,7 +49,8 @@ class LocalizationValidator {
     for (final locale in config.localization.locales) {
       final file = File('${config.localization.arbDir}/app_$locale.arb');
 
-      if (!file.existsSync()) throw Exception('Missing locale file: ${file.path}');
+      if (!file.existsSync())
+        throw Exception('Missing locale file: ${file.path}');
       LoggerService.success('Locale "$locale" found.');
     }
   }
@@ -64,7 +67,8 @@ class LocalizationValidator {
   }
 
   static void _validateDefaultLocale(InitConfig config) {
-    if (!config.localization.locales.contains(config.localization.defaultLocale)) {
+    if (!config.localization.locales
+        .contains(config.localization.defaultLocale)) {
       throw Exception('Default locale "${config.localization.defaultLocale}" '
           'is not included in supported locales.');
     }

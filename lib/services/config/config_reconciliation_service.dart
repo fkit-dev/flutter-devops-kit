@@ -22,7 +22,8 @@ class ConfigReconciliationService {
   ///
   /// Returns the cleaned Environment and Firebase configuration together
   /// with the detected added and removed targets.
-  ConfigReconciliationResult reconcile({required InitConfig current, required FlavorSetup updated}) {
+  ConfigReconciliationResult reconcile(
+      {required InitConfig current, required FlavorSetup updated}) {
     final currentTargets = current.flavors.toSet();
     final newTargets = updated.flavors.toSet();
 

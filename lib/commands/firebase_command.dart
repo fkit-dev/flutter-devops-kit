@@ -76,13 +76,16 @@ class FirebaseCommand extends BaseArgCommand {
       return;
     }
 
-    final target = results.rest.isNotEmpty ? results.rest.first : config.defaultFlavor;
+    final target =
+        results.rest.isNotEmpty ? results.rest.first : config.defaultFlavor;
 
     final platform = results['platform'] as String;
 
-    final notes = results['notes'] as String? ?? 'Automated build upload via FKIT';
+    final notes =
+        results['notes'] as String? ?? 'Automated build upload via FKIT';
 
-    final testerGroup = results['group'] as String? ?? config.firebase.testerGroup;
+    final testerGroup =
+        results['group'] as String? ?? config.firebase.testerGroup;
 
     if (!config.flavors.contains(target)) {
       LoggerService.error(

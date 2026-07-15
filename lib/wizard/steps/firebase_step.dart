@@ -85,15 +85,23 @@ class FirebaseStep extends WizardStep<FirebaseConfig> {
     );
   }
 
-  FirebasePlatform? _collectPlatform({required bool enabled, required String platform, required String target, FirebasePlatform? current}) {
+  FirebasePlatform? _collectPlatform(
+      {required bool enabled,
+      required String platform,
+      required String target,
+      FirebasePlatform? current}) {
     if (!enabled) return null;
 
     return FirebasePlatform(
-        appId: PromptService.ask('$platform Firebase App ID', defaultValue: current?.appId),
-        options: PromptService.ask('$platform Firebase options', defaultValue: _resolveOptionsPath(target: target, current: current)));
+        appId: PromptService.ask('$platform Firebase App ID',
+            defaultValue: current?.appId),
+        options: PromptService.ask('$platform Firebase options',
+            defaultValue:
+                _resolveOptionsPath(target: target, current: current)));
   }
 
-  String _resolveOptionsPath({required String target, FirebasePlatform? current}) {
+  String _resolveOptionsPath(
+      {required String target, FirebasePlatform? current}) {
     if (current != null && current.options.isNotEmpty) return current.options;
     if (!flavors.enabled) return 'lib/firebase_options.dart';
     return 'lib/firebase_options_$target.dart';

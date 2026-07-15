@@ -67,7 +67,12 @@ class LocalizationStep extends WizardStep<LocalizationConfig> {
       defaultValue: current?.locales.join(',') ?? defaultLocale,
     );
 
-    final locales = localeInput.split(',').map((locale) => locale.trim()).where((locale) => locale.isNotEmpty).toSet().toList();
+    final locales = localeInput
+        .split(',')
+        .map((locale) => locale.trim())
+        .where((locale) => locale.isNotEmpty)
+        .toSet()
+        .toList();
 
     return LocalizationConfig(
       enabled: true,

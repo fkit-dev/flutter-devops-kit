@@ -19,7 +19,8 @@ class ConfigUpdateService {
   const ConfigUpdateService();
 
   /// Updates the specified configuration [section].
-  Future<void> update({required ConfigSection section, required InitConfig config}) async {
+  Future<void> update(
+      {required ConfigSection section, required InitConfig config}) async {
     LoggerService.section('Update ${section.name} Configuration');
 
     switch (section) {
@@ -37,13 +38,15 @@ class ConfigUpdateService {
     }
 
     LoggerService.blank();
-    LoggerService.success('${section.name} configuration updated successfully.');
+    LoggerService.success(
+        '${section.name} configuration updated successfully.');
     LoggerService.blank();
   }
 
   Future<void> _updateFlavors(InitConfig config) async {
     final flavors = FlavorStep(current: config).collect();
-    final reconciliation = const ConfigReconciliationService().reconcile(current: config, updated: flavors);
+    final reconciliation = const ConfigReconciliationService()
+        .reconcile(current: config, updated: flavors);
 
     var environment = reconciliation.environment;
     var firebase = reconciliation.firebase;
@@ -55,7 +58,9 @@ class ConfigUpdateService {
         flavors: reconciliation.addedTargets,
       );
 
-      final addedEnvironment = EnvironmentStep(flavors: addedFlavorSetup, current: environment).collect();
+      final addedEnvironment =
+          EnvironmentStep(flavors: addedFlavorSetup, current: environment)
+              .collect();
 
       environment = EnvironmentConfig(
         enabled: addedEnvironment.enabled,
@@ -90,14 +95,16 @@ class ConfigUpdateService {
       'environment': {
         'enabled': environment.enabled,
         'configurations': {
-          for (final entry in environment.configurations.entries) entry.key: entry.value.toMap(),
+          for (final entry in environment.configurations.entries)
+            entry.key: entry.value.toMap(),
         },
       },
       'firebase': {
         'enabled': firebase.enabled,
         'tester_group': firebase.testerGroup,
         'configurations': {
-          for (final entry in firebase.configurations.entries) entry.key: entry.value.toMap(),
+          for (final entry in firebase.configurations.entries)
+            entry.key: entry.value.toMap(),
         },
       },
     });
@@ -106,13 +113,16 @@ class ConfigUpdateService {
   Future<void> _updateEnvironment(InitConfig config) async {
     final flavors = ConfigMapper.toFlavorSetup(config);
 
-    final environment = EnvironmentStep(flavors: flavors, current: config.environment).collect();
+    final environment =
+        EnvironmentStep(flavors: flavors, current: config.environment)
+            .collect();
 
     await const ConfigSectionWriter().write({
       'environment': {
         'enabled': environment.enabled,
         'configurations': {
-          for (final entry in environment.configurations.entries) entry.key: entry.value.toMap(),
+          for (final entry in environment.configurations.entries)
+            entry.key: entry.value.toMap(),
         },
       },
     });
@@ -122,21 +132,25 @@ class ConfigUpdateService {
     final platforms = ConfigMapper.toPlatformSetup(config);
     final flavors = ConfigMapper.toFlavorSetup(config);
 
-    final firebase = FirebaseStep(platforms: platforms, flavors: flavors, current: config.firebase).collect();
+    final firebase = FirebaseStep(
+            platforms: platforms, flavors: flavors, current: config.firebase)
+        .collect();
 
     await const ConfigSectionWriter().write({
       'firebase': {
         'enabled': firebase.enabled,
         'tester_group': firebase.testerGroup,
         'configurations': {
-          for (final entry in firebase.configurations.entries) entry.key: entry.value.toMap(),
+          for (final entry in firebase.configurations.entries)
+            entry.key: entry.value.toMap(),
         },
       },
     });
   }
 
   Future<void> _updateLocalization(InitConfig config) async {
-    final localization = LocalizationStep(current: config.localization).collect();
+    final localization =
+        LocalizationStep(current: config.localization).collect();
 
     await const ConfigSectionWriter().write({
       'localization': {

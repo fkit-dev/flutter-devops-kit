@@ -35,7 +35,8 @@ class TemplateDi {
 
   /// Creates a template dependency injection configuration from [map].
   factory TemplateDi.fromMap(Map<dynamic, dynamic> map) {
-    final registrationsMap = Map<dynamic, dynamic>.from(map['registrations'] ?? const {});
+    final registrationsMap =
+        Map<dynamic, dynamic>.from(map['registrations'] ?? const {});
 
     return TemplateDi(
       strategy: (map['strategy']?.toString() ?? 'manual').trim().toLowerCase(),
@@ -71,12 +72,14 @@ class TemplateDi {
   bool get isInjectable => strategy == 'injectable';
 
   /// Returns whether a registration exists for [component].
-  bool hasRegistration(String component) => registrations.containsKey(component);
+  bool hasRegistration(String component) =>
+      registrations.containsKey(component);
 
   /// Returns the registration associated with [component].
   ///
   /// Returns `null` when the component has no registration.
-  TemplateRegistration? getRegistration(String component) => registrations[component];
+  TemplateRegistration? getRegistration(String component) =>
+      registrations[component];
 
   /// All dependency injection registrations defined by the template.
   Iterable<TemplateRegistration> get allRegistrations => registrations.values;

@@ -72,7 +72,8 @@ class RunCommand extends BaseArgCommand {
   ) async {
     final config = await ConfigService.load();
 
-    final flavor = results.rest.isEmpty ? config.defaultFlavor : results.rest.first;
+    final flavor =
+        results.rest.isEmpty ? config.defaultFlavor : results.rest.first;
 
     final platform = switch (results['platform'] as String) {
       'android' => BuildPlatform.apk,

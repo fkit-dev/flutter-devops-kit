@@ -65,7 +65,8 @@ class GoRouterRenderer with GeneratorMixin {
       LoggerService.info('  • ${route.name}');
 
       if (status.requiresDefinition) {
-        updatedRouteContent = _appendRouteDefinition(content: updatedRouteContent, route: route);
+        updatedRouteContent =
+            _appendRouteDefinition(content: updatedRouteContent, route: route);
       }
       if (status.requiresImport) {
         updatedRouterContent = _appendImport(
@@ -75,15 +76,18 @@ class GoRouterRenderer with GeneratorMixin {
         );
       }
       if (status.requiresRegistration) {
-        updatedRouterContent = _appendRouterRegistration(content: updatedRouterContent, route: route);
+        updatedRouterContent = _appendRouterRegistration(
+            content: updatedRouterContent, route: route);
       }
     }
 
     if (updatedRouteContent != routeContent) {
-      await writeFile(file: routeFile, content: updatedRouteContent, overwrite: true);
+      await writeFile(
+          file: routeFile, content: updatedRouteContent, overwrite: true);
     }
     if (updatedRouterContent != routerContent) {
-      await writeFile(file: routerFile, content: updatedRouterContent, overwrite: true);
+      await writeFile(
+          file: routerFile, content: updatedRouterContent, overwrite: true);
     }
   }
 
@@ -129,33 +133,55 @@ class GoRouterRenderer with GeneratorMixin {
     );
   }
 
-  String _appendImport({required String content, required ResolvedRoute route, required String routerFile}) {
-    _validateMarkers(content: content, startMarker: _importStartMarker, endMarker: _importEndMarker, fileName: 'router imports');
+  String _appendImport(
+      {required String content,
+      required ResolvedRoute route,
+      required String routerFile}) {
+    _validateMarkers(
+        content: content,
+        startMarker: _importStartMarker,
+        endMarker: _importEndMarker,
+        fileName: 'router imports');
 
-    final importPath = const RouteImportResolver().resolve(routerFile: routerFile, screenFile: route.file);
+    final importPath = const RouteImportResolver()
+        .resolve(routerFile: routerFile, screenFile: route.file);
     final import = "import '$importPath';";
-    return _insertBeforeEndMarker(content: content, endMarker: _importEndMarker, value: import);
+    return _insertBeforeEndMarker(
+        content: content, endMarker: _importEndMarker, value: import);
   }
 
-  String _appendRouterRegistration({required String content, required ResolvedRoute route}) {
-    _validateMarkers(content: content, startMarker: _routeStartMarker, endMarker: _routeEndMarker, fileName: 'router routes');
+  String _appendRouterRegistration(
+      {required String content, required ResolvedRoute route}) {
+    _validateMarkers(
+        content: content,
+        startMarker: _routeStartMarker,
+        endMarker: _routeEndMarker,
+        fileName: 'router routes');
     final registration = '''
       GoRoute(
         path: AppRoute.${route.name}.path,
         name: AppRoute.${route.name}.routeName,
         builder: (_, _) => const ${route.className}(),
       ),''';
-    return _insertBeforeEndMarker(content: content, endMarker: _routeEndMarker, value: registration);
+    return _insertBeforeEndMarker(
+        content: content, endMarker: _routeEndMarker, value: registration);
   }
 
-  String _insertBeforeEndMarker({required String content, required String endMarker, required String value}) {
+  String _insertBeforeEndMarker(
+      {required String content,
+      required String endMarker,
+      required String value}) {
     final index = content.indexOf(endMarker);
     if (index == -1) throw Exception('FKIT marker not found: $endMarker');
 
     return content.replaceRange(index, index, '$value\n\n');
   }
 
-  void _validateMarkers({required String content, required String startMarker, required String endMarker, required String fileName}) {
+  void _validateMarkers(
+      {required String content,
+      required String startMarker,
+      required String endMarker,
+      required String fileName}) {
     if (!content.contains(startMarker)) {
       throw Exception('Missing FKIT start marker in $fileName: $startMarker');
     }

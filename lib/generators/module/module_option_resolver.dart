@@ -34,7 +34,8 @@ class ModuleOptionResolver {
 
   bool _resolveBoolean(ModuleOption option) {
     final defaultValue = option.defaultValue == true;
-    final answer = PromptService.ask(option.prompt, defaultValue: defaultValue ? 'y' : 'n');
+    final answer = PromptService.ask(option.prompt,
+        defaultValue: defaultValue ? 'y' : 'n');
 
     final normalized = answer.trim().toLowerCase();
 

@@ -65,23 +65,28 @@ class NamingService {
   late final String repository = _className(featurePascal, 'Repository');
 
   /// The generated repository implementation class name.
-  late final String repositoryImpl = _className(featurePascal, 'RepositoryImpl');
+  late final String repositoryImpl =
+      _className(featurePascal, 'RepositoryImpl');
 
 // ---------------------------------------------------------------------------
 // Datasource
 // ---------------------------------------------------------------------------
 
   /// The generated remote datasource class name.
-  late final String remoteDatasource = _className(featurePascal, 'RemoteDatasource');
+  late final String remoteDatasource =
+      _className(featurePascal, 'RemoteDatasource');
 
   /// The generated remote datasource implementation class name.
-  late final String remoteDatasourceImpl = _className(featurePascal, 'RemoteDatasourceImpl');
+  late final String remoteDatasourceImpl =
+      _className(featurePascal, 'RemoteDatasourceImpl');
 
   /// The generated local datasource class name.
-  late final String localDatasource = _className(featurePascal, 'LocalDatasource');
+  late final String localDatasource =
+      _className(featurePascal, 'LocalDatasource');
 
   /// The generated local datasource implementation class name.
-  late final String localDatasourceImpl = _className(featurePascal, 'LocalDatasourceImpl');
+  late final String localDatasourceImpl =
+      _className(featurePascal, 'LocalDatasourceImpl');
 
 // ---------------------------------------------------------------------------
 // Resource Based
@@ -116,16 +121,20 @@ class NamingService {
   late final String repositoryImplFile = '${featureSnake}_repository_impl.dart';
 
   /// The generated remote datasource file name.
-  late final String remoteDatasourceFile = '${featureSnake}_remote_datasource.dart';
+  late final String remoteDatasourceFile =
+      '${featureSnake}_remote_datasource.dart';
 
   /// The generated remote datasource implementation file name.
-  late final String remoteDatasourceImplFile = '${featureSnake}_remote_datasource_impl.dart';
+  late final String remoteDatasourceImplFile =
+      '${featureSnake}_remote_datasource_impl.dart';
 
   /// The generated local datasource file name.
-  late final String localDatasourceFile = '${featureSnake}_local_datasource.dart';
+  late final String localDatasourceFile =
+      '${featureSnake}_local_datasource.dart';
 
   /// The generated local datasource implementation file name.
-  late final String localDatasourceImplFile = '${featureSnake}_local_datasource_impl.dart';
+  late final String localDatasourceImplFile =
+      '${featureSnake}_local_datasource_impl.dart';
 
   /// The generated entity file name.
   late final String entityFile = '${resourceSnake}_entity.dart';
@@ -242,13 +251,15 @@ class NamingService {
   late final String remoteDatasourceBase = '${featureSnake}_remote_datasource';
 
   /// The remote datasource implementation file name without its Dart extension.
-  late final String remoteDatasourceImplBase = '${featureSnake}_remote_datasource_impl';
+  late final String remoteDatasourceImplBase =
+      '${featureSnake}_remote_datasource_impl';
 
   /// The local datasource file name without its Dart extension.
   late final String localDatasourceBase = '${featureSnake}_local_datasource';
 
   /// The local datasource implementation file name without its Dart extension.
-  late final String localDatasourceImplBase = '${featureSnake}_local_datasource_impl';
+  late final String localDatasourceImplBase =
+      '${featureSnake}_local_datasource_impl';
 
   /// The generated Bloc file name.
   late final String blocFile = '$blocBase.dart';
@@ -272,13 +283,15 @@ class NamingService {
   late final String remoteDatasourceInstance = _instance(remoteDatasource);
 
   /// The generated remote datasource implementation instance name.
-  late final String remoteDatasourceImplInstance = _instance(remoteDatasourceImpl);
+  late final String remoteDatasourceImplInstance =
+      _instance(remoteDatasourceImpl);
 
   /// The generated local datasource instance name.
   late final String localDatasourceInstance = _instance(localDatasource);
 
   /// The generated local datasource implementation instance name.
-  late final String localDatasourceImplInstance = _instance(localDatasourceImpl);
+  late final String localDatasourceImplInstance =
+      _instance(localDatasourceImpl);
 
   /// The generated entity instance name.
   late final String entityInstance = _instance(entity);

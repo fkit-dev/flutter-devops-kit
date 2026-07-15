@@ -17,7 +17,8 @@ class InitValidator {
   }
 
   static void _validateFlavoring(InitConfig config) {
-    if (!config.flavoringEnabled && config.flavors.length > 1) throw Exception('❌ Flavoring disabled but multiple flavors configured');
+    if (!config.flavoringEnabled && config.flavors.length > 1)
+      throw Exception('❌ Flavoring disabled but multiple flavors configured');
 
     if (!config.flavors.contains(config.defaultFlavor)) {
       throw Exception(
@@ -30,7 +31,8 @@ class InitValidator {
   }
 
   static void _validateMainEntry(InitConfig config) {
-    if (!FileValidator.exists(config.mainEntry)) throw Exception('❌ Main entry not found: ${config.mainEntry}');
+    if (!FileValidator.exists(config.mainEntry))
+      throw Exception('❌ Main entry not found: ${config.mainEntry}');
 
     LoggerService.success('Main entry validated');
   }
@@ -44,9 +46,11 @@ class InitValidator {
       final target = entry.key;
       final details = entry.value;
 
-      if (!config.flavors.contains(target)) throw Exception('❌ Environment target "$target" is not configured');
+      if (!config.flavors.contains(target))
+        throw Exception('❌ Environment target "$target" is not configured');
 
-      if (details.file.isEmpty) throw Exception('❌ Environment file not configured for "$target"');
+      if (details.file.isEmpty)
+        throw Exception('❌ Environment file not configured for "$target"');
 
       if (!FileValidator.exists(details.file)) {
         throw Exception(
@@ -102,7 +106,10 @@ class InitValidator {
   }
 
   static void _validateFirebasePlatform(
-      {required InitConfig config, required String target, required String platformName, required String? options}) {
+      {required InitConfig config,
+      required String target,
+      required String platformName,
+      required String? options}) {
     if (!PlatformUtils.isEnabled(config, platformName)) return;
 
     if (options == null || options.isEmpty) return;

@@ -43,7 +43,11 @@ class LocalizationConfig {
       outputDir: map['output_dir']?.toString() ?? 'lib/gen/l10n',
       outputFile: map['output_file']?.toString() ?? 'app_localizations.dart',
       defaultLocale: map['default_locale']?.toString() ?? 'en',
-      locales: (map['locales'] as List?)?.map((locale) => locale.toString()).where((locale) => locale.isNotEmpty).toList() ?? const ['en'],
+      locales: (map['locales'] as List?)
+              ?.map((locale) => locale.toString())
+              .where((locale) => locale.isNotEmpty)
+              .toList() ??
+          const ['en'],
     );
   }
 }

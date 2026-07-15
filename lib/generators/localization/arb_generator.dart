@@ -33,13 +33,17 @@ class ArbGenerator {
     }
   }
 
-  static Future<void> _createOrUpdateArb(InitConfig config, String locale) async {
+  static Future<void> _createOrUpdateArb(
+      InitConfig config, String locale) async {
     final file = File('${config.localization.arbDir}/app_$locale.arb');
 
     if (!file.existsSync()) {
-      final json = locale == config.localization.defaultLocale ? _defaultTemplate(locale) : _localeTemplate(locale);
+      final json = locale == config.localization.defaultLocale
+          ? _defaultTemplate(locale)
+          : _localeTemplate(locale);
 
-      await file.writeAsString(const JsonEncoder.withIndent('  ').convert(json));
+      await file
+          .writeAsString(const JsonEncoder.withIndent('  ').convert(json));
 
       LoggerService.success('Generated app_$locale.arb');
 
@@ -60,7 +64,8 @@ class ArbGenerator {
     File file,
     String locale,
   ) async {
-    final existing = jsonDecode(await file.readAsString()) as Map<String, dynamic>;
+    final existing =
+        jsonDecode(await file.readAsString()) as Map<String, dynamic>;
 
     final defaults = _defaultTemplate(locale);
 

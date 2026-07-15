@@ -15,17 +15,22 @@ class FirebaseConfig {
   final Map<String, FirebaseDetails> configurations;
 
   /// Creates an FKIT Firebase configuration.
-  const FirebaseConfig({required this.enabled, required this.testerGroup, required this.configurations});
+  const FirebaseConfig(
+      {required this.enabled,
+      required this.testerGroup,
+      required this.configurations});
 
   /// Creates Firebase configuration from the provided [map].
   factory FirebaseConfig.fromMap(Map<dynamic, dynamic> map) {
-    final configurationsMap = Map<dynamic, dynamic>.from(map['configurations'] ?? const {});
+    final configurationsMap =
+        Map<dynamic, dynamic>.from(map['configurations'] ?? const {});
 
     return FirebaseConfig(
         enabled: map['enabled'] ?? false,
         testerGroup: map['tester_group']?.toString() ?? 'internal-testers',
-        configurations:
-            configurationsMap.map((key, value) => MapEntry(key.toString(), FirebaseDetails.fromMap(Map<String, dynamic>.from(value)))));
+        configurations: configurationsMap.map((key, value) => MapEntry(
+            key.toString(),
+            FirebaseDetails.fromMap(Map<String, dynamic>.from(value)))));
   }
 
   /// Returns Firebase configuration for the specified [target].

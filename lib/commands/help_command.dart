@@ -20,7 +20,8 @@ class HelpCommand extends Command {
   String get usage => 'fkit help [command]';
 
   @override
-  List<String> get examples => const ['fkit help', 'fkit help make', 'fkit help feat'];
+  List<String> get examples =>
+      const ['fkit help', 'fkit help make', 'fkit help feat'];
 
   @override
   Future<void> run(List<String> args) async {
@@ -39,16 +40,18 @@ class HelpCommand extends Command {
   void _showGeneralHelp() {
     LoggerService.section('Flutter DevOps Kit (FKIT)');
 
-    final commands = CommandRegistry.commands.where((e) => e.name != name).toList()
-      ..sort((a, b) {
-        final category = a.category.index.compareTo(b.category.index);
+    final commands =
+        CommandRegistry.commands.where((e) => e.name != name).toList()
+          ..sort((a, b) {
+            final category = a.category.index.compareTo(b.category.index);
 
-        if (category != 0) return category;
+            if (category != 0) return category;
 
-        return a.name.compareTo(b.name);
-      });
+            return a.name.compareTo(b.name);
+          });
 
-    final usageWidth = commands.map((e) => e.usage.length).reduce((a, b) => a > b ? a : b);
+    final usageWidth =
+        commands.map((e) => e.usage.length).reduce((a, b) => a > b ? a : b);
 
     CommandCategory? previous;
 
@@ -91,7 +94,9 @@ class HelpCommand extends Command {
   // ---------------------------------------------------------------------------
 
   void _showCommandHelp(String commandName) {
-    final command = CommandRegistry.commands.where((e) => e.name == commandName).firstOrNull;
+    final command = CommandRegistry.commands
+        .where((e) => e.name == commandName)
+        .firstOrNull;
 
     if (command == null) {
       LoggerService.error('Unknown command "$commandName".');

@@ -16,12 +16,19 @@ class FirebaseDetails {
 
   /// Creates Firebase platform configuration from the provided [map].
   factory FirebaseDetails.fromMap(Map<String, dynamic> map) {
-    return FirebaseDetails(android: _platformFromMap(map['android']), ios: _platformFromMap(map['ios']), web: _platformFromMap(map['web']));
+    return FirebaseDetails(
+        android: _platformFromMap(map['android']),
+        ios: _platformFromMap(map['ios']),
+        web: _platformFromMap(map['web']));
   }
 
   /// Converts this Firebase configuration to a map.
   Map<String, dynamic> toMap() {
-    return {if (android != null) 'android': android!.toMap(), if (ios != null) 'ios': ios!.toMap(), if (web != null) 'web': web!.toMap()};
+    return {
+      if (android != null) 'android': android!.toMap(),
+      if (ios != null) 'ios': ios!.toMap(),
+      if (web != null) 'web': web!.toMap()
+    };
   }
 
   /// Returns the configured Firebase platforms as named entries.

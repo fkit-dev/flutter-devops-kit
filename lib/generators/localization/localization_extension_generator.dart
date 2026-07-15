@@ -27,7 +27,8 @@ class LocalizationExtensionGenerator {
       '${directory.path}/context_localization_extension.dart',
     );
 
-    final import = '${config.localization.outputDir.replaceFirst('lib/', '')}/${config.localization.outputFile}';
+    final import =
+        '${config.localization.outputDir.replaceFirst('lib/', '')}/${config.localization.outputFile}';
 
     await file.writeAsString(
       '''

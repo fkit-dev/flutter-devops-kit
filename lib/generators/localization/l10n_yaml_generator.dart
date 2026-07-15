@@ -39,7 +39,8 @@ class L10nYamlGenerator {
   ) {
     final buffer = StringBuffer()
       ..writeln('arb-dir: ${config.localization.arbDir}')
-      ..writeln('template-arb-file: app_${config.localization.defaultLocale}.arb')
+      ..writeln(
+          'template-arb-file: app_${config.localization.defaultLocale}.arb')
       ..writeln('output-localization-file: ${config.localization.outputFile}')
       ..writeln('output-dir: ${config.localization.outputDir}');
 

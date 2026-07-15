@@ -88,13 +88,19 @@ class InitConfig {
     final build = Map<dynamic, dynamic>.from(map['build'] ?? const {});
     final entry = Map<dynamic, dynamic>.from(map['entry'] ?? const {});
     final flavoring = Map<dynamic, dynamic>.from(map['flavoring'] ?? const {});
-    final environment = Map<dynamic, dynamic>.from(map['environment'] ?? const {});
+    final environment =
+        Map<dynamic, dynamic>.from(map['environment'] ?? const {});
     final firebase = Map<dynamic, dynamic>.from(map['firebase'] ?? const {});
-    final localization = Map<dynamic, dynamic>.from(map['localization'] ?? const {});
+    final localization =
+        Map<dynamic, dynamic>.from(map['localization'] ?? const {});
     final generator = Map<dynamic, dynamic>.from(map['generator'] ?? const {});
-    final flavors =
-        (map['flavors'] as List?)?.map((flavor) => flavor.toString()).where((flavor) => flavor.isNotEmpty).toList() ?? const <String>[];
-    final defaultFlavor = flavoring['default']?.toString() ?? (flavors.isNotEmpty ? flavors.first : 'main');
+    final flavors = (map['flavors'] as List?)
+            ?.map((flavor) => flavor.toString())
+            .where((flavor) => flavor.isNotEmpty)
+            .toList() ??
+        const <String>[];
+    final defaultFlavor = flavoring['default']?.toString() ??
+        (flavors.isNotEmpty ? flavors.first : 'main');
 
     return InitConfig(
       version: fkit['version']?.toString() ?? '0.1.1',
@@ -113,7 +119,8 @@ class InitConfig {
       obfuscate: build['obfuscate'] ?? true,
       mainEntry: entry['main']?.toString() ?? 'lib/main.dart',
       featureDir: generator['feature_dir']?.toString() ?? 'lib/features',
-      defaultTemplate: generator['default_template']?.toString() ?? 'riverpod_clean',
+      defaultTemplate:
+          generator['default_template']?.toString() ?? 'riverpod_clean',
     );
   }
 }

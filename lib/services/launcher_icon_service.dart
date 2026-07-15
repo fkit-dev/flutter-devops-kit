@@ -60,7 +60,8 @@ class LauncherIconService {
       '  adaptive_icon_foreground: "${config.adaptiveForeground}"',
     );
 
-    if (config.adaptiveMonochrome != null && config.adaptiveMonochrome!.isNotEmpty) {
+    if (config.adaptiveMonochrome != null &&
+        config.adaptiveMonochrome!.isNotEmpty) {
       buffer.writeln(
         '  adaptive_icon_monochrome: "${config.adaptiveMonochrome}"',
       );
@@ -102,7 +103,9 @@ class LauncherIconService {
       issues.add('Adaptive foreground not found: ${config.adaptiveForeground}');
     }
 
-    if (config.adaptiveMonochrome != null && config.adaptiveMonochrome!.isNotEmpty && !File(config.adaptiveMonochrome!).existsSync()) {
+    if (config.adaptiveMonochrome != null &&
+        config.adaptiveMonochrome!.isNotEmpty &&
+        !File(config.adaptiveMonochrome!).existsSync()) {
       issues.add(
         'Adaptive monochrome not found: ${config.adaptiveMonochrome}',
       );
@@ -166,7 +169,8 @@ class LauncherIconService {
       web: web,
       adaptiveBackground: adaptiveBackground,
       adaptiveForeground: adaptiveForeground,
-      adaptiveMonochrome: adaptiveMonochrome.isEmpty ? null : adaptiveMonochrome,
+      adaptiveMonochrome:
+          adaptiveMonochrome.isEmpty ? null : adaptiveMonochrome,
       removeAlphaIos: removeAlphaIos,
     );
   }

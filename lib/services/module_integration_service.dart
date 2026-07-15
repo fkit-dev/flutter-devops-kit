@@ -1,5 +1,6 @@
 import '../generators/module/integration/module_integrator_registry.dart';
 import '../generators/module/module_context.dart';
+
 /// Integrates generated modules into an FKIT project.
 ///
 /// Resolves the appropriate module integrator based on the configured
@@ -16,12 +17,12 @@ class ModuleIntegrationService {
     final integration = context.module.integration;
 
     if (!integration.enabled) {
-    return;
+      return;
     }
 
     final integrator = ModuleIntegratorRegistry.resolve(
-    diStrategy: context.template.di.strategy,
-    integrationStrategy: integration.strategy,
+      diStrategy: context.template.di.strategy,
+      integrationStrategy: integration.strategy,
     );
 
     if (integrator == null) {

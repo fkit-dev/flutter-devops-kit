@@ -39,7 +39,12 @@ class FlavorStep extends WizardStep<FlavorSetup> {
       defaultValue: _currentFlavors(),
     );
 
-    final flavors = flavorsInput.split(',').map((value) => value.trim()).where((value) => value.isNotEmpty).toSet().toList();
+    final flavors = flavorsInput
+        .split(',')
+        .map((value) => value.trim())
+        .where((value) => value.isNotEmpty)
+        .toSet()
+        .toList();
 
     if (flavors.isEmpty) {
       LoggerService.warning(
@@ -58,7 +63,9 @@ class FlavorStep extends WizardStep<FlavorSetup> {
       defaultValue: _currentDefaultFlavor(flavors),
     );
 
-    final defaultFlavor = flavors.contains(requestedDefaultFlavor) ? requestedDefaultFlavor : flavors.first;
+    final defaultFlavor = flavors.contains(requestedDefaultFlavor)
+        ? requestedDefaultFlavor
+        : flavors.first;
 
     if (defaultFlavor != requestedDefaultFlavor) {
       LoggerService.warning(
