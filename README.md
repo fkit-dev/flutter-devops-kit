@@ -1,34 +1,59 @@
-# FKIT — Flutter DevOps Kit
+````markdown
+<p align="center">
+  <img src="assets/branding/fkit-banner.png" alt="FKIT Banner">
+</p>
 
-FKIT is a command-line toolkit for Flutter project automation, code generation, builds, Firebase distribution, flavors, and Clean Architecture.
+<h1 align="center">FKIT — Flutter DevOps Kit</h1>
 
-A scalable, template-driven Flutter CLI toolkit for project automation, code generation, reusable architecture workflows, builds, Firebase distribution, signing, localization, and developer tooling.
+<p align="center">
+  <strong>A powerful CLI toolkit for Flutter project automation, code generation, builds, Firebase distribution, flavors, and developer workflows.</strong>
+</p>
 
-FKIT is designed to reduce repetitive Flutter setup and development tasks while remaining flexible enough to support different project architectures and engineering workflows.
+<p align="center">
+  Build • Automate • Generate • Deploy
+</p>
+
+<p align="center">
+  <a href="https://pub.dev/packages/flutter_devops_kit">
+    <img src="https://img.shields.io/pub/v/flutter_devops_kit.svg" alt="Pub Version">
+  </a>
+  <a href="https://pub.dev/packages/flutter_devops_kit">
+    <img src="https://img.shields.io/pub/likes/flutter_devops_kit" alt="Pub Likes">
+  </a>
+  <a href="https://pub.dev/packages/flutter_devops_kit">
+    <img src="https://img.shields.io/pub/points/flutter_devops_kit" alt="Pub Points">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+  </a>
+</p>
 
 ---
 
 # Overview
 
-FKIT (`Flutter DevOps Kit`) is a reusable command-line toolkit built for Flutter developers and teams.
+**FKIT (Flutter DevOps Kit)** is a reusable command-line toolkit built for Flutter developers and engineering teams.
 
-Instead of repeatedly configuring project structure, architecture, modules, builds, signing, localization, Firebase distribution, launcher icons, and code generation manually, FKIT provides a unified CLI workflow.
+Instead of repeatedly configuring project structure, architecture, modules, builds, signing, localization, Firebase distribution, launcher icons, and code generation manually, FKIT provides a unified, scalable, and consistent CLI workflow.
 
-FKIT is installed globally once and configured per Flutter project using:
+Install FKIT globally once and configure each Flutter project using a simple configuration file:
 
-```text
+```yaml
 fkit.yaml
 ```
 
-The toolkit is designed around three major ideas:
+FKIT is built around four core principles:
 
-* Project automation
-* Template-driven code generation
-* Reusable development workflows
+- ⚡ **Project Automation** — Eliminate repetitive Flutter setup tasks.
+- 🏗️ **Template-Driven Code Generation** — Generate production-ready architecture and boilerplate.
+- 🚀 **Build & Release Automation** — Simplify APK/AAB/IPA builds, flavors, signing, and Firebase App Distribution.
+- 🛠️ **Developer Productivity** — Standardize workflows across personal, team, and enterprise projects.
 
-FKIT can be used for both existing Flutter projects and newly initialized projects.
+Whether you're starting a brand-new Flutter application or maintaining a large production codebase, FKIT helps you automate repetitive tasks, enforce consistency, and accelerate development.
 
 ---
+````
+
 
 # Installation
 
