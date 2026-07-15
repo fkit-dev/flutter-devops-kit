@@ -23,18 +23,9 @@ class InitWizard {
     final featureDir = FeatureStep().collect();
     final useFvm = ToolingStep().collect();
     final platforms = PlatformStep().collect();
-
     final flavors = FlavorStep().collect();
-
-    final environment = EnvironmentStep(
-      flavors,
-    ).collect();
-
-    final firebase = FirebaseStep(
-      platforms: platforms,
-      flavors: flavors,
-    ).collect();
-
+    final environment = EnvironmentStep(flavors: flavors).collect();
+    final firebase = FirebaseStep(platforms: platforms, flavors: flavors).collect();
     final localization = LocalizationStep().collect();
     final generator = GeneratorStep().collect();
 

@@ -5,6 +5,14 @@ import '../wizard_step.dart';
 
 /// Collects localization configuration during the initialization wizard.
 class LocalizationStep extends WizardStep<LocalizationConfig> {
+  /// The existing localization configuration.
+  final LocalizationConfig? current;
+
+  /// Creates a localization configuration step.
+  LocalizationStep({
+    this.current,
+  });
+
   @override
   LocalizationConfig collect() {
     LoggerService.blank();
@@ -12,49 +20,51 @@ class LocalizationStep extends WizardStep<LocalizationConfig> {
 
     final enabled = PromptService.confirm(
       'Enable localization?',
-      defaultValue: false,
+      defaultValue: current?.enabled ?? false,
     );
 
     if (!enabled) {
-      return const LocalizationConfig(
+      return LocalizationConfig(
         enabled: false,
-        arbDir: 'lib/l10n',
-        templateArb: 'app_en.arb',
-        outputDir: 'lib/gen/l10n',
-        outputFile: 'app_localizations.dart',
-        defaultLocale: 'en',
-        locales: ['en'],
+        arbDir: current?.arbDir ?? 'lib/l10n',
+        templateArb: current?.templateArb ?? 'app_en.arb',
+        outputDir: current?.outputDir ?? 'lib/gen/l10n',
+        outputFile: current?.outputFile ?? 'app_localizations.dart',
+        defaultLocale: current?.defaultLocale ?? 'en',
+        locales: current?.locales ?? const ['en'],
       );
     }
 
     final arbDir = PromptService.ask(
       'ARB directory',
-      defaultValue: 'lib/l10n',
+      defaultValue: current?.arbDir ?? 'lib/l10n',
     );
 
     final defaultLocale = PromptService.ask(
       'Default locale',
-      defaultValue: 'en',
+      defaultValue: current?.defaultLocale ?? 'en',
     );
 
     final templateArb = PromptService.ask(
       'Template ARB file',
-      defaultValue: 'app_$defaultLocale.arb',
+      defaultValue: _resolveTemplateArb(
+        defaultLocale,
+      ),
     );
 
     final outputDir = PromptService.ask(
       'Generated output directory',
-      defaultValue: 'lib/gen/l10n',
+      defaultValue: current?.outputDir ?? 'lib/gen/l10n',
     );
 
     final outputFile = PromptService.ask(
       'Output localization file',
-      defaultValue: 'app_localizations.dart',
+      defaultValue: current?.outputFile ?? 'app_localizations.dart',
     );
 
     final localeInput = PromptService.ask(
       'Supported locales',
-      defaultValue: defaultLocale,
+      defaultValue: current?.locales.join(',') ?? defaultLocale,
     );
 
     final locales = localeInput.split(',').map((locale) => locale.trim()).where((locale) => locale.isNotEmpty).toSet().toList();
@@ -68,5 +78,15 @@ class LocalizationStep extends WizardStep<LocalizationConfig> {
       defaultLocale: defaultLocale,
       locales: locales,
     );
+  }
+
+  String _resolveTemplateArb(String defaultLocale) {
+    final currentTemplate = current?.templateArb;
+
+    if (currentTemplate != null && currentTemplate.isNotEmpty) {
+      return currentTemplate;
+    }
+
+    return 'app_$defaultLocale.arb';
   }
 }

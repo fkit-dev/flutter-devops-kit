@@ -2,7 +2,7 @@ import '../core/command.dart';
 import '../core/command_category.dart';
 import '../generators/core/generator_context.dart';
 import '../generators/feature/component_generator.dart';
-import '../services/config_service.dart';
+import '../services/config/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 import '../services/maintenance_service.dart';
@@ -55,8 +55,7 @@ class MakeCommand extends Command {
     final config = await ConfigService.load();
     final template = await TemplateService.load(config.defaultTemplate);
 
-    final context = GeneratorContext(
-        config: config, feature: feature, name: resource, template: template);
+    final context = GeneratorContext(config: config, feature: feature, name: resource, template: template);
 
     LoggerService.section('Generating $target: ${resource ?? feature}');
 
@@ -79,8 +78,7 @@ class MakeCommand extends Command {
       LoggerService.blank();
 
       for (final entry in template.components.entries) {
-        LoggerService.info(
-            '${entry.key.padRight(25)}${entry.value.description}');
+        LoggerService.info('${entry.key.padRight(25)}${entry.value.description}');
       }
 
       LoggerService.blank();
@@ -90,8 +88,7 @@ class MakeCommand extends Command {
       LoggerService.blank();
 
       for (final entry in template.groups.entries) {
-        LoggerService.info(
-            '${entry.key.padRight(25)}${entry.value.description}');
+        LoggerService.info('${entry.key.padRight(25)}${entry.value.description}');
       }
 
       return;

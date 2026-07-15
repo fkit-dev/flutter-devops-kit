@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:yaml/yaml.dart';
 
-import '../models/init_config.dart';
+import '../../models/init_config.dart';
 
 /// Provides utilities for loading FKIT project configuration.
 class ConfigService {

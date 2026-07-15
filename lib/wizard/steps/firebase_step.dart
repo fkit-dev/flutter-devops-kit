@@ -15,10 +15,14 @@ class FirebaseStep extends WizardStep<FirebaseConfig> {
   /// The flavor configuration used to determine Firebase targets.
   final FlavorSetup flavors;
 
+  /// The existing Firebase configuration.
+  final FirebaseConfig? current;
+
   /// Creates a Firebase configuration step.
   FirebaseStep({
     required this.platforms,
     required this.flavors,
+    this.current,
   });
 
   @override
@@ -28,20 +32,20 @@ class FirebaseStep extends WizardStep<FirebaseConfig> {
 
     final enabled = PromptService.confirm(
       'Does project use Firebase?',
-      defaultValue: false,
+      defaultValue: current?.enabled ?? false,
     );
 
     if (!enabled) {
-      return const FirebaseConfig(
+      return FirebaseConfig(
         enabled: false,
-        testerGroup: 'internal-testers',
-        configurations: {},
+        testerGroup: current?.testerGroup ?? 'internal-testers',
+        configurations: const {},
       );
     }
 
     final testerGroup = PromptService.ask(
       'Default Firebase tester group',
-      defaultValue: 'internal-testers',
+      defaultValue: current?.testerGroup ?? 'internal-testers',
     );
 
     final configurations = <String, FirebaseDetails>{};
@@ -50,21 +54,26 @@ class FirebaseStep extends WizardStep<FirebaseConfig> {
       LoggerService.blank();
       LoggerService.command(target);
 
+      final currentDetails = current?.configurationFor(target);
+
       configurations[target] = FirebaseDetails(
         android: _collectPlatform(
           enabled: platforms.android,
           platform: 'Android',
           target: target,
+          current: currentDetails?.android,
         ),
         ios: _collectPlatform(
           enabled: platforms.ios,
           platform: 'iOS',
           target: target,
+          current: currentDetails?.ios,
         ),
         web: _collectPlatform(
           enabled: platforms.web,
           platform: 'Web',
           target: target,
+          current: currentDetails?.web,
         ),
       );
     }
@@ -76,31 +85,17 @@ class FirebaseStep extends WizardStep<FirebaseConfig> {
     );
   }
 
-  FirebasePlatform? _collectPlatform({
-    required bool enabled,
-    required String platform,
-    required String target,
-  }) {
-    if (!enabled) {
-      return null;
-    }
+  FirebasePlatform? _collectPlatform({required bool enabled, required String platform, required String target, FirebasePlatform? current}) {
+    if (!enabled) return null;
 
     return FirebasePlatform(
-      appId: PromptService.ask(
-        '$platform Firebase App ID',
-      ),
-      options: PromptService.ask(
-        '$platform Firebase options',
-        defaultValue: _defaultOptionsPath(target),
-      ),
-    );
+        appId: PromptService.ask('$platform Firebase App ID', defaultValue: current?.appId),
+        options: PromptService.ask('$platform Firebase options', defaultValue: _resolveOptionsPath(target: target, current: current)));
   }
 
-  String _defaultOptionsPath(String target) {
-    if (!flavors.enabled) {
-      return 'lib/firebase_options.dart';
-    }
-
+  String _resolveOptionsPath({required String target, FirebasePlatform? current}) {
+    if (current != null && current.options.isNotEmpty) return current.options;
+    if (!flavors.enabled) return 'lib/firebase_options.dart';
     return 'lib/firebase_options_$target.dart';
   }
 }

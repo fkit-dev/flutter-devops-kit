@@ -1,7 +1,7 @@
 import '../core/command.dart';
 import '../core/command_category.dart';
 import '../core/package_version.dart';
-import '../services/config_service.dart';
+import '../services/config/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/launcher_icon_service.dart';
 import '../services/logger_service.dart';

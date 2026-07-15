@@ -1,6 +1,6 @@
 import '../core/command.dart';
 import '../core/command_category.dart';
-import '../services/config_service.dart';
+import '../services/config/config_service.dart';
 import '../services/logger_service.dart';
 import '../services/project_setup_service.dart';
 import '../services/template_service.dart';

@@ -4,7 +4,7 @@ import '../models/build_result.dart';
 import '../models/init_config.dart';
 import '../validators/init_validator.dart';
 import 'artifact_service.dart';
-import 'config_service.dart';
+import 'config/config_service.dart';
 import 'flutter_service.dart';
 import 'logger_service.dart';
 

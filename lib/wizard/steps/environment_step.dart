@@ -10,25 +10,20 @@ class EnvironmentStep extends WizardStep<EnvironmentConfig> {
   /// The flavor configuration used to determine environment targets.
   final FlavorSetup flavors;
 
+  /// The existing environment configuration.
+  final EnvironmentConfig? current;
+
   /// Creates an environment configuration step.
-  EnvironmentStep(this.flavors);
+  EnvironmentStep({required this.flavors, this.current});
 
   @override
   EnvironmentConfig collect() {
     LoggerService.blank();
     LoggerService.info('Environment');
 
-    final enabled = PromptService.confirm(
-      'Does project use environment files?',
-      defaultValue: true,
-    );
+    final enabled = PromptService.confirm('Does project use environment files?', defaultValue: current?.enabled ?? true);
 
-    if (!enabled) {
-      return const EnvironmentConfig(
-        enabled: false,
-        configurations: {},
-      );
-    }
+    if (!enabled) return const EnvironmentConfig(enabled: false, configurations: {});
 
     final configurations = <String, EnvironmentDetails>{};
 
@@ -36,25 +31,18 @@ class EnvironmentStep extends WizardStep<EnvironmentConfig> {
       LoggerService.blank();
       LoggerService.command(target);
 
+      final currentDetails = current?.configurationFor(target);
+
       configurations[target] = EnvironmentDetails(
-        file: PromptService.ask(
-          'Environment file path',
-          defaultValue: _defaultPath(target),
-        ),
-      );
+          file: PromptService.ask('Environment file path', defaultValue: _resolvePath(target: target, current: currentDetails)));
     }
 
-    return EnvironmentConfig(
-      enabled: true,
-      configurations: configurations,
-    );
+    return EnvironmentConfig(enabled: true, configurations: configurations);
   }
 
-  String _defaultPath(String target) {
-    if (!flavors.enabled) {
-      return 'env/env.json';
-    }
-
+  String _resolvePath({required String target, EnvironmentDetails? current}) {
+    if (current != null && current.file.isNotEmpty) return current.file;
+    if (!flavors.enabled) return 'env/env.json';
     return 'env/$target.json';
   }
 }

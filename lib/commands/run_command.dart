@@ -5,7 +5,7 @@ import '../core/command_category.dart';
 import '../models/build_mode.dart';
 import '../models/build_platform.dart';
 import '../services/build_service.dart';
-import '../services/config_service.dart';
+import '../services/config/config_service.dart';
 
 /// Runs the Flutter application using FKIT project configuration.
 ///

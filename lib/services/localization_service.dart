@@ -2,10 +2,10 @@ import 'dart:io';
 
 import '../generators/localization/arb_generator.dart';
 import '../generators/localization/l10n_yaml_generator.dart';
-import '../services/config_service.dart';
 import '../services/flutter_service.dart';
 import '../services/logger_service.dart';
 import '../validators/localization_validator.dart';
+import 'config/config_service.dart';
 import 'pubspec_service.dart';
 
 /// Manages localization setup, generation, and validation for Flutter projects.

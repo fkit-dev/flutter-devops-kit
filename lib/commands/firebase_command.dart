@@ -3,7 +3,7 @@ import 'package:args/args.dart';
 import '../core/base_arg_command.dart';
 import '../core/command_category.dart';
 import '../services/build_service.dart';
-import '../services/config_service.dart';
+import '../services/config/config_service.dart';
 import '../services/firebase_service.dart';
 import '../services/logger_service.dart';
 import '../utils/app_platform.dart';
