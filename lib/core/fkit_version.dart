@@ -3,5 +3,5 @@ class FkitVersion {
   const FkitVersion._();
 
   /// The current version of the FKIT package.
-  static const current = '0.1.2';
+  static const current = '0.1.4';
 }
