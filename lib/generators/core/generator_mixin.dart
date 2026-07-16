@@ -76,7 +76,7 @@ mixin GeneratorMixin {
     required String templateRoot,
     required String template,
     required String output,
-    required Map<String, String> variables,
+    required Map<String, dynamic> variables,
     bool overwrite = false,
   }) async {
     final content = await TemplateRenderer.render(
@@ -95,7 +95,7 @@ mixin GeneratorMixin {
   /// Replaces template placeholders in [value] using the provided [variables].
   String resolveVariables(
     String value,
-    Map<String, String> variables,
+    Map<String, dynamic> variables,
   ) {
     return TemplateRenderer.renderString(value, variables);
   }

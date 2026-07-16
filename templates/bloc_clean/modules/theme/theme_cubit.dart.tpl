@@ -16,10 +16,14 @@ class AppThemeCubit extends Cubit<AppThemeState> {
     emit(
       state.copyWith(
         themeMode: switch (value) {
-          'light' => ThemeMode.light,
-          'dark' => ThemeMode.dark,
-          _ => ThemeMode.system,
-        },
+                     'light' => ThemeMode.light,
+
+                   {{#if has_dark_theme}}
+                     'dark' => ThemeMode.dark,
+                   {{/if}}
+                   
+                     _ => ThemeMode.system,
+                   },
       ),
     );
   }

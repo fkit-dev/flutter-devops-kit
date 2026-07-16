@@ -13,7 +13,9 @@ class AppTheme {
 
   static ThemeData get light => _theme(Brightness.light);
 
+{{#if has_dark_theme}}
   static ThemeData get dark => _theme(Brightness.dark);
+{{/if}}
 
   static ThemeData _theme(Brightness brightness) {
     final isLight = brightness == Brightness.light;
@@ -25,21 +27,14 @@ class AppTheme {
 
     final colorScheme = baseScheme.copyWith(
       primary: AppColor.primary,
-      onPrimary: AppColor.white,
 
-      secondary: AppColor.primaryLight,
-      onSecondary: AppColor.white,
+{{#if secondary_is_custom}}
+      secondary: AppColor.secondary,
+{{/if}}
 
       tertiary: AppColor.success,
-      onTertiary: AppColor.white,
 
       error: AppColor.error,
-      onError: AppColor.white,
-
-      surface: isLight ? AppColor.lightCard : AppColor.darkCard,
-      onSurface: isLight ? AppColor.black : AppColor.white,
-
-      onSurfaceVariant: AppColor.grey,
     );
 
     final textTheme = AppTypography.create(colorScheme);
@@ -51,14 +46,14 @@ class AppTheme {
 
       colorScheme: colorScheme,
 
-      fontFamily: AppTypography.fontFamily == null || AppTypography.fontFamily!.isEmpty
+      fontFamily: AppTypography.fontFamily == null ||
+              AppTypography.fontFamily!.isEmpty
           ? null
           : AppTypography.fontFamily,
 
       textTheme: textTheme,
 
-      scaffoldBackgroundColor:
-          isLight ? AppColor.lightSurface : AppColor.darkSurface,
+      scaffoldBackgroundColor: colorScheme.surface,
 
       appBarTheme: AppBarTheme(
         elevation: 0,
@@ -72,8 +67,7 @@ class AppTheme {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness:
               isLight ? Brightness.dark : Brightness.light,
-          systemNavigationBarColor:
-              isLight ? AppColor.white : AppColor.black,
+          systemNavigationBarColor: colorScheme.surface,
           systemNavigationBarIconBrightness:
               isLight ? Brightness.dark : Brightness.light,
         ),
@@ -136,9 +130,7 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: colorScheme.primary,
-          side: BorderSide(
-            color: colorScheme.primary,
-          ),
+          side: BorderSide(color: colorScheme.primary),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_radiusSmall),
           ),
@@ -156,8 +148,7 @@ class AppTheme {
 
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor:
-            isLight ? AppColor.white : AppColor.darkCard,
+        fillColor: colorScheme.surfaceContainerHighest,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 14,
@@ -168,7 +159,7 @@ class AppTheme {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radiusSmall),
           borderSide: BorderSide(
-            color: AppColor.lightGrey,
+            color: colorScheme.outlineVariant,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -204,16 +195,14 @@ class AppTheme {
       ),
 
       switchTheme: SwitchThemeData(
-        thumbColor:
-            WidgetStateProperty.all(colorScheme.primary),
+        thumbColor: WidgetStateProperty.all(colorScheme.primary),
         trackColor: WidgetStateProperty.all(
           colorScheme.primary.withValues(alpha: 0.35),
         ),
       ),
 
       radioTheme: RadioThemeData(
-        fillColor:
-            WidgetStateProperty.all(colorScheme.primary),
+        fillColor: WidgetStateProperty.all(colorScheme.primary),
       ),
 
       iconButtonTheme: IconButtonThemeData(
@@ -227,25 +216,21 @@ class AppTheme {
         textColor: colorScheme.onSurface,
       ),
 
-      bottomNavigationBarTheme:
-          BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: colorScheme.surface,
         selectedItemColor: colorScheme.primary,
-        unselectedItemColor:
-            colorScheme.onSurfaceVariant,
+        unselectedItemColor: colorScheme.onSurfaceVariant,
         selectedLabelStyle: textTheme.labelSmall,
         unselectedLabelStyle: textTheme.labelSmall,
       ),
 
-      progressIndicatorTheme:
-          ProgressIndicatorThemeData(
+      progressIndicatorTheme: ProgressIndicatorThemeData(
         color: colorScheme.primary,
       ),
 
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: colorScheme.primary,
-        selectionColor:
-            colorScheme.primary.withValues(alpha: 0.25),
+        selectionColor: colorScheme.primary.withValues(alpha: 0.25),
         selectionHandleColor: colorScheme.primary,
       ),
     );

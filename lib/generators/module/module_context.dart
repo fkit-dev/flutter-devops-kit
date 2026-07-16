@@ -2,6 +2,7 @@ import '../../models/init_config.dart';
 import '../../models/module/module_definition.dart';
 import '../../models/module/module_package.dart';
 import '../../models/template/template_definition.dart';
+import 'module_variable_resolver.dart';
 
 /// Provides configuration and resolved values used during module generation.
 class ModuleContext {
@@ -29,23 +30,19 @@ class ModuleContext {
   String get templateRoot => '${template.name}/modules/${module.name}';
 
   /// The template variables available during module generation.
-  Map<String, String> get variables => {
-        'projectName': config.projectName,
-      };
+  Map<String, dynamic> get variables => const ModuleVariableResolver().resolve(this);
 
   /// The enabled runtime packages required by the module.
   ///
   /// Conditional packages are included only when their associated option is
   /// enabled.
-  Map<String, String> get enabledPackages =>
-      _resolvePackages(module.requirements.packages);
+  Map<String, String> get enabledPackages => _resolvePackages(module.requirements.packages);
 
   /// The enabled development packages required by the module.
   ///
   /// Conditional packages are included only when their associated option is
   /// enabled.
-  Map<String, String> get enabledDevPackages =>
-      _resolvePackages(module.requirements.devPackages);
+  Map<String, String> get enabledDevPackages => _resolvePackages(module.requirements.devPackages);
 
   /// Returns whether the specified module [option] is enabled.
   bool isEnabled(String option) => options[option] == true;

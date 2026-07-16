@@ -6,6 +6,43 @@ description: Material 3 theme with light, dark and system mode.
 
 version: 1.0.0
 
+options:
+
+  primary_color:
+    type: color
+    prompt: Primary color
+    default: "#2563EB"
+
+  secondary_color:
+    type: color
+    prompt: Secondary color (leave empty to derive automatically)
+    default: "auto"
+
+  success_color:
+    type: color
+    prompt: Success color
+    default: "#16A34A"
+
+  warning_color:
+    type: color
+    prompt: Warning color
+    default: "#F59E0B"
+
+  error_color:
+    type: color
+    prompt: Error color
+    default: "#DC2626"
+
+  enable_dark_theme:
+    type: bool
+    prompt: Enable dark theme?
+    default: true
+
+  generate_gradient:
+    type: bool
+    prompt: Generate primary gradient?
+    default: false
+
 files:
 
   - template: app_color.dart.tpl
