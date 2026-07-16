@@ -13,7 +13,6 @@ class Failure {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-      case DioExceptionType.transformTimeout:
         return TimeoutError();
 
       case DioExceptionType.badCertificate:
@@ -32,6 +31,7 @@ class Failure {
         return _handleBadResponse(exception);
 
       case DioExceptionType.unknown:
+      default:
         return _handleUnknownError(exception);
     }
   }
