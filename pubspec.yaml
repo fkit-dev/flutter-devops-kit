@@ -11,7 +11,7 @@ documentation: https://github.com/fkit-dev/flutter-devops-kit#readme
 
 screenshots:
   - description: FKIT - Flutter DevOps Toolkit
-    path: assets/branding/pub_thumbnail.png
+    path: assets/branding/fkit_logo.png
 
   - description: FKIT command line interface
     path: assets/branding/fkit_banner.png
