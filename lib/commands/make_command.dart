@@ -1,4 +1,5 @@
 import '../core/command.dart';
+import '../core/command_args.dart';
 import '../core/command_category.dart';
 import '../generators/core/generator_context.dart';
 import '../generators/feature/component_generator.dart';
@@ -22,7 +23,8 @@ class MakeCommand extends Command {
   CommandCategory get category => CommandCategory.feature;
 
   @override
-  String get usage => 'fkit make <component> <feature> [name]';
+  String get usage =>
+      'fkit make <component> <feature> [name] [--yes|--force] [--no-build-runner]';
 
   @override
   List<String> get examples => const [
@@ -43,14 +45,17 @@ class MakeCommand extends Command {
 
   @override
   Future<void> run(List<String> args) async {
-    if (args.length < 2) {
+    final positional = CommandArgs.positional(args);
+    if (positional.length < 2) {
       LoggerService.error('Usage: $usage');
       return;
     }
 
-    final target = args[0].trim();
-    final feature = args[1].trim();
-    final resource = args.length > 2 ? args[2].trim() : null;
+    final target = positional[0].trim();
+    final feature = positional[1].trim();
+    final resource = positional.length > 2 ? positional[2].trim() : null;
+    final overwrite = CommandArgs.hasFlag(args, '--yes') ||
+        CommandArgs.hasFlag(args, '--force');
 
     final config = await ConfigService.load();
     final template = await TemplateService.load(config.defaultTemplate);
@@ -63,11 +68,19 @@ class MakeCommand extends Command {
     final generator = const ComponentGenerator();
 
     if (template.components.containsKey(target)) {
-      await generator.generate(context: context, component: target);
+      await generator.generate(
+        context: context,
+        component: target,
+        overwrite: overwrite,
+      );
       await MaintenanceService().synchronize(context);
     } else if (template.groups.containsKey(target)) {
       for (final item in template.groups[target]!.components) {
-        await generator.generate(context: context, component: item);
+        await generator.generate(
+          context: context,
+          component: item,
+          overwrite: overwrite,
+        );
       }
       await MaintenanceService().synchronize(context);
     } else {
@@ -97,7 +110,9 @@ class MakeCommand extends Command {
       return;
     }
 
-    await FlutterService(config).buildRunner();
+    if (!CommandArgs.hasFlag(args, '--no-build-runner')) {
+      await FlutterService(config).buildRunner();
+    }
 
     LoggerService.blank();
     if (template.groups.containsKey(target)) {

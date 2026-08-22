@@ -4,8 +4,5 @@ theme:
 network:
   description: Dio based networking layer.
 
-storage:
-  description: Secure Storage and Shared Preferences.
-
 router:
   description: GoRouter configuration.

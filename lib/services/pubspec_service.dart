@@ -13,7 +13,13 @@ import 'logger_service.dart';
 /// saving changes, and running dependency resolution after modifications.
 class PubspecService {
   /// Creates a service for managing the project's pubspec configuration.
-  PubspecService();
+  PubspecService({
+    this.runPubGet = true,
+  });
+
+  /// Whether dependency resolution should be executed after saving changes.
+  final bool runPubGet;
+
   final File _file = File('pubspec.yaml');
 
   late final YamlEditor _editor;
@@ -29,12 +35,14 @@ class PubspecService {
   ///
   /// Adds the required localization dependencies, enables Flutter code
   /// generation, and saves the updated `pubspec.yaml` file.
-  Future<void> ensureLocalization() async {
+  Future<void> ensureLocalization({
+    bool syncDependencies = true,
+  }) async {
     await _ensureLoaded();
     await ensureFlutterSdkDependency('flutter_localizations');
     await ensureDependency('intl');
     await ensureFlutterGenerate();
-    await save();
+    if (syncDependencies) await save();
   }
 
   /// Ensures that [package] exists in the project's dependencies.
@@ -134,8 +142,10 @@ class PubspecService {
     if (!_modified) return;
 
     await _file.writeAsString(_editor.toString());
-    final config = await ConfigService.load();
-    await FlutterService(config).pubGet();
+    if (runPubGet) {
+      final config = await ConfigService.load();
+      await FlutterService(config).pubGet();
+    }
     _modified = false;
     LoggerService.success('pubspec.yaml updated.');
   }

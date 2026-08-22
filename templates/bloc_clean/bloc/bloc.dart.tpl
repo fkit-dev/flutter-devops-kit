@@ -4,6 +4,7 @@ import '../../domain/usecases/{{usecaseFile}}';
 import '{{eventFile}}';
 import '{{stateFile}}';
 
+// FKIT generated BLoC: replace placeholder flow with feature behavior.
 class {{bloc}} extends Bloc<{{event}}, {{state}}> {
   {{bloc}}({
     required {{usecase}} {{usecaseInstance}},

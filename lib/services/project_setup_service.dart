@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import '../generators/maintainers/app_maintainer.dart';
 import '../models/init_config.dart';
 import '../models/template/template_definition.dart';
 import 'extension_service.dart';
@@ -23,6 +26,8 @@ class ProjectSetupService {
   Future<bool> setup({
     required InitConfig config,
     required TemplateDefinition template,
+    bool overwrite = false,
+    bool runFlutterCommands = true,
   }) async {
     final setup = template.setup;
 
@@ -37,10 +42,13 @@ class ProjectSetupService {
       return false;
     }
 
-    final pubspec = PubspecService();
+    _validateBootstrapTargets(template);
+
+    final pubspec = PubspecService(runPubGet: runFlutterCommands);
 
     await _prepareProject(
       config: config,
+      runFlutterCommands: runFlutterCommands,
     );
 
     await _collectTemplateRequirements(
@@ -53,6 +61,9 @@ class ProjectSetupService {
       template: template,
       modules: setup.modules,
       pubspec: pubspec,
+      overwrite: overwrite,
+      defaultsOnly: overwrite,
+      runFlutterCommands: runFlutterCommands,
     );
 
     // Synchronize all collected template and module dependencies once.
@@ -62,29 +73,46 @@ class ProjectSetupService {
       config: config,
       template: template,
       features: setup.features,
+      overwrite: overwrite,
+      runFlutterCommands: runFlutterCommands,
     );
 
     await const ProjectBootstrapService().bootstrap(
       config: config,
       template: template,
+      overwrite: overwrite,
     );
 
-    await FlutterService(config).postGenerate(
-      buildRunner: template.requirements.buildRunner ||
-          moduleRequiresBuildRunner ||
-          featuresGenerated,
-    );
+    if (config.localization.enabled) {
+      await _wireLocalization(
+        config: config,
+        template: template,
+      );
+    }
+
+    if (runFlutterCommands) {
+      await FlutterService(config).postGenerate(
+        buildRunner: template.requirements.buildRunner ||
+            moduleRequiresBuildRunner ||
+            featuresGenerated,
+      );
+    }
 
     return true;
   }
 
   Future<void> _prepareProject({
     required InitConfig config,
+    required bool runFlutterCommands,
   }) async {
     LoggerService.section('Preparing Project');
 
     if (config.localization.enabled) {
-      await LocalizationService().generate();
+      await LocalizationService().generate(
+        config: config,
+        maintainApp: false,
+        runFlutterCommands: runFlutterCommands,
+      );
     }
 
     await ExtensionService().generate();
@@ -118,6 +146,9 @@ class ProjectSetupService {
     required TemplateDefinition template,
     required List<String> modules,
     required PubspecService pubspec,
+    required bool overwrite,
+    required bool defaultsOnly,
+    required bool runFlutterCommands,
   }) async {
     var requiresBuildRunner = false;
 
@@ -135,6 +166,9 @@ class ProjectSetupService {
         pubspecService: pubspec,
         syncDependencies: false,
         postGenerate: false,
+        overwrite: overwrite,
+        defaultsOnly: defaultsOnly,
+        runFlutterCommands: runFlutterCommands,
       );
 
       if (!result.installed) {
@@ -157,6 +191,8 @@ class ProjectSetupService {
     required InitConfig config,
     required TemplateDefinition template,
     required List<String> features,
+    required bool overwrite,
+    required bool runFlutterCommands,
   }) async {
     var generatedAny = false;
 
@@ -172,6 +208,8 @@ class ProjectSetupService {
         template: template,
         feature: feature,
         postGenerate: false,
+        overwrite: overwrite,
+        runFlutterCommands: runFlutterCommands,
       );
 
       if (!generated) {
@@ -186,5 +224,51 @@ class ProjectSetupService {
     }
 
     return generatedAny;
+  }
+
+  void _validateBootstrapTargets(TemplateDefinition template) {
+    final bootstrap = template.setup.bootstrap;
+    if (!bootstrap.enabled) return;
+
+    final files = [bootstrap.app, bootstrap.main].whereType();
+    for (final file in files) {
+      final target = File(file.output);
+      if (target.existsSync() &&
+          target.statSync().type != FileSystemEntityType.file) {
+        throw Exception('Bootstrap target is not a file: ${file.output}');
+      }
+      final parent = target.parent;
+      if (parent.existsSync() &&
+          parent.statSync().type != FileSystemEntityType.directory) {
+        throw Exception(
+            'Bootstrap target parent is not a directory: ${parent.path}');
+      }
+    }
+  }
+
+  Future<void> _wireLocalization({
+    required InitConfig config,
+    required TemplateDefinition template,
+  }) async {
+    final app = template.setup.bootstrap.app;
+    if (app == null) {
+      throw Exception(
+        'Cannot enable localization: template "${template.name}" does not '
+        'configure a bootstrap App file.',
+      );
+    }
+
+    if (!File(app.output).existsSync()) {
+      throw Exception(
+        'Cannot enable localization: configured bootstrap App file is missing '
+        'at ${app.output}.',
+      );
+    }
+
+    await const AppMaintainer().enableLocalization(
+      appFilePath: app.output,
+      outputDir: config.localization.outputDir,
+      outputFile: config.localization.outputFile,
+    );
   }
 }

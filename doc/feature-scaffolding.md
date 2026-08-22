@@ -52,7 +52,7 @@ Current default template:
 
 ```yaml id="’winiiii344"
 generator:
-  default_template: riverpod_clean
+  default_template: bloc_clean
 ```
 
 ---
@@ -260,28 +260,28 @@ fkit.yaml
 
 ```yaml id="’winiiii354"
 generator:
-  default_template: riverpod_clean
+  default_template: bloc_clean
 ```
 
 ---
 
-# Planned Templates
+# Template Status
 
-Future architecture generators:
+Current and planned architecture generators:
 
 | Template       | Status  |
 | -------------- | ------- |
-| riverpod_clean | ✅       |
-| bloc_clean     | Planned |
+| bloc_clean     | Current, production-ready |
+| riverpod_clean | Planned |
 | mvvm           | Planned |
 | provider_clean | Planned |
 | getx_clean     | Planned |
 
 ---
 
-# Planned Bloc Structure
+# BLoC Structure
 
-Future generated structure:
+Current generated structure:
 
 ```text id="’winiiii355"
 presentation/

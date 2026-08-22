@@ -64,7 +64,7 @@ firebase:
   tester_group: internal-testers
 
 generator:
-  default_template: riverpod_clean
+  default_template: bloc_clean
 ```
 
 ---
@@ -331,15 +331,16 @@ Example:
 
 ```yaml
 generator:
-  default_template: riverpod_clean
+  default_template: bloc_clean
 ```
 
-Planned templates:
+Template status:
 
-* riverpod_clean
-* bloc_clean
-* mvvm
-* provider_clean
+* bloc_clean (current, production-ready)
+* riverpod_clean (planned)
+* mvvm (planned)
+* provider_clean (planned)
+* getx_clean (planned)
 
 ---
 

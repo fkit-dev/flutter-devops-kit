@@ -2,6 +2,7 @@ import '../../domain/repositories/{{repositoryFile}}';
 import '../datasources/local/{{localDatasourceFile}}';
 import '../datasources/remote/{{remoteDatasourceFile}}';
 
+// FKIT generated implementation point: compose datasources into repository behavior.
 class {{repositoryImpl}} implements {{repository}} {
   const {{repositoryImpl}}({
     required {{remoteDatasource}} {{remoteDatasourceInstance}},

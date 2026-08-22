@@ -17,16 +17,23 @@ class FeatureGenerationService {
       {required InitConfig config,
       required TemplateDefinition template,
       required String feature,
-      bool postGenerate = true}) async {
+      bool postGenerate = true,
+      bool overwrite = false,
+      bool runFlutterCommands = true}) async {
     final context =
         GeneratorContext(config: config, feature: feature, template: template);
 
-    final generated = await FeatureGenerator().generate(context);
+    final generated = await FeatureGenerator().generate(
+      context,
+      overwrite: overwrite,
+    );
 
     if (!generated) return false;
     await MaintenanceService().synchronize(context);
 
-    if (postGenerate) await FlutterService(config).buildRunner();
+    if (postGenerate && runFlutterCommands) {
+      await FlutterService(config).buildRunner();
+    }
     return true;
   }
 }

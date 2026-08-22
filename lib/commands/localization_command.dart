@@ -2,8 +2,10 @@ import 'package:args/args.dart';
 
 import '../core/base_arg_command.dart';
 import '../core/command_category.dart';
+import '../services/config/config_service.dart';
 import '../services/localization_service.dart';
 import '../services/logger_service.dart';
+import '../services/template_service.dart';
 
 /// Manages localization workflows for FKIT projects.
 ///
@@ -19,7 +21,7 @@ class LocalizationCommand extends BaseArgCommand {
   CommandCategory get category => CommandCategory.localization;
 
   @override
-  String get usage => 'fkit l10n <command>';
+  String get usage => 'fkit l10n <command> [--yes|--force]';
 
   @override
   List<String> get examples => const [
@@ -35,7 +37,9 @@ class LocalizationCommand extends BaseArgCommand {
   bool get requiresFlutterProject => true;
 
   @override
-  ArgParser buildParser() => ArgParser();
+  ArgParser buildParser() => ArgParser()
+    ..addFlag('yes', negatable: false)
+    ..addFlag('force', negatable: false);
 
   @override
   Future<void> execute(
@@ -79,13 +83,26 @@ class LocalizationCommand extends BaseArgCommand {
       return;
     }
 
+    final config = await ConfigService.load();
+    final template = await TemplateService.load(config.defaultTemplate);
+    final appFilePath = template.setup.bootstrap.app?.output;
+    final overwrite = results['yes'] == true || results['force'] == true;
+
     switch (results.rest.first.toLowerCase()) {
       case 'setup':
-        await LocalizationService().setup();
+        await LocalizationService().generate(
+          config: config,
+          appFilePath: appFilePath,
+          overwrite: overwrite,
+        );
         break;
 
       case 'generate':
-        await LocalizationService().generate();
+        await LocalizationService().generate(
+          config: config,
+          appFilePath: appFilePath,
+          overwrite: overwrite,
+        );
         break;
 
       case 'doctor':

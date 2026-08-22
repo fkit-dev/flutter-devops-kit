@@ -1,4 +1,5 @@
 import '../core/command.dart';
+import '../core/command_args.dart';
 import '../core/command_category.dart';
 import '../services/config/config_service.dart';
 import '../services/feature_generation_service.dart';
@@ -19,7 +20,8 @@ class FeatureCommand extends Command {
   CommandCategory get category => CommandCategory.feature;
 
   @override
-  String get usage => 'fkit feat <feature_name>';
+  String get usage =>
+      'fkit feat <feature_name> [--yes|--force] [--no-build-runner]';
 
   @override
   List<String> get examples => const [
@@ -36,12 +38,13 @@ class FeatureCommand extends Command {
 
   @override
   Future<void> run(List<String> args) async {
-    if (args.isEmpty) {
+    final positional = CommandArgs.positional(args);
+    if (positional.isEmpty) {
       LoggerService.error('Usage: $usage');
       return;
     }
 
-    final feature = args.first.trim();
+    final feature = positional.first.trim();
 
     final config = await ConfigService.load();
     final template = await TemplateService.load(
@@ -54,6 +57,9 @@ class FeatureCommand extends Command {
       config: config,
       template: template,
       feature: feature,
+      overwrite: CommandArgs.hasFlag(args, '--yes') ||
+          CommandArgs.hasFlag(args, '--force'),
+      postGenerate: !CommandArgs.hasFlag(args, '--no-build-runner'),
     );
 
     if (!generated) {

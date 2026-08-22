@@ -43,11 +43,17 @@ setup:
 requires:
   packages:
     get_it: ^9.2.1
+    flutter_bloc: ^9.1.0
+    freezed_annotation: ^3.1.0
+    json_annotation: ^4.12.0
 
-  dev_packages: {}
+  dev_packages:
+    build_runner: ^2.5.4
+    freezed: ^3.2.3
+    json_serializable: ^6.9.5
 
   flutter_gen: false
-  build_runner: false
+  build_runner: true
 
 supports:
   - feature

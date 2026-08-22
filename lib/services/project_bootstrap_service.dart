@@ -22,6 +22,7 @@ class ProjectBootstrapService with GeneratorMixin {
   Future<bool> bootstrap({
     required InitConfig config,
     required TemplateDefinition template,
+    bool overwrite = false,
   }) async {
     final bootstrap = template.setup.bootstrap;
 
@@ -50,6 +51,7 @@ class ProjectBootstrapService with GeneratorMixin {
         templatePath: app.template,
         outputPath: app.output,
         variables: variables,
+        overwrite: overwrite,
       );
 
       generatedAny = generatedAny || generated;
@@ -63,6 +65,7 @@ class ProjectBootstrapService with GeneratorMixin {
         templatePath: main.template,
         outputPath: main.output,
         variables: variables,
+        overwrite: overwrite,
       );
 
       generatedAny = generatedAny || generated;
@@ -76,18 +79,19 @@ class ProjectBootstrapService with GeneratorMixin {
     required String templatePath,
     required String outputPath,
     required Map<String, String> variables,
+    required bool overwrite,
   }) async {
     final file = File(outputPath);
 
-    var overwrite = false;
+    var shouldOverwrite = overwrite;
 
-    if (file.existsSync()) {
-      overwrite = PromptService.confirm(
+    if (file.existsSync() && !shouldOverwrite) {
+      shouldOverwrite = PromptService.confirm(
         '$outputPath already exists. Overwrite?',
         defaultValue: false,
       );
 
-      if (!overwrite) {
+      if (!shouldOverwrite) {
         LoggerService.info(
           'Skipped $outputPath.',
         );
@@ -101,7 +105,7 @@ class ProjectBootstrapService with GeneratorMixin {
       template: templatePath,
       output: outputPath,
       variables: variables,
-      overwrite: overwrite,
+      overwrite: shouldOverwrite,
     );
 
     return true;

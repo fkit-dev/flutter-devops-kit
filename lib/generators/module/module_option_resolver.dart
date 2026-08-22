@@ -14,18 +14,45 @@ class ModuleOptionResolver {
   /// Returns an empty map when the module does not define any configurable
   /// options.
   Future<Map<String, dynamic>> resolve(ModuleDefinition module) async {
+    return resolveWithDefaults(module, defaultsOnly: false);
+  }
+
+  /// Resolves module option values, optionally using defaults without prompts.
+  Future<Map<String, dynamic>> resolveWithDefaults(
+    ModuleDefinition module, {
+    required bool defaultsOnly,
+  }) async {
     if (!module.hasOptions) return const {};
 
     final values = <String, dynamic>{};
 
-    LoggerService.blank();
-    LoggerService.section('${module.displayName} Configuration');
+    if (!defaultsOnly) {
+      LoggerService.blank();
+      LoggerService.section('${module.displayName} Configuration');
+    }
 
     for (final option in module.options.values) {
-      values[option.name] = _resolveOption(option);
+      values[option.name] =
+          defaultsOnly ? _resolveDefault(option) : _resolveOption(option);
     }
 
     return values;
+  }
+
+  dynamic _resolveDefault(ModuleOption option) {
+    switch (option.type) {
+      case ModuleOptionType.bool:
+        return option.defaultValue == true;
+      case ModuleOptionType.string:
+      case ModuleOptionType.enumType:
+        return option.defaultValue?.toString() ?? '';
+      case ModuleOptionType.color:
+        final value = option.defaultValue?.toString() ?? '#000000';
+        return value == 'auto' ? value : _toDartColor(value);
+      case ModuleOptionType.int:
+      case ModuleOptionType.double:
+        return option.defaultValue;
+    }
   }
 
   dynamic _resolveOption(ModuleOption option) {
@@ -52,7 +79,8 @@ class ModuleOptionResolver {
 
   bool _resolveBoolean(ModuleOption option) {
     final defaultValue = option.defaultValue == true;
-    final answer = PromptService.ask(option.prompt, defaultValue: defaultValue ? 'y' : 'n');
+    final answer = PromptService.ask(option.prompt,
+        defaultValue: defaultValue ? 'y' : 'n');
 
     final normalized = answer.trim().toLowerCase();
 
@@ -82,6 +110,10 @@ class ModuleOptionResolver {
         option.prompt,
         defaultValue: defaultValue,
       ).trim();
+
+      if (answer == 'auto') {
+        return answer;
+      }
 
       if (_isValidColor(answer)) {
         return _toDartColor(answer);

@@ -1,0 +1,17 @@
+name: fkit_fixture_app
+description: Minimal Flutter fixture for FKIT setup and generation tests.
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

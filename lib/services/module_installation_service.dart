@@ -34,14 +34,18 @@ class ModuleInstallationService {
     PubspecService? pubspecService,
     bool syncDependencies = true,
     bool postGenerate = true,
+    bool overwrite = false,
+    bool defaultsOnly = false,
+    bool runFlutterCommands = true,
   }) async {
     final module = await const ModuleService().load(
       template: template.name,
       module: moduleName,
     );
 
-    final options = await const ModuleOptionResolver().resolve(
+    final options = await const ModuleOptionResolver().resolveWithDefaults(
       module,
+      defaultsOnly: defaultsOnly,
     );
 
     final context = ModuleContext(
@@ -53,6 +57,7 @@ class ModuleInstallationService {
 
     final generated = await const ModuleGenerator().generate(
       context,
+      overwrite: overwrite,
     );
 
     if (!generated) {
@@ -63,7 +68,8 @@ class ModuleInstallationService {
       );
     }
 
-    final pubspec = pubspecService ?? PubspecService();
+    final pubspec =
+        pubspecService ?? PubspecService(runPubGet: runFlutterCommands);
 
     if (context.enabledPackages.isNotEmpty) {
       await pubspec.ensureDependencies(
@@ -85,7 +91,7 @@ class ModuleInstallationService {
       context,
     );
 
-    if (postGenerate) {
+    if (postGenerate && runFlutterCommands) {
       await FlutterService(config).postGenerate(
         buildRunner: module.requiresBuildRunner,
       );

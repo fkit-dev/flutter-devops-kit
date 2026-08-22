@@ -64,7 +64,10 @@ fkit doctor
 fkit init
 
 # Generate a new feature
-fkit gen feature
+fkit feat auth --no-build-runner
+
+# Run setup without overwrite prompts
+fkit setup --yes
 ```
 
 ---
@@ -74,7 +77,7 @@ fkit gen feature
 - 🏗️ Project initialization & setup
 - 📂 Feature & module code generation
 - 🎯 Clean Architecture templates
-- 🧩 BLoC, Riverpod & Provider support
+- 🧩 Template-driven BLoC Clean Architecture generation
 - 📦 APK, AAB & IPA build automation
 - 🔥 Firebase App Distribution
 - 🎨 Multi-flavor project management
@@ -88,7 +91,7 @@ fkit gen feature
 
 # 📖 Overview
 
-**FKIT (Flutter DevOps Kit)** is a reusable command-line toolkit built for Flutter developers, teams, and organizations.
+**FKIT (Flutter DevOps Kit)** is a reusable command-line toolkit built for Flutter developers, teams, and organizations. The currently production-ready template is `bloc_clean`; Riverpod Clean and MVVM templates are planned.
 
 Instead of repeatedly configuring project structure, architecture, modules, builds, signing, localization, launcher icons, Firebase App Distribution, and code generation manually, FKIT provides a unified, scalable, and consistent CLI workflow.
 
@@ -537,9 +540,19 @@ fkit firebase production
 
 FKIT uses reusable architecture templates to define how projects, features, components, modules, routing, dependency injection, and project setup workflows are generated.
 
-The currently available template is:
+The currently available production-ready template is:
 
 * `bloc_clean` — Feature-first Clean Architecture using `flutter_bloc`
+
+Planned templates: `riverpod_clean`, `mvvm`, `provider_clean`, and `getx_clean`.
+
+Use `--yes` or `--force` with setup, module installation, feature generation,
+component generation, and localization generation to overwrite without prompts.
+Use `--no-build-runner` with feature and component generation when codegen will
+be run separately.
+
+Generated feature files assume the selected template's declared runtime and
+development dependencies have been added to `pubspec.yaml`.
 
 Templates can define:
 

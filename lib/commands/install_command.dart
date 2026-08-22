@@ -1,4 +1,5 @@
 import '../core/command.dart';
+import '../core/command_args.dart';
 import '../core/command_category.dart';
 import '../services/config/config_service.dart';
 import '../services/logger_service.dart';
@@ -20,7 +21,7 @@ class InstallCommand extends Command {
   CommandCategory get category => CommandCategory.project;
 
   @override
-  String get usage => 'fkit install <module>';
+  String get usage => 'fkit install <module> [--yes|--force]';
 
   @override
   List<String> get examples => const [
@@ -42,7 +43,15 @@ class InstallCommand extends Command {
       return;
     }
 
-    final moduleName = args.first.trim();
+    final positional = CommandArgs.positional(args);
+    if (positional.isEmpty) {
+      LoggerService.error('Usage: $usage');
+      return;
+    }
+
+    final moduleName = positional.first.trim();
+    final overwrite = CommandArgs.hasFlag(args, '--yes') ||
+        CommandArgs.hasFlag(args, '--force');
 
     final config = await ConfigService.load();
 
@@ -77,6 +86,8 @@ class InstallCommand extends Command {
       config: config,
       template: template,
       moduleName: moduleName,
+      overwrite: overwrite,
+      defaultsOnly: overwrite,
     );
 
     if (!result.installed) {

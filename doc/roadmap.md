@@ -83,8 +83,8 @@ Expand architecture generation support.
 
 | Template       | Status  |
 | -------------- | ------- |
-| riverpod_clean | ✅       |
-| bloc_clean     | Planned |
+| bloc_clean     | Current, production-ready |
+| riverpod_clean | Planned |
 | mvvm           | Planned |
 | provider_clean | Planned |
 | getx_clean     | Planned |

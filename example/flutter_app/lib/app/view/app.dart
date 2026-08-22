@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../router/app_router.dart';
-import '../theme/app_theme.dart';
 // <fkit:imports>
 // </fkit:imports>
 
@@ -10,15 +8,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-
       // <fkit:material_app>
       // </fkit:material_app>
-
-      routerConfig: AppRouter.router,
+      home: const Scaffold(
+        body: Center(
+          child: Text('FKIT fixture'),
+        ),
+      ),
     );
   }
 }

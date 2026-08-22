@@ -1,0 +1,58 @@
+fkit:
+  version: 0.1.1
+
+project_name: fkit_fixture_app
+
+tooling:
+  use_fvm: false
+
+platforms:
+  android: false
+  ios: false
+  web: false
+
+generator:
+  feature_dir: lib/features
+  default_template: bloc_clean
+
+build:
+  debug_info: ./debug-info
+  obfuscate: true
+
+entry:
+  main: lib/main.dart
+
+flavoring:
+  enabled: true
+  default: development
+
+flavors:
+  - development
+  - staging
+  - production
+
+environment:
+  enabled: true
+  configurations:
+    development:
+      file: env/development.json
+    staging:
+      file: env/staging.json
+    production:
+      file: env/production.json
+
+firebase:
+  enabled: false
+  tester_group: internal-testers
+  configurations: {}
+
+localization:
+  enabled: true
+  arb_dir: lib/l10n
+  template: app_en.arb
+  output_dir: lib/gen/l10n
+  output_file: app_localizations.dart
+  default_locale: en
+  locales:
+    - en
+    - es

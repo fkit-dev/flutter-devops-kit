@@ -1,4 +1,5 @@
 import '../core/command.dart';
+import '../core/command_args.dart';
 import '../core/command_category.dart';
 import '../services/config/config_service.dart';
 import '../services/logger_service.dart';
@@ -19,11 +20,12 @@ class SetupCommand extends Command {
   CommandCategory get category => CommandCategory.project;
 
   @override
-  String get usage => 'fkit setup';
+  String get usage => 'fkit setup [--yes|--force]';
 
   @override
   List<String> get examples => const [
         'fkit setup',
+        'fkit setup --yes',
       ];
 
   @override
@@ -51,6 +53,8 @@ class SetupCommand extends Command {
     await const ProjectSetupService().setup(
       config: config,
       template: template,
+      overwrite: CommandArgs.hasFlag(args, '--yes') ||
+          CommandArgs.hasFlag(args, '--force'),
     );
 
     LoggerService.blank();

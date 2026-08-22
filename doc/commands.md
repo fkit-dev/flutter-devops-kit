@@ -406,10 +406,18 @@ fkit feat auth
 
 Generates feature folder structure.
 
+Use `--force` (or `--yes`) to overwrite generated files without prompts in
+setup, module installation, feature generation, component generation, and
+localization generation. Use `--no-build-runner` with feature and component
+generation when the build step will be run separately.
+
+Generated feature files require the selected template's declared runtime and
+development dependencies.
+
 Supported templates:
 
-* Riverpod Clean Architecture
-* Bloc Clean Architecture (planned)
+* BLoC Clean Architecture (current, production-ready)
+* Riverpod Clean Architecture (planned)
 * MVVM (planned)
 
 ---
