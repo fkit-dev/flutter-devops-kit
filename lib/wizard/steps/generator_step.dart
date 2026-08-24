@@ -13,7 +13,7 @@ class GeneratorStep extends WizardStep<GeneratorSetup> {
 
     final template = PromptService.ask(
       'Default template',
-      defaultValue: 'riverpod_clean',
+      defaultValue: 'bloc_clean',
     );
 
     return GeneratorSetup(

@@ -120,7 +120,7 @@ class InitConfig {
       mainEntry: entry['main']?.toString() ?? 'lib/main.dart',
       featureDir: generator['feature_dir']?.toString() ?? 'lib/features',
       defaultTemplate:
-          generator['default_template']?.toString() ?? 'riverpod_clean',
+          generator['default_template']?.toString() ?? 'bloc_clean',
     );
   }
 }

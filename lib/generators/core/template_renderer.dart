@@ -21,7 +21,8 @@ class TemplateRenderer {
       variables,
     );
 
-    final sorted = variables.entries.toList()..sort((a, b) => b.key.length.compareTo(a.key.length));
+    final sorted = variables.entries.toList()
+      ..sort((a, b) => b.key.length.compareTo(a.key.length));
 
     for (final entry in sorted) {
       result = result.replaceAll(

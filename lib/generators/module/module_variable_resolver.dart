@@ -29,8 +29,11 @@ class ModuleVariableResolver {
   ) {
     final secondary = variables['secondary_color'];
 
-    variables['secondary_is_custom'] = secondary != null && secondary.toString().isNotEmpty && secondary != 'auto';
-    variables['secondary_is_generated'] = !(variables['secondary_is_custom'] == true);
+    variables['secondary_is_custom'] = secondary != null &&
+        secondary.toString().isNotEmpty &&
+        secondary != 'auto';
+    variables['secondary_is_generated'] =
+        !(variables['secondary_is_custom'] == true);
     variables['has_dark_theme'] = variables['enable_dark_theme'] == true;
     variables['has_gradient'] = variables['generate_gradient'] == true;
     variables['has_light_only_theme'] = !(variables['has_dark_theme'] == true);
