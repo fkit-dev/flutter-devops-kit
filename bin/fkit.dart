@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_devops_kit/core/command.dart';
 import 'package:flutter_devops_kit/core/command_registry.dart';
+import 'package:yaml/yaml.dart';
 
 Future<void> main(List<String> args) async {
   if (args.isEmpty) {
@@ -62,6 +63,22 @@ bool _checkPreconditions(Command command) {
 }
 
 bool _looksLikeFlutterProject() {
-  final content = File('pubspec.yaml').readAsStringSync();
-  return content.contains('sdk: flutter') || content.contains('flutter:');
+  try {
+    final pubspec = loadYaml(File('pubspec.yaml').readAsStringSync());
+    if (pubspec is! Map) return false;
+
+    final dependencies = pubspec['dependencies'];
+    if (dependencies is! Map || !dependencies.containsKey('flutter')) {
+      return false;
+    }
+
+    final flutter = dependencies['flutter'];
+    if (flutter is Map) {
+      return flutter['sdk']?.toString() == 'flutter';
+    }
+
+    return true;
+  } catch (_) {
+    return false;
+  }
 }

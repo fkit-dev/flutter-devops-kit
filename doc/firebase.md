@@ -59,19 +59,19 @@ fkit.yaml
 
 ```yaml id="btjlwm"
 firebase:
+  enabled: true
   tester_group: internal-testers
-
-flavors:
-  production:
-    env: env/production.json
-
-    firebase:
-      app_distribution_id: 1:1234567890:android:abcdef123456
-
-      options:
-        android: lib/firebase_options_production.dart
-        ios: lib/firebase_options_production.dart
-        web: lib/firebase_options_production.dart
+  configurations:
+    production:
+      android:
+        app_id: 1:1234567890:android:abcdef123456
+        options: lib/firebase_options_production.dart
+      ios:
+        app_id: 1:1234567890:ios:abcdef123456
+        options: lib/firebase_options_production.dart
+      web:
+        app_id: 1:1234567890:web:abcdef123456
+        options: lib/firebase_options_production.dart
 ```
 
 ---

@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file. 
 
+## 0.1.4
+
+### Added
+
+- Added a checked-in minimal Flutter fixture under `example/flutter_app` for
+  setup, localization, module, feature, and component generation validation.
+- Added fixture-backed service tests for BLoC setup generation, localization
+  wiring, dependency collection, duplicate-safe maintenance, and component
+  overwrite behavior.
+- Added command suggestion support for mistyped top-level commands and
+  `fkit help <command>`.
+- Added centralized CLI preflight checks for commands that require a Flutter
+  project or `fkit.yaml`.
+- Added `.pubignore` entries to keep local artifacts and experimental templates
+  out of pub package archives.
+
+### Changed
+
+- Reworked `README.md` for pub.dev with installation, PATH setup,
+  requirements, quick start, configuration, command reference, workflows, and
+  fallback guidance.
+- Rewrote `doc/commands.md` as the complete guidebook for supported commands,
+  arguments, flags, examples, and invalid-command behavior.
+- Updated `example/example.dart` and `example/fkit.yaml` to show safer,
+  copyable package usage with Firebase disabled by default.
+- Updated `doc/configuration.md` to use the current sectioned `fkit.yaml`
+  structure.
+- Marked `bloc_clean` as the current production-ready template and Riverpod,
+  MVVM, Provider, and GetX templates as planned.
+- Improved non-interactive generation semantics for setup, module installation,
+  bootstrap generation, localization setup, feature generation, and component
+  generation.
+- Improved BLoC template setup dependencies to include required BLoC, Freezed,
+  JSON serialization, and build runner packages.
+
+### Fixed
+
+- Fixed localization setup to wire the selected template's configured App file
+  instead of hardcoding `lib/app/app.dart`.
+- Fixed localization import generation to use a relative import path from the
+  generated App file.
+- Fixed setup ordering so localization files are generated before bootstrap App
+  maintenance and App localization wiring happens after bootstrap generation.
+- Fixed template and module validation to fail early when referenced manifests
+  or template files are missing.
+- Fixed stale template/module documentation that advertised unavailable planned
+  modules or templates as current.
+- Fixed package version reporting by updating `FkitVersion.current` to `0.1.4`.
+
 ## 0.1.3
 
 ### Added

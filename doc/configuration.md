@@ -15,7 +15,10 @@ Every Flutter project using FKIT must contain this file in the project root.
 Example:
 
 ```yaml
-project_name: sample_project
+fkit:
+  version: 0.1.1
+
+project_name: my_app
 
 tooling:
   use_fvm: false
@@ -34,37 +37,41 @@ entry:
 
 flavoring:
   enabled: true
+  default: development
 
 flavors:
-  default: production
+  - development
+  - staging
+  - production
 
-  development:
-    env: env/development.json
-
-    firebase:
-      app_distribution_id: YOUR_DEV_APP_ID
-
-      options:
-        android: lib/firebase_options_development.dart
-        ios: lib/firebase_options_development.dart
-        web: lib/firebase_options_development.dart
-
-  production:
-    env: env/production.json
-
-    firebase:
-      app_distribution_id: YOUR_PROD_APP_ID
-
-      options:
-        android: lib/firebase_options_production.dart
-        ios: lib/firebase_options_production.dart
-        web: lib/firebase_options_production.dart
+environment:
+  enabled: true
+  configurations:
+    development:
+      file: env/development.json
+    staging:
+      file: env/staging.json
+    production:
+      file: env/production.json
 
 firebase:
+  enabled: false
   tester_group: internal-testers
+  configurations: {}
 
 generator:
+  feature_dir: lib/features
   default_template: bloc_clean
+
+localization:
+  enabled: false
+  arb_dir: lib/l10n
+  template: app_en.arb
+  output_dir: lib/gen/l10n
+  output_file: app_localizations.dart
+  default_locale: en
+  locales:
+    - en
 ```
 
 ---
@@ -76,7 +83,7 @@ generator:
 Project identifier.
 
 ```yaml
-project_name: scoreloan
+project_name: my_app
 ```
 
 Used internally for project metadata and future automation support.
@@ -218,15 +225,21 @@ Useful for:
 
 ---
 
-# Flavors
+# Flavor Targets
 
-## `flavors.default`
+## `flavoring.default`
 
 Default flavor used when no flavor is provided.
 
 ```yaml
-flavors:
+flavoring:
+  enabled: true
   default: production
+
+flavors:
+  - development
+  - staging
+  - production
 ```
 
 Example:
@@ -243,9 +256,9 @@ production
 
 ---
 
-# Flavor Environment
+# Environment Configuration
 
-## `env`
+## `environment.configurations`
 
 Environment file used with:
 
@@ -256,46 +269,36 @@ Environment file used with:
 Example:
 
 ```yaml
-development:
-  env: env/development.json
+environment:
+  enabled: true
+  configurations:
+    development:
+      file: env/development.json
 ```
 
 ---
 
 # Firebase Configuration
 
-## `firebase.app_distribution_id`
+## `firebase.configurations`
 
-Firebase App Distribution App ID.
+Firebase App Distribution App IDs and FlutterFire options files are configured
+per target and platform.
 
 Example:
 
 ```yaml
 firebase:
-  app_distribution_id: 1:1234567890:android:abcdef
-```
-
-Used by:
-
-```bash
-fkit firebase
-```
-
----
-
-# Firebase Options
-
-## `firebase.options`
-
-FlutterFire-generated Firebase options files.
-
-Example:
-
-```yaml
-options:
-  android: lib/firebase_options_development.dart
-  ios: lib/firebase_options_development.dart
-  web: lib/firebase_options_development.dart
+  enabled: true
+  tester_group: internal-testers
+  configurations:
+    production:
+      android:
+        app_id: 1:1234567890:android:abcdef
+        options: lib/firebase_options_production.dart
+      ios:
+        app_id: 1:1234567890:ios:abcdef
+        options: lib/firebase_options_production.dart
 ```
 
 Used for:
@@ -349,18 +352,22 @@ Template status:
 ```yaml
 flavoring:
   enabled: true
-
-flavors:
   default: production
 
-  development:
-    env: env/development.json
+flavors:
+  - development
+  - staging
+  - production
 
-  staging:
-    env: env/staging.json
-
-  production:
-    env: env/production.json
+environment:
+  enabled: true
+  configurations:
+    development:
+      file: env/development.json
+    staging:
+      file: env/staging.json
+    production:
+      file: env/production.json
 ```
 
 Build example:
@@ -376,12 +383,16 @@ fkit build apk production
 ```yaml
 flavoring:
   enabled: false
-
-flavors:
   default: main
 
-  main:
-    env: env/env.json
+flavors:
+  - main
+
+environment:
+  enabled: true
+  configurations:
+    main:
+      file: env/env.json
 ```
 
 Build example:
