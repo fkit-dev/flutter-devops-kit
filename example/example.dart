@@ -1,4 +1,4 @@
-/// Flutter DevOps Kit example workflow.
+/// Flutter DevOps Kit example workflow for pub.dev.
 ///
 /// FKIT is primarily used as a command-line application.
 ///
@@ -14,21 +14,30 @@
 /// fkit init
 /// ```
 ///
-/// Setup the project using the selected architecture template:
+/// Review `fkit.yaml`, then set up the project using the selected architecture
+/// template:
 ///
 /// ```bash
-/// fkit setup
+/// fkit setup --yes
 /// ```
 ///
-/// Generate a feature:
+/// Generate a feature without running build runner immediately:
 ///
 /// ```bash
-/// fkit feat auth
+/// fkit feat auth --no-build-runner
+/// fkit generate
 /// ```
 ///
 /// Install a reusable module:
 ///
 /// ```bash
-/// fkit install network
+/// fkit install network --yes
+/// ```
+///
+/// Ask for command-specific help when needed:
+///
+/// ```bash
+/// fkit help make
+/// fkit help build
 /// ```
 void main() {}

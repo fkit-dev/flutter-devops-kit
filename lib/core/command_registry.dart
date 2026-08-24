@@ -64,4 +64,47 @@ class CommandRegistry {
     }
     return null;
   }
+
+  /// Returns close command names for an unknown [name].
+  static List<String> suggestions(String name) {
+    if (name.trim().isEmpty) return const [];
+
+    final normalized = name.toLowerCase();
+    final matches = <String>[];
+
+    for (final command in commands) {
+      final candidates = [command.name, ...command.aliases];
+      if (candidates.any(
+        (candidate) =>
+            candidate.startsWith(normalized) ||
+            normalized.startsWith(candidate) ||
+            _distance(candidate, normalized) <= 2,
+      )) {
+        matches.add(command.name);
+      }
+    }
+
+    matches.sort();
+    return matches.take(3).toList();
+  }
+
+  static int _distance(String a, String b) {
+    final previous = List<int>.generate(b.length + 1, (index) => index);
+    final current = List<int>.filled(b.length + 1, 0);
+
+    for (var i = 1; i <= a.length; i++) {
+      current[0] = i;
+      for (var j = 1; j <= b.length; j++) {
+        final cost = a.codeUnitAt(i - 1) == b.codeUnitAt(j - 1) ? 0 : 1;
+        current[j] = [
+          current[j - 1] + 1,
+          previous[j] + 1,
+          previous[j - 1] + cost,
+        ].reduce((value, element) => value < element ? value : element);
+      }
+      previous.setAll(0, current);
+    }
+
+    return previous[b.length];
+  }
 }

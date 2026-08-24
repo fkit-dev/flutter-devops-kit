@@ -24,7 +24,7 @@ fkit:
 # Project
 # =============================================================================
 
-project_name: scoreloan
+project_name: my_app
 
 
 # =============================================================================
@@ -195,7 +195,8 @@ environment:
 # environment configuration.
 #
 # enabled:
-#   Enables Firebase workflows.
+#   Enables Firebase workflows. Keep this false until the app IDs and
+#   FlutterFire option files below are real project values.
 #
 # tester_group:
 #   Default Firebase App Distribution tester group.
@@ -218,7 +219,7 @@ environment:
 # =============================================================================
 
 firebase:
-  enabled: true
+  enabled: false
 
   tester_group: internal-testers
 
@@ -310,5 +311,4 @@ localization:
 
   locales:
     - en
-    - mr
-    - hi
+    - es

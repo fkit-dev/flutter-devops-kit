@@ -44,6 +44,11 @@ void main() {
       expect(CommandRegistry.command('Help'), isNull);
     });
 
+    test('suggests close command names', () {
+      expect(CommandRegistry.suggestions('hep'), contains('help'));
+      expect(CommandRegistry.suggestions('instal'), contains('install'));
+    });
+
     test('each command has unique name', () {
       final names = <String>{};
       for (final cmd in CommandRegistry.commands) {

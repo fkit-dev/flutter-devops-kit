@@ -101,6 +101,11 @@ class HelpCommand extends Command {
     if (command == null) {
       LoggerService.error('Unknown command "$commandName".');
       LoggerService.blank();
+      final suggestions = CommandRegistry.suggestions(commandName);
+      if (suggestions.isNotEmpty) {
+        LoggerService.info('Did you mean: ${suggestions.join(', ')}?');
+        LoggerService.blank();
+      }
       LoggerService.info('Run "fkit help" to see all commands.');
 
       return;

@@ -1,0 +1,10 @@
+.DS_Store
+**/.DS_Store
+.idea/
+
+# Local dependency artifacts from optional fixture analysis.
+example/flutter_app/.dart_tool/
+example/flutter_app/pubspec.lock
+
+# Experimental shared widget templates are not part of the public package yet.
+templates/shared/widgets/

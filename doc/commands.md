@@ -1,528 +1,451 @@
-# FKIT Commands Guide
+# FKIT Command Guide
 
-This document contains all available Flutter DevOps Kit (`fkit`) commands and their usage.
+This guide lists the supported `fkit` commands, required context, examples, and
+fallback behavior for incorrect invocations.
 
----
+## Command Format
 
-# Command Structure
-
-Basic command format:
-
-```bash id="hjlwm0"
+```bash
 fkit <command> [arguments] [options]
 ```
 
-Example:
+Use command-specific help:
 
-```bash id="u8jlwm"
-fkit build apk production
-```
-
----
-
-# Help Commands
-
-## Show Help
-
-```bash id="i5jlwm"
+```bash
 fkit help
+fkit help feat
+fkit help build
 ```
 
-Displays all available commands.
+## Global Fallbacks
 
----
+- Running `fkit` with no arguments shows general help.
+- Unknown top-level commands show general help and suggest close matches.
+- Commands that require a Flutter project must be run beside `pubspec.yaml`.
+- Commands that require FKIT configuration must be run beside `fkit.yaml`.
+- Invalid parser options print the parser error and command usage.
 
-# Initialization Commands
+Examples:
 
-## Initialize FKIT
+```bash
+fkit hepl
+fkit help instal
+fkit setup
+```
 
-```bash id="’winiiii283"
+If `fkit.yaml` is missing for a configuration-aware command, run:
+
+```bash
 fkit init
 ```
 
-Interactive project setup wizard.
+## Project Commands
 
-Generates:
+### `fkit help [command]`
 
-```bash id="’winiiii284"
-fkit.yaml
+Shows all commands or details for one command.
+
+```bash
+fkit help
+fkit help make
 ```
 
-Prompts for:
+Fallback: unknown command names show a suggestion when available.
 
-* platforms
-* flavors
-* Firebase configs
-* FVM usage
-* generator templates
+### `fkit doctor`
 
----
+Checks local tooling such as Flutter, Dart, Git, Firebase CLI, Java, CocoaPods,
+and platform tooling.
 
-# Validation Commands
-
-## Validate Environment
-
-```bash id="’winiiii285"
+```bash
 fkit doctor
 ```
 
-Checks required tooling:
+### `fkit init`
 
-* Flutter
-* Dart
-* Firebase CLI
-* Java
-* CocoaPods
-* Git
+Runs the interactive FKIT configuration wizard and writes `fkit.yaml`.
 
----
+```bash
+fkit init
+```
 
-## Validate Project Configuration
+Requires a Flutter project.
 
-```bash id="’winiiii286"
+### `fkit setup [--yes|--force]`
+
+Applies the selected template setup from `fkit.yaml`.
+
+```bash
+fkit setup
+fkit setup --yes
+```
+
+For `bloc_clean`, setup can install theme/router/network modules, add declared
+dependencies, generate bootstrap files, prepare localization, generate initial
+features, synchronize routes/DI/barrels, and run post-generation commands.
+
+Use `--yes` or `--force` to overwrite generated files without prompts and use
+default module option values.
+
+Requires a Flutter project and `fkit.yaml`.
+
+### `fkit config [section]`
+
+Prints the loaded FKIT configuration.
+
+```bash
+fkit config
+fkit config project
+fkit config environment
+```
+
+Fallback: unknown sections print an error.
+
+### `fkit validate`
+
+Validates FKIT configuration, entry files, environment files, Firebase option
+files, and flavor settings.
+
+```bash
 fkit validate
 ```
 
-Checks:
+## Dependency and Maintenance Commands
 
-* entry file
-* env files
-* Firebase option files
-* flavor configuration
+### `fkit get`
 
----
+Runs dependency resolution.
 
-# Configuration Commands
-
-## Print Loaded Config
-
-```bash id="’winiiii287"
-fkit config
-```
-
-Displays parsed FKIT configuration.
-
-Useful for debugging configuration issues.
-
----
-
-# Flutter Project Commands
-
-## Clean Project
-
-```bash id="’winiiii288"
-fkit clean
-```
-
-Equivalent to:
-
-```bash id="’winiiii289"
-flutter clean
-```
-
----
-
-## Fetch Dependencies
-
-```bash id="’winiiii290"
+```bash
 fkit get
 ```
 
-Equivalent to:
+Equivalent Flutter command:
 
-```bash id="’winiiii291"
+```bash
 flutter pub get
 ```
 
----
+### `fkit generate`
 
-## Apply Dart Fixes
+Runs build runner once.
 
-```bash id="’winiiii292"
-fkit fix
-```
-
-Equivalent to:
-
-```bash id="’winiiii293"
-dart fix --apply
-```
-
----
-
-## Analyze Project
-
-```bash id="’winiiii294"
-fkit analyze
-```
-
-Equivalent to:
-
-```bash id="’winiiii295"
-dart analyze lib
-```
-
----
-
-## Format Project
-
-```bash id="’winiiii296"
-fkit format
-```
-
-Equivalent to:
-
-```bash id="’winiiii297"
-dart format lib
-```
-
----
-
-# Code Generation Commands
-
-## Generate Files
-
-```bash id="’winiiii298"
+```bash
 fkit generate
 ```
 
-Equivalent to:
+Equivalent Flutter pub command:
 
-```bash id="’winiiii299"
+```bash
 flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
-Used for:
+### `fkit watch`
 
-* Riverpod generators
-* Freezed
-* JSON serialization
-* Retrofit
-* FlutterGen
+Runs build runner in watch mode.
 
----
-
-## Watch Generators
-
-```bash id="’winiiii300"
+```bash
 fkit watch
 ```
 
-Equivalent to:
+### `fkit analyze`
 
-```bash id="’winiiii301"
-dart run build_runner watch --delete-conflicting-outputs
+Runs Dart analysis for `lib`.
+
+```bash
+fkit analyze
 ```
 
-Continuously watches file changes.
+### `fkit format`
 
----
+Formats Dart files in `lib`.
 
-# Run Commands
-
-## Run Application
-
-```bash id="’winiiii302"
-fkit run production
+```bash
+fkit format
 ```
 
-Runs Flutter application.
+### `fkit fix`
 
----
+Applies Dart fixes.
 
-# Run Modes
-
-## Debug Mode
-
-```bash id="’winiiii303"
-fkit run production
+```bash
+fkit fix
 ```
 
-Default mode.
+## Code Generation Commands
 
----
+### `fkit feat <feature> [--yes|--force] [--no-build-runner]`
 
-## Profile Mode
+Generates a complete feature using the selected template.
 
-```bash id="’winiiii304"
-fkit run production -p
+```bash
+fkit feat auth
+fkit feat profile --no-build-runner
+fkit feat checkout --yes
 ```
 
-OR:
+Use `--yes` or `--force` to overwrite an existing generated feature. Use
+`--no-build-runner` when you want to run `fkit generate` later.
 
-```bash id="’winiiii305"
-fkit run production --profile
+Generated files require the selected template's declared dependencies.
+
+### `fkit make <component> <feature> [name] [--yes|--force] [--no-build-runner]`
+
+Generates one feature component or a component group.
+
+```bash
+fkit make screen auth Login
+fkit make dto auth LoginRequest
+fkit make resource auth User --no-build-runner
+fkit make bloc auth --force
 ```
 
----
+Supported `bloc_clean` components:
 
-## Release Mode
+- `entity`
+- `dto`
+- `mapper`
+- `usecase`
+- `bloc`
+- `state`
+- `event`
+- `repository`
+- `repository_impl`
+- `remote_datasource`
+- `remote_datasource_impl`
+- `local_datasource`
+- `local_datasource_impl`
+- `screen`
 
-```bash id="’winiiii306"
+Supported `bloc_clean` groups:
+
+- `resource`
+- `bloc`
+- `datasource`
+
+Fallback: unknown components print supported components and groups.
+
+### `fkit install <module> [--yes|--force]`
+
+Installs a template module.
+
+```bash
+fkit install theme
+fkit install router --yes
+fkit install network --force
+```
+
+Available `bloc_clean` modules:
+
+- `theme`
+- `router`
+- `network`
+
+Fallback: unknown modules print available modules.
+
+## Localization Commands
+
+### `fkit l10n <setup|generate|doctor> [--yes|--force]`
+
+Manages Flutter localization files and validation.
+
+```bash
+fkit l10n setup
+fkit l10n generate --yes
+fkit l10n doctor
+```
+
+Actions:
+
+- `setup`: generate localization config/files and wire the app
+- `generate`: regenerate localization config/files and wire the app
+- `doctor`: validate localization config
+
+Fallback: missing or unknown actions print supported actions.
+
+## Run and Build Commands
+
+### `fkit run [flavor] [-p] [-r] [-t android|ios|web]`
+
+Runs the app using FKIT flavor/platform settings.
+
+```bash
+fkit run
+fkit run development
+fkit run staging -p
 fkit run production -r
+fkit run -t web
 ```
 
-OR:
+Options:
 
-```bash id="’winiiii307"
-fkit run production --release
-```
+- `-p`, `--profile`: profile mode
+- `-r`, `--release`: release mode
+- `-t`, `--platform`: `android`, `ios`, or `web`
 
----
+Web runs skip Flutter flavor arguments automatically.
 
-# Platform Support
+### `fkit build <apk|aab|ipa|web> [flavor]`
 
-## Android
+Builds the app.
 
-```bash id="’winiiii308"
-fkit run production -t android
-```
-
----
-
-## iOS
-
-```bash id="’winiiii309"
-fkit run production -t ios
-```
-
----
-
-## Web
-
-```bash id="’winiiii310"
-fkit run production -t web
-```
-
-Web automatically skips Flutter flavor arguments.
-
----
-
-# Build Commands
-
-## APK Build
-
-```bash id="’winiiii311"
-fkit build apk production
-```
-
-Builds Android APK.
-
----
-
-## AAB Build
-
-```bash id="’winiiii312"
+```bash
+fkit build apk development
 fkit build aab production
-```
-
-Builds Android App Bundle.
-
----
-
-## IPA Build
-
-```bash id="’winiiii313"
 fkit build ipa production
-```
-
-Builds iOS IPA.
-
----
-
-## Web Build
-
-```bash id="’winiiii314"
 fkit build web
-```
-
-OR:
-
-```bash id="’winiiii315"
 fkit build web production
 ```
 
-Web builds automatically skip Flutter flavors.
+If `[flavor]` is omitted, FKIT uses `flavoring.default` from `fkit.yaml`.
 
----
+## Firebase Commands
 
-# Firebase Commands
+### `fkit firebase [target] [-p android|ios] [-n "notes"] [-g group]`
 
-## Upload To Firebase App Distribution
+Builds and uploads to Firebase App Distribution.
 
-```bash id="’winiiii316"
-fkit firebase production
+```bash
+fkit firebase
+fkit firebase staging
+fkit firebase production -p ios
+fkit firebase staging -g qa -n "QA regression build"
 ```
 
-Builds APK and uploads to Firebase App Distribution.
+Requires `firebase.enabled: true` and matching Firebase app configuration for
+the target/platform.
 
----
+Fallbacks:
 
-## Upload With Release Notes
+- disabled Firebase prints a clear error
+- unknown targets print a clear error
+- disabled platforms print a clear error
+- missing Firebase platform config prints a clear error
 
-```bash id="’winiiii317"
-fkit firebase production --notes="QA regression build"
-```
+## Signing Commands
 
----
+### `fkit signing <setup|doctor>`
 
-# Android Signing Commands
+Manages Android signing configuration.
 
-## Setup Android Signing
-
-```bash id="’winiiii318"
+```bash
 fkit signing setup
-```
-
-Generates:
-
-* keystore
-* key.properties
-* .gitignore entries
-
----
-
-## Validate Android Signing
-
-```bash id="’winiiii319"
 fkit signing doctor
 ```
 
-Checks:
+Fallback: missing or unknown actions print supported actions.
 
-* key.properties
-* keystore existence
-* Gradle files
+## Launcher Icon Commands
 
----
+### `fkit icon <generate|configure|doctor>`
 
-# Feature Scaffolding Commands
+Manages `flutter_launcher_icons` configuration and generation.
 
-## Create Feature Module
-
-```bash id="’winiiii320"
-fkit feat auth
+```bash
+fkit icon configure
+fkit icon generate
+fkit icon doctor
 ```
 
-Generates feature folder structure.
+Fallback: missing or unknown actions print supported actions.
 
-Use `--force` (or `--yes`) to overwrite generated files without prompts in
-setup, module installation, feature generation, component generation, and
-localization generation. Use `--no-build-runner` with feature and component
-generation when the build step will be run separately.
+## Extension Commands
 
-Generated feature files require the selected template's declared runtime and
-development dependencies.
+### `fkit extension generate`
 
-Supported templates:
+Generates common Flutter extension files.
 
-* BLoC Clean Architecture (current, production-ready)
-* Riverpod Clean Architecture (planned)
-* MVVM (planned)
+```bash
+fkit extension generate
+```
 
----
+Fallback: missing or unknown actions print supported actions.
 
-# Flavor Behavior
+## Flavor Behavior
 
-## Flavored Projects
+Flavored projects:
 
-```yaml id="’winiiii321"
+```yaml
 flavoring:
   enabled: true
+  default: development
+
+flavors:
+  - development
+  - staging
+  - production
 ```
 
-FKIT automatically uses:
+FKIT passes Flutter flavor arguments for mobile builds and runs.
 
-```bash id="’winiiii322"
---flavor production
-```
+Non-flavored projects:
 
----
-
-## Non-Flavored Projects
-
-```yaml id="’winiiii323"
+```yaml
 flavoring:
   enabled: false
+  default: main
+
+flavors:
+  - main
 ```
 
-FKIT skips Flutter flavor arguments automatically.
+FKIT skips Flutter flavor arguments.
 
-Useful for:
+## FVM Support
 
-* web apps
-* simple apps
-* dart-define-only workflows
+Enable FVM in `fkit.yaml`:
 
----
-
-# FVM Support
-
-Enable inside:
-
-```yaml id="’winiiii324"
+```yaml
 tooling:
   use_fvm: true
 ```
 
-FKIT automatically uses:
+FKIT then runs commands through `fvm flutter` and `fvm dart`.
 
-```bash id="’winiiii325"
-fvm flutter
-fvm dart
-```
+## Common Workflows
 
-instead of:
+Fresh setup:
 
-```bash id="’winiiii326"
-flutter
-dart
-```
-
----
-
-# Common Workflows
-
-## Fresh Project Setup
-
-```bash id="’winiiii327"
+```bash
+flutter create my_app
+cd my_app
 fkit init
-fkit doctor
-fkit get
+fkit setup --yes
+```
+
+Feature generation:
+
+```bash
+fkit feat auth --no-build-runner
+fkit make dto auth LoginRequest --no-build-runner
 fkit generate
 ```
 
----
+Localization:
 
-## Production APK Build
+```bash
+fkit l10n setup --yes
+fkit l10n doctor
+```
 
-```bash id="’winiiii328"
+Production Android build:
+
+```bash
+fkit validate
 fkit build apk production
 ```
 
----
+Firebase QA distribution:
 
-## Firebase QA Distribution
-
-```bash id="’winiiii329"
-fkit firebase staging --notes="QA build"
+```bash
+fkit firebase staging -p android -g qa -n "QA build"
 ```
 
----
+## Planned Commands
 
-## Setup Android Signing
+These commands are planned and not implemented in the current release:
 
-```bash id="’winiiii330"
-fkit signing setup
-```
-
----
-
-# Planned Commands
-
-Future FKIT commands:
-
-```bash id="’winiiii331"
+```bash
 fkit release
 fkit deploy
 fkit changelog
@@ -530,24 +453,3 @@ fkit version
 fkit ci
 fkit store
 ```
-
----
-
-# Best Practices
-
-## Recommended
-
-* Use FVM for teams
-* Keep env files separated
-* Use flavor-specific Firebase projects
-* Validate configuration before release
-* Use release notes for Firebase uploads
-
----
-
-## Avoid
-
-* Sharing keystores in Git
-* Hardcoded secrets
-* Mixing environments
-* Using production Firebase in staging
