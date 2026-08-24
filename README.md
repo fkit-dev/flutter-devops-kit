@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/fkit-dev/flutter-devops-kit/main/assets/branding/fkit_banner.png" alt="FKIT Banner" width="100%">
+</p>
+
 # Flutter DevOps Kit (FKIT)
 
 [![Pub Version](https://img.shields.io/pub/v/flutter_devops_kit.svg)](https://pub.dev/packages/flutter_devops_kit)
